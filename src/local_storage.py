@@ -1,3 +1,4 @@
+import os
 from PIL import Image
 
 from src.filter_names_enum import FilterNamesEnum
@@ -9,14 +10,16 @@ class LocalStorage:
         self.__filters_folder_path = filters_folder_path
         self.__last_image_id = 0
 
-    def save_image(self, image: Image):
-        pass
+    def save_image(self, image: Image) -> int:
+        self.__last_image_id += 1
+        image.save(os.path.join(self.__tmp_folder_path, str(self.__last_image_id) + ".jpg"))
+        return self.__last_image_id
 
     def get_image(self, image_id: int) -> Image:
-        pass
+        return Image.open(os.path.join(self.__tmp_folder_path, str(image_id) + ".jpg"))
 
     def delete_image(self, image_id: int):
-        pass
+        os.remove(os.path.join(self.__tmp_folder_path, str(image_id) + ".jpg"))
 
     def get_filter_image(self, filter_name: FilterNamesEnum):
-        pass
+        return Image.open(os.path.join(self.__filters_folder_path, filter_name.value + ".jpg"))
