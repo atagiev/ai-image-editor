@@ -1,22 +1,22 @@
 <template>
   <div id="app">
-    <el-row>
-      <el-button>Default</el-button>
-      <el-button type='primary'>Primary</el-button>
-      <el-button type='success'>Success</el-button>
-      <el-button type='info'>Info</el-button>
-      <el-button type='warning'>Warning</el-button>
-      <el-button type='danger'>Danger</el-button>
-    </el-row>
+    <el-container direction="vertical">
+      <el-header>
+        <Header></Header>
+      </el-header>
+      <el-main>Main</el-main>
+    </el-container>
   </div>
 </template>
 
 <script>
+import Header from '@/components/Header'
 // import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
   components: {
+    Header
   }
 }
 </script>
@@ -28,6 +28,13 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /* margin-top: 60px; */
+  width: 1240px;
+  margin: auto;
 }
+el-main {
+  background-color: rgba(54, 51, 51, 0.81);;
+  height: 800px;
+}
+
 </style>
