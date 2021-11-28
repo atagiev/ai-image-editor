@@ -9,7 +9,7 @@
 
       </el-main>
       <el-footer>
-        <FiltersList></FiltersList>
+        <Footer></Footer>
       </el-footer>
     </el-container>
   </div>
@@ -17,14 +17,14 @@
 
 <script>
 import Header from '@/components/Header'
-import FiltersList from '@/components/FiltersList'
+import Footer from '@/components/Footer'
 // import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
   components: {
     Header,
-    FiltersList
+    Footer
   }
 }
 </script>
@@ -42,7 +42,7 @@ export default {
   overflow:hidden;
 }
 el-main {
-  background-color: rgba(54, 51, 51, 0.81);;
+  background-color: rgba(54, 51, 51, 0.81);
   height: 600px;
 }
 el-footer{
