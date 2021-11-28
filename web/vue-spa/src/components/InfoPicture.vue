@@ -26,14 +26,15 @@ export default ({
 </script>
 
 <style scoped>
-.info-picture{
-  background-color: rgba(0, 0, 0, 0.329);
-  display: flex;
-  width: 500px;
-  justify-content: space-between;
-  margin: auto;
-  padding: 10px 15px;
-  border-radius: 20px;
-  margin-top: 25px;
-}
+  .info-picture{
+    background-color: rgba(0, 0, 0, 0.329);
+    display: flex;
+    /* align-items: center; */
+    margin-left: 360px;
+    width: 500px;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-radius: 20px;
+    margin-top: 25px;
+  }
 </style>
