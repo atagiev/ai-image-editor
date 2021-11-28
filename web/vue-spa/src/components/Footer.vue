@@ -13,7 +13,7 @@
         action="https://jsonplaceholder.typicode.com/posts/"
         :limit="1"
         :multiple="false">
-        <el-button slot="trigger" type="success">Загрузить</el-button>
+        <el-button class="upld-btn" slot="trigger" type="success">Загрузить</el-button>
         <!-- <el-button style="margin-left: 10px;" type="success" @click="submitUpload">Загрузить</el-button> -->
         <!-- <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div> -->
       </el-upload>
@@ -24,7 +24,7 @@
         </label>
       </div> -->
     </div>
-    <div class="filters" v-if="isImageUploaded">
+    <div class="filters-container" v-if="isImageUploaded">
       <div class="filters__buttons">
         <button class="classic-btn btn">C</button>
         <button class="neural-btn btn">NN</button>
@@ -50,7 +50,7 @@ export default ({
     FilterItem
   },
   data: () => ({
-    isImageUploaded: true
+    isImageUploaded: false
   }),
   methods: {
 
@@ -60,7 +60,7 @@ export default ({
 
 <style scoped>
 .footer{
-  display: flex;
+  /* display: flex; */
   height: 100%;
 }
 .welcome-container{
@@ -76,10 +76,12 @@ export default ({
   line-height: 28px;
 }
 .upload-file{
-  max-width: 200px;
+  /* max-width: 200px; */
+  height: 100%;
 }
-.el-button{
+.upld-btn{
   width: 200px;
+  height: 40px;
   font-size: 24px;
   background:#309860;
   border: none;
@@ -87,9 +89,9 @@ export default ({
 .el-button:hover{
   background:#4ac885a9;
 }
-.filters{
+.filters-container{
   height: 80%;
-  margin: auto 0;
+  margin-top: 15px;
   display: flex;
   width: 100%;
 }

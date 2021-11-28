@@ -5,6 +5,7 @@
         <Header></Header>
       </el-header>
       <el-main>
+        <ButtonsList></ButtonsList>
         <InfoPicture></InfoPicture>
         <PictureItem></PictureItem>
         <EffectText></EffectText>
@@ -22,6 +23,7 @@ import Footer from '@/components/Footer'
 import PictureItem from '@/components/PictureItem'
 import InfoPicture from './components/InfoPicture.vue'
 import EffectText from './components/EffectText.vue'
+import ButtonsList from './components/ButtonsList.vue'
 // import HelloWorld from './components/HelloWorld.vue'
 
 export default {
@@ -31,11 +33,13 @@ export default {
     Footer,
     PictureItem,
     InfoPicture,
-    EffectText
+    EffectText,
+    ButtonsList
   }
 }
 </script>
 
+    ButtonsList
 <style>
 #app {
   font-family: Roboto, sans-serif;
