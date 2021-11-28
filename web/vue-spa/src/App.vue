@@ -5,8 +5,9 @@
         <Header></Header>
       </el-header>
       <el-main>
-        Main
-
+        <InfoPicture></InfoPicture>
+        <PictureItem></PictureItem>
+        <EffectText></EffectText>
       </el-main>
       <el-footer>
         <Footer></Footer>
@@ -18,13 +19,19 @@
 <script>
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import PictureItem from '@/components/PictureItem'
+import InfoPicture from './components/InfoPicture.vue'
+import EffectText from './components/EffectText.vue'
 // import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
   components: {
     Header,
-    Footer
+    Footer,
+    PictureItem,
+    InfoPicture,
+    EffectText
   }
 }
 </script>
