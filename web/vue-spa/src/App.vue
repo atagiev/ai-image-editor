@@ -4,37 +4,50 @@
       <el-header>
         <Header></Header>
       </el-header>
-      <el-main>Main</el-main>
+      <el-main>
+        Main
+
+      </el-main>
+      <el-footer>
+        <FiltersList></FiltersList>
+      </el-footer>
     </el-container>
   </div>
 </template>
 
 <script>
 import Header from '@/components/Header'
+import FiltersList from '@/components/FiltersList'
 // import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
   components: {
-    Header
+    Header,
+    FiltersList
   }
 }
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #ffffff;
   /* margin-top: 60px; */
   width: 1240px;
   margin: auto;
+  overflow:hidden;
 }
 el-main {
   background-color: rgba(54, 51, 51, 0.81);;
-  height: 800px;
+  height: 600px;
+}
+el-footer{
+  background-color: #4D4E53;
+  height: 150px;
 }
 
 </style>
