@@ -4,37 +4,61 @@
       <el-header>
         <Header></Header>
       </el-header>
-      <el-main>Main</el-main>
+      <el-main>
+        <ButtonsList></ButtonsList>
+        <InfoPicture></InfoPicture>
+        <PictureItem></PictureItem>
+        <EffectText></EffectText>
+      </el-main>
+      <el-footer>
+        <Footer></Footer>
+      </el-footer>
     </el-container>
   </div>
 </template>
 
 <script>
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+import PictureItem from '@/components/PictureItem'
+import InfoPicture from './components/InfoPicture.vue'
+import EffectText from './components/EffectText.vue'
+import ButtonsList from './components/ButtonsList.vue'
 // import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
   components: {
-    Header
+    Header,
+    Footer,
+    PictureItem,
+    InfoPicture,
+    EffectText,
+    ButtonsList
   }
 }
 </script>
 
+    ButtonsList
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #ffffff;
   /* margin-top: 60px; */
   width: 1240px;
   margin: auto;
+  overflow:hidden;
 }
 el-main {
-  background-color: rgba(54, 51, 51, 0.81);;
-  height: 800px;
+  background-color: rgba(54, 51, 51, 0.81);
+  height: 600px;
+}
+el-footer{
+  background-color: #4D4E53;
+  height: 150px;
 }
 
 </style>
