@@ -2,7 +2,7 @@
   <div class="filter-item">
     <div class="filter-item__temp-picture">
         <div class="filter-item__filter-name">
-          Название фильтра
+          {{ nameFilter }}
         </div>
     </div>
 
@@ -13,8 +13,11 @@
 // import { defineComponent } from '@vue/composition-api'
 
 export default ({
-  name: 'FilterItem'
-
+  name: 'FilterItem',
+  data: () => ({
+    nameFilter: 'Название фильтра',
+    typeFilter: ''
+  })
 })
 </script>
 
@@ -29,6 +32,8 @@ export default ({
   background-size: cover;
   width: 200px;
   height: 100%;
+  box-sizing: content-box;
+  cursor: pointer;
 }
 .filter-item__filter-name{
   margin-top: 90px;

@@ -35,11 +35,11 @@
 
 <script>
 export default {
-
+  name: 'ButtonsList'
 }
 </script>
 
-<style>
+<style scoped>
 .btns-list{
   position: sticky;
   float: right;
@@ -50,7 +50,7 @@ export default {
   gap: 10px;
 }
 button{
-  height:5px;
+  height:10px;
   padding: 10px;
 }
 .btn{

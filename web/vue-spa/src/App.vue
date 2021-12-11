@@ -39,7 +39,6 @@ export default {
 }
 </script>
 
-    ButtonsList
 <style>
 #app {
   font-family: Roboto, sans-serif;
