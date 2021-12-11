@@ -26,8 +26,12 @@
     </div>
     <div class="filters-container" v-if="isImageUploaded">
       <div class="filters__buttons">
-        <button class="classic-btn btn">C</button>
-        <button class="neural-btn btn">NN</button>
+        <button class="classic-btn btn"
+          :class="{'active-btn':isActiveClassic}"
+          @click='onClickBtnClassic'>C</button>
+        <button class="neural-btn btn"
+          :class="{'active-btn':isActiveNeural}"
+          @click='onClickBtnNeural'>NN</button>
       </div>
       <div class="filters__list">
         <FilterItem></FilterItem>
@@ -50,10 +54,19 @@ export default ({
     FilterItem
   },
   data: () => ({
-    isImageUploaded: false
+    isImageUploaded: true,
+    isActiveClassic: true,
+    isActiveNeural: false
   }),
   methods: {
-
+    onClickBtnClassic () {
+      this.isActiveClassic = true
+      this.isActiveNeural = false
+    },
+    onClickBtnNeural () {
+      this.isActiveClassic = false
+      this.isActiveNeural = true
+    }
   }
 })
 </script>
@@ -114,13 +127,22 @@ export default ({
   /* padding: 10px; */
   color: white;
   background: #3C3939;
-  border: none;
+  border: 0px solid #4ac885a9;
   border-radius: 7px;
   font-size: 20px;
   height: 55px;
+
+  cursor: pointer;
 }
 .btn:hover{
-  border: 2px solid #4ac885a9;
+  box-shadow: inset -2px -2px #4ac885a9, inset 2px 2px #4ac885a9;
+  /* border: 2px solid #4ac885a9; */
+}
+.active-btn{
+  background-color: #52da91bd;
+
+  transform: scale(1.1);
+  box-sizing: content-box;
 }
 /* для варианта кнопки с инпутом */
 input{
