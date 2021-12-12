@@ -6,10 +6,13 @@
 
 <script>
 // import { defineComponent } from '@vue/composition-api'
+import { mapGetters } from 'vuex'
 
 export default ({
-  name: 'PictureItem'
-
+  name: 'PictureItem',
+  computed: {
+    ...mapGetters(['CUR_FILE'])
+  }
 })
 </script>
 
