@@ -1,15 +1,17 @@
 <template>
   <div class="effect-text">
-    Эффект: отсутствует
+    Эффект: {{ CUR_EFFECT }}
   </div>
 </template>
 
 <script>
-// import { defineComponent } from '@vue/composition-api'
+import { mapGetters } from 'vuex'
 
 export default ({
-  name: 'EffectText'
-
+  name: 'EffectText',
+  computed: {
+    ...mapGetters(['CUR_EFFECT'])
+  }
 })
 </script>
 

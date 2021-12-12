@@ -6,23 +6,24 @@
         Загрузите ваше первое изображение
       </div>
       <!-- action указывает куда загружается файл -->
-      <el-upload
+      <!-- <el-upload
         class="upload-file"
         ref="upload"
         accept="image/jpeg,image/png"
-        action="https://jsonplaceholder.typicode.com/posts/"
+        action=""
         :limit="1"
-        :multiple="false">
+        :multiple="false"
+        v-on:change="handleFileUpload()">
         <el-button class="upld-btn" slot="trigger" type="success">Загрузить</el-button>
-        <!-- <el-button style="margin-left: 10px;" type="success" @click="submitUpload">Загрузить</el-button> -->
-        <!-- <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div> -->
-      </el-upload>
-      <!-- <div class="filters-container__upload">
-        <input type="file" class="input-file" ref="upload" accept="image/jpeg,image/png" v-on:change="handleFileUpload()" v-on:click="submitFile()">
-        <label class="input-file__label" for="input-file">
-          <span class="upload-file__text">Загрузить</span>
+      </el-upload> -->
+      <div class="filters-container__upload">
+
+        <label class="input__file-button" for="input-file">
+          <input type="file" class="input-file" ref="upload" accept="image/jpeg,image/png"
+            @change="handleFileUpload( $event )" v-on:click="submitFile()">
+          <span class="input__file-button-text">Загрузить</span>
         </label>
-      </div> -->
+      </div>
     </div>
     <div class="filters-container" v-if="isImageUploaded">
       <div class="filters__buttons">
@@ -34,11 +35,7 @@
           @click='onClickBtnNeural'>NN</button>
       </div>
       <div class="filters__list">
-        <FilterItem></FilterItem>
-        <FilterItem></FilterItem>
-        <FilterItem></FilterItem>
-        <FilterItem></FilterItem>
-        <FilterItem></FilterItem>
+        <FiltersList :activeType='activeType'></FiltersList>
       </div>
     </div>
 
@@ -46,26 +43,43 @@
 </template>
 
 <script>
-import FilterItem from '@/components/FilterItem'
+// import FilterItem from '@/components/FilterItem'
+import { mapActions } from 'vuex'
+import FiltersList from '@/components/FiltersList'
 
 export default ({
   name: 'Footer',
   components: {
-    FilterItem
+    FiltersList
   },
   data: () => ({
-    isImageUploaded: true,
+    isImageUploaded: false,
     isActiveClassic: true,
-    isActiveNeural: false
+    isActiveNeural: false,
+    activeType: '',
+    file: ''
   }),
   methods: {
+    ...mapActions(['changeFile']),
     onClickBtnClassic () {
       this.isActiveClassic = true
       this.isActiveNeural = false
+      this.activeType = 'classic'
     },
     onClickBtnNeural () {
       this.isActiveClassic = false
       this.isActiveNeural = true
+      this.activeType = 'neural'
+    },
+    handleFileUpload (event) {
+      this.file = event.target.files[0]
+      this.isImageUploaded = true
+      this.changeFile(event.target.files[0])
+      this.$emit('onChangeStatus', this.isImageUploaded)
+      console.log(this.file.name)
+    },
+    submitFile () {
+      console.log('click')
     }
   }
 })
@@ -94,10 +108,11 @@ export default ({
 }
 .upld-btn{
   width: 200px;
-  height: 40px;
+  /* height: 40px; */
   font-size: 24px;
   background:#309860;
   border: none;
+  text-align: center;
 }
 .el-button:hover{
   background:#4ac885a9;
@@ -117,12 +132,12 @@ export default ({
   margin: 13px 10px;
   gap: 10px;
 }
-.filters__list{
+/* .filters__list{
   margin-left: 30px;
   display: flex;
   height: auto;
   gap: 30px;
-}
+} */
 .btn{
   /* padding: 10px; */
   color: white;
@@ -145,18 +160,22 @@ export default ({
   box-sizing: content-box;
 }
 /* для варианта кнопки с инпутом */
-input{
-  display: none;
+.filters-container__upload {
+  /* width: 100%;
+  /* position: relative; */
+  /* margin: 15px 0;
+  text-align: center;  */
 }
 .input-file{
   opacity: 0;
+  /* width: 200px; */
+  height: 100%;
+  /* visibility: hidden; */
   position: absolute;
-  z-index: -1;
-  overflow: hidden;
-  width: 0.4px;
-  height: 0.4px;
+  cursor: pointer;
 }
-.input-file__label {
+.input__file-button {
+  position: relative;
   width: 110px;
   font-size: 24px;
   background-color: #309860;
@@ -165,9 +184,9 @@ input{
   align-items: center;
   padding: 9px 49px;
   border-radius: 6px;
-  cursor: pointer;
+
 }
-.input-file__label:hover {
+.input__file-button:hover {
   background:#4ac885a9;
 }
 </style>

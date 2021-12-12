@@ -1,18 +1,18 @@
 <template>
   <div id="app">
     <el-container direction="vertical">
-      <el-header>
+      <header>
         <Header></Header>
-      </el-header>
-      <el-main>
-        <ButtonsList></ButtonsList>
-        <InfoPicture></InfoPicture>
-        <PictureItem></PictureItem>
-        <EffectText></EffectText>
-      </el-main>
-      <el-footer>
-        <Footer></Footer>
-      </el-footer>
+      </header>
+      <main >
+        <ButtonsList v-if='statusUpload'></ButtonsList>
+        <InfoPicture v-if='statusUpload'></InfoPicture>
+        <PictureItem v-if='statusUpload'></PictureItem>
+        <EffectText v-if='statusUpload'></EffectText>
+      </main>
+      <footer>
+        <Footer @onChangeStatus="onChangeStatusInUpload"></Footer>
+      </footer>
     </el-container>
   </div>
 </template>
@@ -35,27 +35,36 @@ export default {
     InfoPicture,
     EffectText,
     ButtonsList
+  },
+  data: () => ({
+    statusUpload: false
+  }),
+  methods: {
+    onChangeStatusInUpload (status) {
+      this.statusUpload = status
+      console.log(status)
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #ffffff;
-  /* margin-top: 60px; */
+  margin-top: 60px;
   width: 1240px;
   margin: auto;
   overflow:hidden;
 }
-el-main {
+main {
   background-color: rgba(54, 51, 51, 0.81);
   height: 600px;
 }
-el-footer{
+footer{
   background-color: #4D4E53;
   height: 150px;
 }
