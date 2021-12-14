@@ -12,7 +12,7 @@
                 class="btn-green"
                 @click="submit"
               >
-                Ок
+                Да
           </button>
           <button
                 type="button"
@@ -36,7 +36,7 @@ export default {
       this.$emit('close')
     },
     submit () {
-      this.$emit('')
+      this.$emit('accept')
     }
   }
 }
@@ -97,6 +97,14 @@ export default {
     border-radius: 2px;
     width: 70px;
     padding: 7px 10px;
+    cursor: pointer;
+  }
+  .btn-green:hover{
+    background: #39c57a;
+  }
+  .btn-green:active{
+    background-color: #82fdbbbd;
+    box-shadow: inset 0 0 5px #247248;
   }
   .modal-fade-enter,
   .modal-fade-leave-active {
