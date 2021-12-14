@@ -5,19 +5,7 @@
         Добро пожаловать!<br>
         Загрузите ваше первое изображение
       </div>
-      <!-- action указывает куда загружается файл -->
-      <!-- <el-upload
-        class="upload-file"
-        ref="upload"
-        accept="image/jpeg,image/png"
-        action=""
-        :limit="1"
-        :multiple="false"
-        v-on:change="handleFileUpload()">
-        <el-button class="upld-btn" slot="trigger" type="success">Загрузить</el-button>
-      </el-upload> -->
       <div class="filters-container__upload">
-
         <label class="input__file-button" for="input-file">
           <input type="file" class="input-file" ref="upload" accept="image/jpeg,image/png"
             @change="handleFileUpload( $event )" v-on:click="submitFile()">
@@ -46,6 +34,7 @@
 // import FilterItem from '@/components/FilterItem'
 import { mapActions } from 'vuex'
 import FiltersList from '@/components/FiltersList'
+import axios from 'axios'
 
 export default ({
   name: 'Footer',
@@ -80,6 +69,17 @@ export default ({
     },
     submitFile () {
       console.log('click')
+    },
+    sendPicture () {
+      axios.post('/', this.file)
+      // Если запрос успешен
+        .then(function (response) {
+          console.log(response)
+        })
+      // Если запрос с ошибкой
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   }
 })

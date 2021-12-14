@@ -16,7 +16,7 @@
       </button>
     </div>
     <div class="upload-button">
-      <button class="upld-btn btn">
+      <button class="upld-btn btn" @click='onClickUpload'>
         <i class="el-icon-upload2"></i>
       </button>
     </div>
@@ -34,8 +34,33 @@
 </template>
 
 <script>
+// import modal from './components/DialogBox.vue'
+// import { mapActions } from 'vuex'
+
 export default {
-  name: 'ButtonsList'
+  name: 'ButtonsList',
+  components: {
+  },
+  data: () => ({
+    isModalVisible: false,
+    msg: ''
+  }),
+  methods: {
+    // ...mapActions(['changeModalStatus']),
+    onClickUpload () {
+      this.isModalVisible = true
+      // this.changeModalStatus(this.isModalVisible)
+      this.$emit('onChangeModalStatus', this.isModalVisible, 'Вы действительно хотите загрузить новое изображение?')
+      console.log(this.isModalVisible, ' статус окна')
+      // this.showModal('Вы действительно хотите загрузить новое изображение?')
+    }
+    // showModal (msg) {
+    //   this.changeModalStatus(true)
+    //   console.log()
+    // }
+
+  }
+
 }
 </script>
 

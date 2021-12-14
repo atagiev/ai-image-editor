@@ -4,8 +4,8 @@
       <header>
         <Header></Header>
       </header>
-      <main >
-        <ButtonsList v-if='statusUpload'></ButtonsList>
+      <main>
+        <ButtonsList  @onChangeModalStatus="onChangeModal" v-if='statusUpload'></ButtonsList>
         <InfoPicture v-if='statusUpload'></InfoPicture>
         <PictureItem v-if='statusUpload'></PictureItem>
         <EffectText v-if='statusUpload'></EffectText>
@@ -14,6 +14,18 @@
         <Footer @onChangeStatus="onChangeStatusInUpload"></Footer>
       </footer>
     </el-container>
+    <button
+      type="button"
+      class="btn"
+      @click="showModal"
+    >
+      Open Modal!
+    </button>
+    <modal
+      :msg = modalMessage
+      v-show="isModalVisible"
+      @close="closeModal"
+    />
   </div>
 </template>
 
@@ -24,6 +36,9 @@ import PictureItem from '@/components/PictureItem'
 import InfoPicture from './components/InfoPicture.vue'
 import EffectText from './components/EffectText.vue'
 import ButtonsList from './components/ButtonsList.vue'
+import modal from './components/DialogBox.vue'
+// import { mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 // import HelloWorld from './components/HelloWorld.vue'
 
 export default {
@@ -34,16 +49,33 @@ export default {
     PictureItem,
     InfoPicture,
     EffectText,
-    ButtonsList
+    ButtonsList,
+    modal
   },
   data: () => ({
-    statusUpload: false
+    statusUpload: false,
+    isModalVisible: false,
+    modalMessage: ''
   }),
   methods: {
     onChangeStatusInUpload (status) {
       this.statusUpload = status
       console.log(status)
+    },
+    onChangeModal (status, msg) {
+      this.isModalVisible = status
+      this.modalMessage = msg
+      console.log(status, 'статус модального окна')
+    },
+    showModal () {
+      this.isModalVisible = true
+    },
+    closeModal () {
+      this.isModalVisible = false
     }
+  },
+  computed: {
+    ...mapGetters(['MODAL_STATUS'])
   }
 }
 </script>
