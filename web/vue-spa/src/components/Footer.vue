@@ -41,15 +41,17 @@ export default ({
   components: {
     FiltersList
   },
+  props: ['isImageUploaded'],
   data: () => ({
     isImageUploaded: false,
     isActiveClassic: true,
     isActiveNeural: false,
     activeType: '',
-    file: ''
+    file: '',
+    imageSrc: ''
   }),
   methods: {
-    ...mapActions(['changeFile']),
+    ...mapActions(['changeFile', 'changeURLFile']),
     onClickBtnClassic () {
       this.isActiveClassic = true
       this.isActiveNeural = false
@@ -63,12 +65,33 @@ export default ({
     handleFileUpload (event) {
       this.file = event.target.files[0]
       this.isImageUploaded = true
+      // eslint-disable-next-line prefer-const
+      let reader = new FileReader()
+      reader.addEventListener('load', function () {
+        // this.showPreview = true
+        this.imageSrc = reader.result
+        this.changeURLFile(reader.result)
+        console.log(this.imageSrc)
+      }.bind(this), false)
+      if (this.file) {
+        reader.readAsDataURL(this.file)
+      }
+      this.changeURLFile(this.imageSrc)
       this.changeFile(event.target.files[0])
       this.$emit('onChangeStatus', this.isImageUploaded)
       console.log(this.file.name)
     },
     submitFile () {
       console.log('click')
+    },
+    createImage (file) {
+      // eslint-disable-next-line prefer-const
+      let reader = new FileReader()
+      // eslint-disable-next-line prefer-const
+      reader.onload = function (e) {
+        this.file = e.target.result
+      }
+      reader.readAsDataURL(file)
     },
     sendPicture () {
       axios.post('/', this.file)

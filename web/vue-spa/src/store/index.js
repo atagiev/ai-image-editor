@@ -8,13 +8,15 @@ export default new Vuex.Store({
     currentEffect: 'отсутствует',
     currentFile: '',
     imgUploadStatus: false,
-    modalBoxStatus: false
+    modalBoxStatus: false,
+    urlCurFile: ''
   },
   getters: {
     CUR_EFFECT: state => { return state.currentEffect },
     CUR_FILE: state => { return state.currentFile },
     CUR_STATUS: state => { return state.imgUploadStatus },
-    MODAL_STATUS: state => { return state.modalBoxStatus }
+    MODAL_STATUS: state => { return state.modalBoxStatus },
+    CUR_URL_FILE: state => { return state.urlCurFile }
 
   },
   mutations: {
@@ -33,6 +35,9 @@ export default new Vuex.Store({
     CHANGE_MODAL_STATUS (state, modalStatus) {
       // Vue.set(state, this.currentEffect, effect)
       state.modalBoxStatus = modalStatus
+    },
+    CHANGE_URL_FILE (state, url) {
+      state.urlCurFile = url
     }
   },
   actions: {
@@ -51,6 +56,10 @@ export default new Vuex.Store({
     changeModalStatus ({ commit }, modalStatus) {
       const modStatus = modalStatus
       commit('CHANGE_MODAL_STATUS', modStatus)
+    },
+    changeURLFile ({ commit }, url) {
+      const urlFile = url
+      commit('CHANGE_URL_FILE', urlFile)
     }
   },
   modules: {

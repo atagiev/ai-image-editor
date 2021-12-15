@@ -11,7 +11,7 @@
         <EffectText v-if='statusUpload'></EffectText>
       </main>
       <footer>
-        <Footer @onChangeStatus="onChangeStatusInUpload"></Footer>
+        <Footer :isImageUploaded="statusUpload" @onChangeStatus="onChangeStatusInUpload"></Footer>
       </footer>
     </el-container>
     <button
@@ -41,6 +41,7 @@ import modal from './components/DialogBox.vue'
 // import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
 // import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios'
 
 export default {
   name: 'App',
@@ -78,6 +79,28 @@ export default {
       this.isModalVisible = false
     },
     acceptAction () {
+      console.log(this.statusUpload + ' ' + 'до')
+      if (this.userAction === 'upload') {
+        this.onChangeStatusInUpload(false)
+        this.closeModal()
+      }
+      if (this.userAction === 'download') {
+        axios({
+          url: 'http://localhost:8000/',
+          method: 'GET',
+          responseType: 'blob'
+        }).then((response) => {
+          var fileURL = window.URL.createObjectURL(new Blob([response.data]))
+          var fileLink = document.createElement('a')
+
+          fileLink.href = fileURL
+          fileLink.setAttribute('download', 'file.jpg')
+          document.body.appendChild(fileLink)
+
+          fileLink.click()
+        })
+      }
+      console.log(this.statusUpload + ' ' + 'после')
       console.log(this.userAction, 'применяем')
     }
   },
