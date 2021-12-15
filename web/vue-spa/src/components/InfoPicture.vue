@@ -1,9 +1,10 @@
 <template>
   <div class="info-picture">
     <div class="info-picture__name">
-      {{ CUR_FILE.name }}
+      {{ fileProperty }}
     </div>
     <div class="info-picture__resolution">
+      {{ CUR_FILE.naturalHeight }}
       <!-- {{ this.file }} -->
       <!-- {{ getImgSize() }} -->
     </div>
@@ -41,14 +42,18 @@ export default ({
   },
   computed: {
     ...mapGetters(['CUR_FILE']),
-    file: {
-      get: function () {
-        return this.file
-      },
-      set: function () {
-        this.file = this.$store.getters.CUR_FILE
-      }
+    fileProperty () {
+      return this.CUR_FILE.name
     }
+    // file: {
+    //   get: function () {
+    //     return this.file
+    //   },
+    //   set: function () {
+    //     this.file = this.$store.getters.CUR_FILE
+    //     console.log(this.file.naturalHeight, 'высота картинки')
+    //   }
+    // }
   }
 })
 

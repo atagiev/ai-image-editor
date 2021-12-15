@@ -17,6 +17,7 @@ export default ({
   props: ['activeType'],
   data: () => ({
     nameFilter: 'Название фильтра',
+    classicFiltersNames: [],
     typeFilter: '',
     isActiveFilter: false,
     previewImage: ''
