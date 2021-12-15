@@ -25,6 +25,7 @@
       :msg = modalMessage
       v-show="isModalVisible"
       @close="closeModal"
+      @accept="acceptAction"
     />
   </div>
 </template>
@@ -55,23 +56,29 @@ export default {
   data: () => ({
     statusUpload: false,
     isModalVisible: false,
-    modalMessage: ''
+    modalMessage: '',
+    userAction: ''
   }),
   methods: {
     onChangeStatusInUpload (status) {
       this.statusUpload = status
       console.log(status)
     },
-    onChangeModal (status, msg) {
+    onChangeModal (status, msg, action) {
       this.isModalVisible = status
       this.modalMessage = msg
-      console.log(status, 'статус модального окна')
+      this.userAction = action
+      // this.acceptAction()
+      console.log(action, 'статус модального окна')
     },
     showModal () {
       this.isModalVisible = true
     },
     closeModal () {
       this.isModalVisible = false
+    },
+    acceptAction () {
+      console.log(this.userAction, 'применяем')
     }
   },
   computed: {

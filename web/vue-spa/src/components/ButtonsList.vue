@@ -1,17 +1,17 @@
 <template>
   <div class='btns-list'>
     <div class="accept-button">
-      <button class="acpt-btn btn">
+      <button class="acpt-btn btn" @click='onClickAccept'>
         <i class="el-icon-check"></i>
       </button>
     </div>
     <div class="reset-button">
-      <button class="rst-btn btn">
+      <button class="rst-btn btn" @click='onClickReset'>
         <i class="el-icon-refresh-left"></i>
       </button>
     </div>
     <div class="delete-button">
-      <button class="dlt-btn btn">
+      <button class="dlt-btn btn" @click='onClickDelete'>
         <i class="el-icon-delete-solid"></i>
       </button>
     </div>
@@ -21,12 +21,12 @@
       </button>
     </div>
     <div class="download-button">
-      <button class="dwld-btn btn">
+      <button class="dwld-btn btn" @click='onClickDownload'>
         <i class="el-icon-download"></i>
       </button>
     </div>
     <div class="help-button">
-      <button class="help-btn btn">
+      <button class="help-btn btn" @click='onClickHelp'>
         <i class="el-icon-s-help"></i>
       </button>
     </div>
@@ -43,25 +43,55 @@ export default {
   },
   data: () => ({
     isModalVisible: false,
-    msg: ''
+    msg: '',
+    typeAction: ''
   }),
   methods: {
     // ...mapActions(['changeModalStatus']),
     onClickUpload () {
-      this.isModalVisible = true
+      this.msg = 'Вы действительно хотите загрузить новое изображение?'
+      this.typeAction = 'upload'
+      this.showModal()
+      // this.isModalVisible = true
       // this.changeModalStatus(this.isModalVisible)
-      this.$emit('onChangeModalStatus', this.isModalVisible, 'Вы действительно хотите загрузить новое изображение?')
-      console.log(this.isModalVisible, ' статус окна')
+      // this.$emit('onChangeModalStatus', this.isModalVisible, 'Вы действительно хотите загрузить новое изображение?')
+      // console.log(this.isModalVisible, ' статус окна')
       // this.showModal('Вы действительно хотите загрузить новое изображение?')
+    },
+    onClickAccept () {
+      this.msg = 'Применить к изображению выбранный эффект?'
+      this.typeAction = 'accept'
+      this.showModal()
+    },
+    onClickDelete () {
+      this.msg = 'Вы действительно хотите удалить все примененные эффекты? Будет выведено исходное изображение'
+      this.typeAction = 'delete'
+      this.showModal()
+    },
+    onClickReset () {
+      this.msg = 'Вы действительно хотите сбросить последний примененный эффект?'
+      this.typeAction = 'reset'
+      this.showModal()
+    },
+    onClickDownload () {
+      this.msg = 'Начать загрузку изображения? Редактирование будет завершено'
+      this.typeAction = 'download'
+      this.showModal()
+    },
+    onClickHelp () {
+      this.msg = ''
+      this.typeAction = 'help'
+      this.showModal()
+    },
+
+    showModal () {
+      this.isModalVisible = true
+      this.$emit('onChangeModalStatus', this.isModalVisible, this.msg, this.typeAction)
+      console.log()
     }
-    // showModal (msg) {
-    //   this.changeModalStatus(true)
-    //   console.log()
-    // }
-
   }
-
 }
+
 </script>
 
 <style scoped>
