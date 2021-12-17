@@ -7,20 +7,31 @@
         </div>
 
         <div class="modal-footer">
-          <button
-                type="button"
-                class="btn-green"
-                @click="submit"
-              >
-                Да
-          </button>
-          <button
-                type="button"
-                class="btn-green"
-                @click="cancel"
-              >
-                Отмена
+          <template v-if='userAction != "help"'>
+            <button
+                  type="button"
+                  class="btn-green"
+                  @click="submit"
+                >
+                  Да
             </button>
+            <button
+                  type="button"
+                  class="btn-green"
+                  @click="cancel"
+                >
+                  Отмена
+            </button>
+          </template>
+          <template v-else>
+            <button
+                  type="button"
+                  class="btn-green ok"
+                  @click="cancel"
+                >
+                  Понятно
+            </button>
+          </template>
         </div>
       </div>
     </div>
@@ -30,7 +41,7 @@
 <script>
 export default {
   name: 'modal',
-  props: ['msg'],
+  props: ['msg', 'userAction'],
   methods: {
     cancel () {
       this.$emit('close')
@@ -77,7 +88,7 @@ export default {
     border: 1px solid #31A265;
     border-radius: 2px;
     width: 70px;
-    padding: 7px 10px;
+    padding: 7px 9px;
     cursor: pointer;
   }
   .btn-green:hover{

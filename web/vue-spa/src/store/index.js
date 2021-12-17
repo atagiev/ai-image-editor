@@ -7,27 +7,31 @@ export default new Vuex.Store({
   state: {
     currentEffect: 'отсутствует',
     currentFile: '',
+    initFile: '',
     imgUploadStatus: false,
     modalBoxStatus: false,
+    urlInitFile: '',
     urlCurFile: '',
     resolution: '',
     activeFilter: ''
+
   },
   getters: {
     CUR_EFFECT: state => { return state.currentEffect },
     CUR_FILE: state => { return state.currentFile },
+    URL_CUR_FILE: state => { return state.urlCurFile },
     CUR_STATUS: state => { return state.imgUploadStatus },
     MODAL_STATUS: state => { return state.modalBoxStatus },
-    CUR_URL_FILE: state => { return state.urlCurFile },
+    INIT_FILE: state => { return state.initFile },
+    URL_INIT_FILE: state => { return state.urlInitFile },
     CUR_RESOLUTION: state => { return state.resolution },
     ACT_FILTER: state => { return state.activeFilter }
-
   },
   mutations: {
     CHANGE_EFF (state, effect) {
       state.currentEffect = effect
     },
-    CHANGE_FILE (state, file) {
+    CHANGE_CUR_FILE (state, file) {
       state.currentFile = file
     },
     CHANGE_STATUS (state, status) {
@@ -36,7 +40,10 @@ export default new Vuex.Store({
     CHANGE_MODAL_STATUS (state, modalStatus) {
       state.modalBoxStatus = modalStatus
     },
-    CHANGE_URL_FILE (state, url) {
+    CHANGE_URL_INIT_FILE (state, url) {
+      state.urlInitFile = url
+    },
+    CHANGE_URL_CUR_FILE (state, url) {
       state.urlCurFile = url
     },
     CHANGE_RES (state, res) {
@@ -44,6 +51,9 @@ export default new Vuex.Store({
     },
     CHANGE_ACT_FILTER (state, actFil) {
       state.activeFilter = actFil
+    },
+    CHANGE_INIT_FILE (state, file) {
+      state.initFile = file
     }
 
   },
@@ -52,9 +62,13 @@ export default new Vuex.Store({
       const curEffect = effect
       commit('CHANGE_EFF', curEffect)
     },
-    changeFile ({ commit }, file) {
+    changeCurFile ({ commit }, file) {
       const curImg = file
-      commit('CHANGE_FILE', curImg)
+      commit('CHANGE_CUR_FILE', curImg)
+    },
+    changeInitFile ({ commit }, file) {
+      const initImg = file
+      commit('CHANGE_INIT_FILE', initImg)
     },
     changeStatus ({ commit }, status) {
       const curStatus = status
@@ -64,9 +78,13 @@ export default new Vuex.Store({
       const modStatus = modalStatus
       commit('CHANGE_MODAL_STATUS', modStatus)
     },
-    changeURLFile ({ commit }, url) {
+    changeURLInitFile ({ commit }, url) {
       const urlFile = url
-      commit('CHANGE_URL_FILE', urlFile)
+      commit('CHANGE_URL_INIT_FILE', urlFile)
+    },
+    changeURLCurFile ({ commit }, url) {
+      const urlFile = url
+      commit('CHANGE_URL_CUR_FILE', urlFile)
     },
     changeResolution ({ commit }, res) {
       const resFile = res

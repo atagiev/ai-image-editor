@@ -1,6 +1,6 @@
 <template>
   <div class="picture-item" ref='picture'>
-    <img  height="450px" :src="CUR_URL_FILE" alt="picture">
+    <img  height="450px" :src= 'URL_CUR_FILE' alt="picture">
   </div>
 </template>
 
@@ -10,16 +10,16 @@ import { mapGetters } from 'vuex'
 export default ({
   name: 'PictureItem',
   data: () => ({
-    image: '',
+    imageURL: '',
     file: ''
   }),
   computed: {
-    ...mapGetters(['CUR_FILE', 'CUR_URL_FILE'])
+    ...mapGetters(['INIT_FILE', 'URL_INIT_FILE', 'URL_CUR_FILE'])
   },
   methods: {
   },
-  mounted () {
-    this.image = this.CUR_URL_FILE
+  created () {
+    this.imageURL = this.$store.getters.URL_INIT_FILE
   }
 
 })
@@ -30,6 +30,5 @@ export default ({
     margin: auto;
     margin-top: 20px;
     width: 1000px
-    /* width: 00px; */
   }
 </style>

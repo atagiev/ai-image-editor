@@ -3,9 +3,6 @@
     <div class="info-picture__name">
       {{ fileProperty }}
     </div>
-    <div class="info-picture__resolution">
-      {{ CUR_FILE.naturalHeight }}
-    </div>
   </div>
 </template>
 
@@ -23,13 +20,13 @@ export default ({
   }),
   methods: {
     setNewFile () {
-      this.file = this.$store.getters.CUR_FILE
+      this.file = this.$store.getters.INIT_FILE
     }
   },
   computed: {
-    ...mapGetters(['CUR_FILE']),
+    ...mapGetters(['INIT_FILE']),
     fileProperty () {
-      return this.CUR_FILE.name
+      return this.INIT_FILE.name
     }
   }
 })

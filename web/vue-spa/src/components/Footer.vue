@@ -50,7 +50,7 @@ export default ({
     imageSrc: ''
   }),
   methods: {
-    ...mapActions(['changeFile', 'changeURLFile', 'changeResolution']),
+    ...mapActions(['changeURLInitFile', 'changeURLCurFile', 'changeResolution', 'changeInitFile', 'changeCurFile']),
     onClickBtnClassic () {
       this.isActiveClassic = true
       this.isActiveNeural = false
@@ -68,13 +68,14 @@ export default ({
       let reader = new FileReader()
       reader.addEventListener('load', function () {
         this.imageSrc = reader.result
-        this.changeURLFile(reader.result)
+        this.changeURLInitFile(reader.result)
+        this.changeURLCurFile(reader.result)
       }.bind(this), false)
       if (this.file) {
         reader.readAsDataURL(this.file)
       }
-      this.changeURLFile(this.imageSrc)
-      this.changeFile(event.target.files[0])
+      this.changeCurFile(event.target.files[0])
+      this.changeInitFile(event.target.files[0])
       this.$emit('onChangeStatus', this.isImageUploaded)
     },
     sendPicture () {
