@@ -7,20 +7,31 @@
         </div>
 
         <div class="modal-footer">
-          <button
-                type="button"
-                class="btn-green"
-                @click="submit"
-              >
-                Да
-          </button>
-          <button
-                type="button"
-                class="btn-green"
-                @click="cancel"
-              >
-                Отмена
+          <template v-if='userAction != "help"'>
+            <button
+                  type="button"
+                  class="btn-green"
+                  @click="submit"
+                >
+                  Да
             </button>
+            <button
+                  type="button"
+                  class="btn-green"
+                  @click="cancel"
+                >
+                  Отмена
+            </button>
+          </template>
+          <template v-else>
+            <button
+                  type="button"
+                  class="btn-green ok"
+                  @click="cancel"
+                >
+                  Понятно
+            </button>
+          </template>
         </div>
       </div>
     </div>
@@ -30,7 +41,7 @@
 <script>
 export default {
   name: 'modal',
-  props: ['msg'],
+  props: ['msg', 'userAction'],
   methods: {
     cancel () {
       this.$emit('close')
@@ -54,49 +65,30 @@ export default {
     justify-content: center;
     align-items: center;
   }
-
   .modal {
     background: rgba(25, 27, 24, 0.94);
-    /* overflow-x: auto; */
     display: flex;
     flex-direction: column;
     width: 300px;
     padding: 20px 40px;
   }
-
   .modal-footer {
-    /* border-top: 1px solid #eeeeee; */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    /* justify-content: flex-end; */
   }
-
   .modal-body {
-    /* padding: 30px 10px; */
     padding-bottom: 30px;
     width: auto;
     text-align: start;
-    /* height: 60px; */
   }
-
-  /* .btn-close {
-    border: none;
-    font-size: 20px;
-    padding: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    color: #4AAE9B;
-    background: transparent;
-  } */
-
   .btn-green {
     color: white;
     background: #31A265;
     border: 1px solid #31A265;
     border-radius: 2px;
     width: 70px;
-    padding: 7px 10px;
+    padding: 7px 9px;
     cursor: pointer;
   }
   .btn-green:hover{
