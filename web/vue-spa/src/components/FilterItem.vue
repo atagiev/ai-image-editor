@@ -1,11 +1,12 @@
 <template>
   <div @click='onClickFilter' class="filter-item">
-    <div class="filter-item__classic-picture" :class="classObj">
+    <div class="filter-item" :class="classObj"
+    >
         <div class="filter-item__filter-name">
           {{ nameFilter }}
         </div>
     </div>
-
+<!-- :style="{'background': 'url('+ previewImage + ') no-repeat', 'background-size': 'cover'}" -->
   </div>
 </template>
 
@@ -14,21 +15,17 @@ import { mapActions } from 'vuex'
 
 export default ({
   name: 'FilterItem',
-  props: ['activeType'],
+  props: ['activeType', 'nameFilter', 'previewImage', 'active'],
   data: () => ({
-    nameFilter: 'Название фильтра',
-    classicFiltersNames: [],
     typeFilter: '',
-    isActiveFilter: false,
-    previewImage: ''
+    isActiveFilter: false
   }),
   methods: {
-    ...mapActions(['changeEffect']),
+    ...mapActions(['changeEffect', 'changeActiveFilter']),
     onClickFilter () {
       this.changeEffect(this.nameFilter)
-    },
-    changeItem () {
-      this.typeFilter = this.activeType
+      this.changeActiveFilter(this.nameFilter)
+      this.isActiveFilter = true
     }
   },
   computed: {
@@ -47,25 +44,23 @@ export default ({
 .filter-item:hover{
   border: 3px solid #4ac885a9;
 }
+.filter-item{
+  background-size: cover;
+}
 .filter-item__classic-picture{
-  border: 3px solid transparent;
   background: url("../assets/orig_picture.jpg") no-repeat;
-  /* background: url(" + {{ previewImage }} + ") no-repeat; */
-  /* object-fit:cover; */
+  border: 3px solid transparent;
+  object-fit:cover;
   background-size: cover;
   width: 200px;
-  /* height: 100%; */
   box-sizing: content-box;
   cursor: pointer;
 }
 .filter-item__neural-picture{
   border: 3px solid transparent;
   background: url("../assets/neuron_photo.jpeg") no-repeat;
-  /* background: url(" + {{ previewImage }} + ") no-repeat; */
-  /* object-fit:cover; */
   background-size: cover;
   width: 200px;
-  /* height: 100%; */
   box-sizing: content-box;
   cursor: pointer;
 }
@@ -75,5 +70,7 @@ export default ({
   background-color: rgba(54, 51, 51, 0.81);
   text-align: left;
 }
-
+.clicked_filter {
+  border: 3px solid #4ac885a9;
+}
 </style>

@@ -1,10 +1,19 @@
 <template>
-  <div class="filters_list">
-    <FilterItem :activeType='activeType'></FilterItem>
-    <FilterItem :activeType='activeType'></FilterItem>
-    <FilterItem :activeType='activeType'></FilterItem>
-    <FilterItem :activeType='activeType'></FilterItem>
-    <FilterItem :activeType='activeType'></FilterItem>
+  <div class="filters">
+    <div class="filters_list__classic filters_list" v-if="this.activeType == 'classic'">
+      <FilterItem :activeType='activeType' nameFilter='Черно-белое' previewImage='../static/greyscale.jpg'></FilterItem>
+      <FilterItem :activeType='activeType' nameFilter='Сепия' previewImage='../static/greyscale.jpg'></FilterItem>
+      <FilterItem :activeType='activeType' nameFilter='Инвертирование' previewImage='../static/greyscale.jpg'></FilterItem>
+      <FilterItem :activeType='activeType' nameFilter='Рисунок' previewImage='../static/greyscale.jpg'></FilterItem>
+      <FilterItem :activeType='activeType' nameFilter='Рельеф' previewImage='../static/greyscale.jpg'></FilterItem>
+    </div>
+    <div class="filters_list__neural filters_list" v-else-if="this.activeType == 'neural'">
+      <FilterItem :activeType='activeType' nameFilter='Черно-белое'></FilterItem>
+      <FilterItem :activeType='activeType' nameFilter='Черно-белое'></FilterItem>
+      <FilterItem :activeType='activeType' nameFilter='Черно-белое'></FilterItem>
+      <FilterItem :activeType='activeType' nameFilter='Черно-белое'></FilterItem>
+      <FilterItem :activeType='activeType' nameFilter='Черно-белое'></FilterItem>
+    </div>
   </div>
 </template>
 
@@ -15,9 +24,10 @@ export default {
   components: {
     FilterItem
   },
-  props: ['activeType'],
+  data: () => ({
+  }),
+  props: ['activeType', 'nameFilter', 'previewImage'],
   methods: {
-
   }
 }
 </script>

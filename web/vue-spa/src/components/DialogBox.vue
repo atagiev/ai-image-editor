@@ -54,42 +54,23 @@ export default {
     justify-content: center;
     align-items: center;
   }
-
   .modal {
     background: rgba(25, 27, 24, 0.94);
-    /* overflow-x: auto; */
     display: flex;
     flex-direction: column;
     width: 300px;
     padding: 20px 40px;
   }
-
   .modal-footer {
-    /* border-top: 1px solid #eeeeee; */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    /* justify-content: flex-end; */
   }
-
   .modal-body {
-    /* padding: 30px 10px; */
     padding-bottom: 30px;
     width: auto;
     text-align: start;
-    /* height: 60px; */
   }
-
-  /* .btn-close {
-    border: none;
-    font-size: 20px;
-    padding: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    color: #4AAE9B;
-    background: transparent;
-  } */
-
   .btn-green {
     color: white;
     background: #31A265;

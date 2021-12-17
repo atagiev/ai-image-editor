@@ -14,13 +14,6 @@
         <Footer :isImageUploaded="statusUpload" @onChangeStatus="onChangeStatusInUpload"></Footer>
       </footer>
     </el-container>
-    <button
-      type="button"
-      class="btn"
-      @click="showModal"
-    >
-      Open Modal!
-    </button>
     <modal
       :msg = modalMessage
       v-show="isModalVisible"
@@ -38,9 +31,7 @@ import InfoPicture from './components/InfoPicture.vue'
 import EffectText from './components/EffectText.vue'
 import ButtonsList from './components/ButtonsList.vue'
 import modal from './components/DialogBox.vue'
-// import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
-// import HelloWorld from './components/HelloWorld.vue'
 import axios from 'axios'
 
 export default {
@@ -63,14 +54,11 @@ export default {
   methods: {
     onChangeStatusInUpload (status) {
       this.statusUpload = status
-      console.log(status)
     },
     onChangeModal (status, msg, action) {
       this.isModalVisible = status
       this.modalMessage = msg
       this.userAction = action
-      // this.acceptAction()
-      console.log(action, 'статус модального окна')
     },
     showModal () {
       this.isModalVisible = true
@@ -79,7 +67,6 @@ export default {
       this.isModalVisible = false
     },
     acceptAction () {
-      console.log(this.statusUpload + ' ' + 'до')
       if (this.userAction === 'upload') {
         this.onChangeStatusInUpload(false)
         this.closeModal()
@@ -100,8 +87,6 @@ export default {
           fileLink.click()
         })
       }
-      console.log(this.statusUpload + ' ' + 'после')
-      console.log(this.userAction, 'применяем')
     }
   },
   computed: {

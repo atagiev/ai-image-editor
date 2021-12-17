@@ -5,7 +5,6 @@
 </template>
 
 <script>
-// import { defineComponent } from '@vue/composition-api'
 import { mapGetters } from 'vuex'
 
 export default ({
@@ -16,18 +15,11 @@ export default ({
   }),
   computed: {
     ...mapGetters(['CUR_FILE', 'CUR_URL_FILE'])
-    // computedURL () {
-    //   console.log(this.CUR_URL_FILE)
-    //   debugger
-    //   return 1
-    // }
-
   },
   methods: {
   },
   mounted () {
     this.image = this.CUR_URL_FILE
-    console.log(this.image)
   }
 
 })
