@@ -4,16 +4,23 @@
       <header>
         <Header></Header>
       </header>
-      <main >
-        <ButtonsList v-if='statusUpload'></ButtonsList>
+      <main>
+        <ButtonsList  @onChangeModalStatus="onChangeModal" v-if='statusUpload'></ButtonsList>
         <InfoPicture v-if='statusUpload'></InfoPicture>
         <PictureItem v-if='statusUpload'></PictureItem>
         <EffectText v-if='statusUpload'></EffectText>
       </main>
       <footer>
-        <Footer @onChangeStatus="onChangeStatusInUpload"></Footer>
+        <Footer :isImageUploaded="statusUpload" @onChangeStatus="onChangeStatusInUpload"></Footer>
       </footer>
     </el-container>
+    <modal
+      :userAction = userAction
+      :msg = modalMessage
+      v-show="isModalVisible"
+      @close="closeModal"
+      @accept="acceptAction"
+    />
   </div>
 </template>
 
@@ -24,7 +31,9 @@ import PictureItem from '@/components/PictureItem'
 import InfoPicture from './components/InfoPicture.vue'
 import EffectText from './components/EffectText.vue'
 import ButtonsList from './components/ButtonsList.vue'
-// import HelloWorld from './components/HelloWorld.vue'
+import modal from './components/DialogBox.vue'
+import { mapGetters, mapActions } from 'vuex'
+// import axios from 'axios'
 
 export default {
   name: 'App',
@@ -34,16 +43,56 @@ export default {
     PictureItem,
     InfoPicture,
     EffectText,
-    ButtonsList
+    ButtonsList,
+    modal
   },
   data: () => ({
-    statusUpload: false
+    statusUpload: false,
+    isModalVisible: false,
+    modalMessage: '',
+    userAction: ''
   }),
   methods: {
+    ...mapActions(['changeURLCurFile']),
     onChangeStatusInUpload (status) {
       this.statusUpload = status
-      console.log(status)
+    },
+    onChangeModal (status, msg, action) {
+      this.isModalVisible = status
+      this.modalMessage = msg
+      this.userAction = action
+    },
+    showModal () {
+      this.isModalVisible = true
+    },
+    closeModal () {
+      this.isModalVisible = false
+    },
+    acceptAction () {
+      if (this.userAction === 'upload') {
+        this.onChangeStatusInUpload(false)
+        this.closeModal()
+      }
+      if (this.userAction === 'download') {
+        // eslint-disable-next-line prefer-const
+        let link = document.createElement('a')
+        link.href = this.$store.getters.URL_CUR_FILE
+        link.download = this.$store.getters.CUR_FILE.name
+        link._target = 'blank'
+        link.click()
+        this.closeModal()
+      }
+      if (this.userAction === 'delete') {
+        this.changeURLCurFile(this.$store.getters.URL_INIT_FILE)
+        this.closeModal()
+      }
+      if (this.userAction === 'help') {
+        this.closeModal()
+      }
     }
+  },
+  computed: {
+    ...mapGetters(['MODAL_STATUS', 'URL_CUR_FILE', 'CUR_FILE', 'CUR_EFFECT'])
   }
 }
 </script>

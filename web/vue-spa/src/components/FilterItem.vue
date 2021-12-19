@@ -1,11 +1,11 @@
 <template>
-  <div @click='onClickFilter' class="filter-item">
-    <div class="filter-item__classic-picture" :class="classObj">
-        <div class="filter-item__filter-name">
-          {{ nameFilter }}
-        </div>
+  <div @click='onClickFilter' class="filter">
+    <div class="filter-item" :class="classObj"
+    :style="{'background': 'url('+ itemImage + ') no-repeat'}">
+      <div class="filter-item__filter-name">
+        {{ nameFilter }}
+      </div>
     </div>
-
   </div>
 </template>
 
@@ -14,20 +14,17 @@ import { mapActions } from 'vuex'
 
 export default ({
   name: 'FilterItem',
-  props: ['activeType'],
+  props: ['activeType', 'nameFilter', 'previewImage', 'active'],
   data: () => ({
-    nameFilter: 'Название фильтра',
     typeFilter: '',
-    isActiveFilter: false,
-    previewImage: ''
+    isActiveFilter: false
   }),
   methods: {
-    ...mapActions(['changeEffect']),
+    ...mapActions(['changeEffect', 'changeActiveFilter']),
     onClickFilter () {
       this.changeEffect(this.nameFilter)
-    },
-    changeItem () {
-      this.typeFilter = this.activeType
+      this.changeActiveFilter(this.nameFilter)
+      this.isActiveFilter = true
     }
   },
   computed: {
@@ -36,6 +33,9 @@ export default ({
         'filter-item__classic-picture': this.activeType === 'classic',
         'filter-item__neural-picture': this.activeType === 'neural'
       }
+    },
+    itemImage () {
+      return require(`../assets/${this.previewImage}`)
     }
   }
 })
@@ -46,25 +46,18 @@ export default ({
 .filter-item:hover{
   border: 3px solid #4ac885a9;
 }
+.filter-item{
+  background-size: cover !important;
+}
 .filter-item__classic-picture{
   border: 3px solid transparent;
-  background: url("../assets/orig_picture.jpg") no-repeat;
-  /* background: url(" + {{ previewImage }} + ") no-repeat; */
-  /* object-fit:cover; */
-  background-size: cover;
   width: 200px;
-  /* height: 100%; */
   box-sizing: content-box;
   cursor: pointer;
 }
 .filter-item__neural-picture{
   border: 3px solid transparent;
-  background: url("../assets/neuron_photo.jpeg") no-repeat;
-  /* background: url(" + {{ previewImage }} + ") no-repeat; */
-  /* object-fit:cover; */
-  background-size: cover;
   width: 200px;
-  /* height: 100%; */
   box-sizing: content-box;
   cursor: pointer;
 }
@@ -74,5 +67,7 @@ export default ({
   background-color: rgba(54, 51, 51, 0.81);
   text-align: left;
 }
-
+.clicked_filter {
+  border: 3px solid #4ac885a9;
+}
 </style>

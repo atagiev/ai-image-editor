@@ -5,22 +5,10 @@
         Добро пожаловать!<br>
         Загрузите ваше первое изображение
       </div>
-      <!-- action указывает куда загружается файл -->
-      <!-- <el-upload
-        class="upload-file"
-        ref="upload"
-        accept="image/jpeg,image/png"
-        action=""
-        :limit="1"
-        :multiple="false"
-        v-on:change="handleFileUpload()">
-        <el-button class="upld-btn" slot="trigger" type="success">Загрузить</el-button>
-      </el-upload> -->
       <div class="filters-container__upload">
-
         <label class="input__file-button" for="input-file">
           <input type="file" class="input-file" ref="upload" accept="image/jpeg,image/png"
-            @change="handleFileUpload( $event )" v-on:click="submitFile()">
+            @change="handleFileUpload( $event )">
           <span class="input__file-button-text">Загрузить</span>
         </label>
       </div>
@@ -43,24 +31,26 @@
 </template>
 
 <script>
-// import FilterItem from '@/components/FilterItem'
 import { mapActions } from 'vuex'
 import FiltersList from '@/components/FiltersList'
+import axios from 'axios'
 
 export default ({
   name: 'Footer',
   components: {
     FiltersList
   },
+  props: ['isImageUploaded'],
   data: () => ({
     isImageUploaded: false,
     isActiveClassic: true,
     isActiveNeural: false,
-    activeType: '',
-    file: ''
+    activeType: 'classic',
+    file: '',
+    imageSrc: ''
   }),
   methods: {
-    ...mapActions(['changeFile']),
+    ...mapActions(['changeURLInitFile', 'changeURLCurFile', 'changeResolution', 'changeInitFile', 'changeCurFile']),
     onClickBtnClassic () {
       this.isActiveClassic = true
       this.isActiveNeural = false
@@ -74,12 +64,30 @@ export default ({
     handleFileUpload (event) {
       this.file = event.target.files[0]
       this.isImageUploaded = true
-      this.changeFile(event.target.files[0])
+      // eslint-disable-next-line prefer-const
+      let reader = new FileReader()
+      reader.addEventListener('load', function () {
+        this.imageSrc = reader.result
+        this.changeURLInitFile(reader.result)
+        this.changeURLCurFile(reader.result)
+      }.bind(this), false)
+      if (this.file) {
+        reader.readAsDataURL(this.file)
+      }
+      this.changeCurFile(event.target.files[0])
+      this.changeInitFile(event.target.files[0])
       this.$emit('onChangeStatus', this.isImageUploaded)
-      console.log(this.file.name)
     },
-    submitFile () {
-      console.log('click')
+    sendPicture () {
+      axios.post('/', this.file)
+      // Если запрос успешен
+        .then(function (response) {
+          console.log(response)
+        })
+      // Если запрос с ошибкой
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   }
 })
@@ -87,14 +95,12 @@ export default ({
 
 <style scoped>
 .footer{
-  /* display: flex; */
   height: 100%;
 }
 .welcome-container{
   display: flex;
   margin: 50px 250px;
   justify-content: space-between;
-  /* margin-top: 800px; */
 }
 .welcome-container__text{
   text-align: left;
@@ -103,19 +109,14 @@ export default ({
   line-height: 28px;
 }
 .upload-file{
-  /* max-width: 200px; */
   height: 100%;
 }
 .upld-btn{
   width: 200px;
-  /* height: 40px; */
   font-size: 24px;
   background:#309860;
   border: none;
   text-align: center;
-}
-.el-button:hover{
-  background:#4ac885a9;
 }
 .filters-container{
   height: 80%;
@@ -132,45 +133,26 @@ export default ({
   margin: 13px 10px;
   gap: 10px;
 }
-/* .filters__list{
-  margin-left: 30px;
-  display: flex;
-  height: auto;
-  gap: 30px;
-} */
 .btn{
-  /* padding: 10px; */
   color: white;
   background: #3C3939;
   border: 0px solid #4ac885a9;
   border-radius: 7px;
   font-size: 20px;
   height: 55px;
-
   cursor: pointer;
 }
 .btn:hover{
   box-shadow: inset -2px -2px #4ac885a9, inset 2px 2px #4ac885a9;
-  /* border: 2px solid #4ac885a9; */
 }
 .active-btn{
   background-color: #52da91bd;
-
   transform: scale(1.1);
   box-sizing: content-box;
 }
-/* для варианта кнопки с инпутом */
-.filters-container__upload {
-  /* width: 100%;
-  /* position: relative; */
-  /* margin: 15px 0;
-  text-align: center;  */
-}
 .input-file{
   opacity: 0;
-  /* width: 200px; */
   height: 100%;
-  /* visibility: hidden; */
   position: absolute;
   cursor: pointer;
 }
