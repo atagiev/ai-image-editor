@@ -18,6 +18,9 @@ class LocalStorage:
     def get_image(self, image_id: int) -> Image:
         return Image.open(os.path.join(self.__tmp_folder_path, str(image_id) + ".jpg"))
 
+    def get_image_path(self, image_id: int) -> str:
+        return os.path.join(self.__tmp_folder_path, str(image_id) + ".jpg")
+
     def delete_image(self, image_id: int):
         os.remove(os.path.join(self.__tmp_folder_path, str(image_id) + ".jpg"))
 
