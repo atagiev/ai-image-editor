@@ -7,3 +7,8 @@ class FilterNamesEnum(Enum):
     """
     ai_filter1 = "1234"
     classic_filter1 = "black_white"
+    
+    AI_UPSCALE = "upscale"
+    AI_CANDY = "candy"
+    AI_FEATHERS = "feathers"
+    AI_MOSAIC = "mosaic"
