@@ -53,7 +53,7 @@ export default {
     userAction: ''
   }),
   methods: {
-    ...mapActions(['changeURLCurFile']),
+    ...mapActions(['changeURLCurFile', 'changeEffect']),
     onChangeStatusInUpload (status) {
       this.statusUpload = status
     },
@@ -71,6 +71,7 @@ export default {
     acceptAction () {
       if (this.userAction === 'upload') {
         this.onChangeStatusInUpload(false)
+        this.changeEffect('отсутствует')
         this.closeModal()
       }
       if (this.userAction === 'download') {
@@ -84,6 +85,7 @@ export default {
       }
       if (this.userAction === 'delete') {
         this.changeURLCurFile(this.$store.getters.URL_INIT_FILE)
+        this.changeEffect('отсутствует')
         this.closeModal()
       }
       if (this.userAction === 'help') {

@@ -29,6 +29,6 @@ export default ({
   .picture-item{
     margin: auto;
     margin-top: 20px;
-    width: 1000px
+    width: 1000px;
   }
 </style>

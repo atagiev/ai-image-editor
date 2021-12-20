@@ -10,7 +10,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import axios from 'axios'
 
 export default ({
   name: 'FilterItem',
@@ -20,14 +21,50 @@ export default ({
     isActiveFilter: false
   }),
   methods: {
-    ...mapActions(['changeEffect', 'changeActiveFilter']),
+    ...mapActions(['changeEffect', 'changeActiveFilter', 'changeURLCurFile', 'changeCurFile']),
     onClickFilter () {
       this.changeEffect(this.nameFilter)
       this.changeActiveFilter(this.nameFilter)
       this.isActiveFilter = true
+      this.sendFilter()
+      this.getResult()
+    },
+    // запрос на отправку текущей картинки и названия фильтра
+    sendFilter () {
+      axios.post('/', { filter: this.nameFilter, picture: this.$store.getters.CUR_FILE })
+      // Если запрос успешен
+        .then(function (response) {
+          console.log(response)
+        })
+      // Если запрос с ошибкой
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    // запрос на получение ФАЙЛА обработанной картинки, далее преобразую в url
+    getResult () {
+      axios.get('/')
+      // Если запрос успешен
+        .then(function (response) {
+          this.changeCurFile(response.data)
+          // eslint-disable-next-line prefer-const
+          let reader = new FileReader()
+          reader.addEventListener('load', function () {
+            this.imageSrc = reader.result
+            this.changeURLCurFile(reader.result)
+          }.bind(this), false)
+          if (response.data) {
+            reader.readAsDataURL(response.data)
+          }
+        })
+      // Если запрос с ошибкой
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   },
   computed: {
+    ...mapGetters(['CUR_FILE']),
     classObj () {
       return {
         'filter-item__classic-picture': this.activeType === 'classic',
