@@ -5,10 +5,10 @@ class FilterNamesEnum(Enum):
     """
     IMPORTANT ai filters name should start with "ai_"
     """
-    AI_UPSCALE = "upscale"
     AI_CANDY = "candy"
     AI_FEATHERS = "feathers"
     AI_MOSAIC = "mosaic"
+    
     classic_filter1 = "grey"
     classic_filter2 = "brown"
     classic_filter3 = "invert_colors"
