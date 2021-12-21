@@ -14,7 +14,9 @@ class Queue:
 
     def move_open_to_closed(self, request: Request):
         self.__list_closed_requests.append(request)
-        self.__list_open_requests.remove(request)
 
-    def get_closed_request(self) -> Request:
-        return self.__list_closed_requests.pop() if len(self.__list_closed_requests) > 0 else None
+    def get_closed_requests(self) -> list[Request]:
+        return self.__list_closed_requests
+
+    def delete_closed_request(self, request: Request):
+        self.__list_closed_requests.remove(request)
