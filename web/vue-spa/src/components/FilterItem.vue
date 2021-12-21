@@ -18,7 +18,8 @@ export default ({
   props: ['activeType', 'nameFilter', 'previewImage', 'active'],
   data: () => ({
     typeFilter: '',
-    isActiveFilter: false
+    isActiveFilter: false,
+    filterName: ''
   }),
   methods: {
     ...mapActions(['changeEffect', 'changeActiveFilter', 'changeURLCurFile', 'changeCurFile']),
@@ -26,12 +27,13 @@ export default ({
       this.changeEffect(this.nameFilter)
       this.changeActiveFilter(this.nameFilter)
       this.isActiveFilter = true
+      this.filterName = this.nameFilter
+      console.log(this.nameFilter, this.$store.getters.CUR_FILE)
       this.sendFilter()
-      this.getResult()
     },
     // запрос на отправку текущей картинки и названия фильтра
     sendFilter () {
-      axios.post('http://localhost:5000/', { filter: this.nameFilter, picture: this.$store.getters.CUR_FILE })
+      axios.post('http://localhost:5000/', { filter_name: this.filterName, image: this.$store.getters.CUR_FILE })
       // Если запрос успешен
         .then(function (response) {
           this.changeCurFile(response.data)
