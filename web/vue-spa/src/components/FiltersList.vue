@@ -8,11 +8,11 @@
       <FilterItem :activeType='activeType' nameFilter='Рельеф' previewImage='emboss.jpg'></FilterItem>
     </div>
     <div class="filters_list__neural filters_list" v-else-if="this.activeType == 'neural'">
-      <FilterItem :activeType='activeType' nameFilter='Черно-белое' previewImage='brown.jpg'></FilterItem>
-      <FilterItem :activeType='activeType' nameFilter='Черно-белое' previewImage='greyscale.jpg'></FilterItem>
-      <FilterItem :activeType='activeType' nameFilter='Черно-белое' previewImage='greyscale.jpg'></FilterItem>
-      <FilterItem :activeType='activeType' nameFilter='Черно-белое' previewImage='greyscale.jpg'></FilterItem>
-      <FilterItem :activeType='activeType' nameFilter='Черно-белое' previewImage='greyscale.jpg'></FilterItem>
+      <FilterItem :activeType='activeType' nameFilter='Candy' previewImage='candy.jpg'></FilterItem>
+      <FilterItem :activeType='activeType' nameFilter='Feathers' previewImage='feathers.jpg'></FilterItem>
+      <FilterItem :activeType='activeType' nameFilter='Mosaic' previewImage='mosaic.jpg'></FilterItem>
+      <FilterItem :activeType='activeType' nameFilter='Starry night' previewImage='starry_night.jpg'></FilterItem>
+      <FilterItem :activeType='activeType' nameFilter='Wave' previewImage='wave.jpg'></FilterItem>
     </div>
   </div>
 </template>
