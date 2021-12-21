@@ -9,8 +9,8 @@ class FilterNamesEnum(Enum):
     AI_FEATHERS = "feathers"
     AI_MOSAIC = "mosaic"
     
-    classic_filter1 = "grey"
-    classic_filter2 = "brown"
-    classic_filter3 = "invert_colors"
-    classic_filter4 = "hand_drawn"
-    classic_filter5 = "emboss"
+    GREYSCALE = "Черно-белое"
+    BROWN = "Сепия"
+    INVERT = "Инвертирование"
+    HAND_DRAWN = "Рисунок"
+    EMBOSS = "Рельеф"
