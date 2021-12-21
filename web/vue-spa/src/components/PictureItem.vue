@@ -1,18 +1,27 @@
 <template>
   <div class="picture-item" ref='picture'>
-    <img width="700px" src="../assets/orig_picture.jpg" alt="picture">
+    <img  height="450px" :src= 'URL_CUR_FILE' alt="picture">
   </div>
 </template>
 
 <script>
-// import { defineComponent } from '@vue/composition-api'
 import { mapGetters } from 'vuex'
 
 export default ({
   name: 'PictureItem',
+  data: () => ({
+    imageURL: '',
+    file: ''
+  }),
   computed: {
-    ...mapGetters(['CUR_FILE'])
+    ...mapGetters(['INIT_FILE', 'URL_INIT_FILE', 'URL_CUR_FILE'])
+  },
+  methods: {
+  },
+  created () {
+    this.imageURL = this.$store.getters.URL_INIT_FILE
   }
+
 })
 </script>
 
@@ -20,7 +29,6 @@ export default ({
   .picture-item{
     margin: auto;
     margin-top: 20px;
-    width: 1000px
-    /* width: 00px; */
+    width: 1000px;
   }
 </style>

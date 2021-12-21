@@ -1,15 +1,5 @@
 <template>
   <div class='btns-list'>
-    <div class="accept-button">
-      <button class="acpt-btn btn" @click='onClickAccept'>
-        <i class="el-icon-check"></i>
-      </button>
-    </div>
-    <div class="reset-button">
-      <button class="rst-btn btn" @click='onClickReset'>
-        <i class="el-icon-refresh-left"></i>
-      </button>
-    </div>
     <div class="delete-button">
       <button class="dlt-btn btn" @click='onClickDelete'>
         <i class="el-icon-delete-solid"></i>
@@ -34,8 +24,6 @@
 </template>
 
 <script>
-// import modal from './components/DialogBox.vue'
-// import { mapActions } from 'vuex'
 
 export default {
   name: 'ButtonsList',
@@ -47,47 +35,30 @@ export default {
     typeAction: ''
   }),
   methods: {
-    // ...mapActions(['changeModalStatus']),
     onClickUpload () {
       this.msg = 'Вы действительно хотите загрузить новое изображение?'
       this.typeAction = 'upload'
       this.showModal()
-      // this.isModalVisible = true
-      // this.changeModalStatus(this.isModalVisible)
-      // this.$emit('onChangeModalStatus', this.isModalVisible, 'Вы действительно хотите загрузить новое изображение?')
-      // console.log(this.isModalVisible, ' статус окна')
-      // this.showModal('Вы действительно хотите загрузить новое изображение?')
-    },
-    onClickAccept () {
-      this.msg = 'Применить к изображению выбранный эффект?'
-      this.typeAction = 'accept'
-      this.showModal()
     },
     onClickDelete () {
-      this.msg = 'Вы действительно хотите удалить все примененные эффекты? Будет выведено исходное изображение'
+      this.msg = 'Вернуть исходное изображение?'
       this.typeAction = 'delete'
       this.showModal()
     },
-    onClickReset () {
-      this.msg = 'Вы действительно хотите сбросить последний примененный эффект?'
-      this.typeAction = 'reset'
-      this.showModal()
-    },
     onClickDownload () {
-      this.msg = 'Начать загрузку изображения? Редактирование будет завершено'
+      this.msg = 'Начать скачивание изображения? Вы сможете продолжить редактирование'
       this.typeAction = 'download'
       this.showModal()
     },
     onClickHelp () {
-      this.msg = ''
+      this.msg = 'Для редактирования Вашего изображения представлено два типа фильтров: классический (кнопка "C") и нейронные сети (кнопка "NN").' +
+                  ' Обратите внимание: применение фильтра из списка NN может занять некоторое время'
       this.typeAction = 'help'
       this.showModal()
     },
-
     showModal () {
       this.isModalVisible = true
       this.$emit('onChangeModalStatus', this.isModalVisible, this.msg, this.typeAction)
-      console.log()
     }
   }
 }

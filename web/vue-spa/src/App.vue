@@ -11,17 +11,11 @@
         <EffectText v-if='statusUpload'></EffectText>
       </main>
       <footer>
-        <Footer @onChangeStatus="onChangeStatusInUpload"></Footer>
+        <Footer :isImageUploaded="statusUpload" @onChangeStatus="onChangeStatusInUpload"></Footer>
       </footer>
     </el-container>
-    <button
-      type="button"
-      class="btn"
-      @click="showModal"
-    >
-      Open Modal!
-    </button>
     <modal
+      :userAction = userAction
       :msg = modalMessage
       v-show="isModalVisible"
       @close="closeModal"
@@ -38,9 +32,8 @@ import InfoPicture from './components/InfoPicture.vue'
 import EffectText from './components/EffectText.vue'
 import ButtonsList from './components/ButtonsList.vue'
 import modal from './components/DialogBox.vue'
-// import { mapActions } from 'vuex'
-import { mapGetters } from 'vuex'
-// import HelloWorld from './components/HelloWorld.vue'
+import { mapGetters, mapActions } from 'vuex'
+// import axios from 'axios'
 
 export default {
   name: 'App',
@@ -60,16 +53,14 @@ export default {
     userAction: ''
   }),
   methods: {
+    ...mapActions(['changeURLCurFile', 'changeEffect']),
     onChangeStatusInUpload (status) {
       this.statusUpload = status
-      console.log(status)
     },
     onChangeModal (status, msg, action) {
       this.isModalVisible = status
       this.modalMessage = msg
       this.userAction = action
-      // this.acceptAction()
-      console.log(action, 'статус модального окна')
     },
     showModal () {
       this.isModalVisible = true
@@ -78,11 +69,32 @@ export default {
       this.isModalVisible = false
     },
     acceptAction () {
-      console.log(this.userAction, 'применяем')
+      if (this.userAction === 'upload') {
+        this.onChangeStatusInUpload(false)
+        this.changeEffect('отсутствует')
+        this.closeModal()
+      }
+      if (this.userAction === 'download') {
+        // eslint-disable-next-line prefer-const
+        let link = document.createElement('a')
+        link.href = this.$store.getters.URL_CUR_FILE
+        link.download = this.$store.getters.CUR_FILE.name
+        link._target = 'blank'
+        link.click()
+        this.closeModal()
+      }
+      if (this.userAction === 'delete') {
+        this.changeURLCurFile(this.$store.getters.URL_INIT_FILE)
+        this.changeEffect('отсутствует')
+        this.closeModal()
+      }
+      if (this.userAction === 'help') {
+        this.closeModal()
+      }
     }
   },
   computed: {
-    ...mapGetters(['MODAL_STATUS'])
+    ...mapGetters(['MODAL_STATUS', 'URL_CUR_FILE', 'CUR_FILE', 'CUR_EFFECT'])
   }
 }
 </script>

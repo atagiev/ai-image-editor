@@ -1,41 +1,67 @@
 <template>
-  <div @click='onClickFilter' class="filter-item">
-    <div class="filter-item__classic-picture" :class="classObj">
-        <div class="filter-item__filter-name">
-          {{ nameFilter }}
-        </div>
+  <div @click='onClickFilter' class="filter">
+    <div class="filter-item" :class="classObj"
+    :style="{'background': 'url('+ itemImage + ') no-repeat'}">
+      <div class="filter-item__filter-name">
+        {{ nameFilter }}
+      </div>
     </div>
-
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import axios from 'axios'
 
 export default ({
   name: 'FilterItem',
-  props: ['activeType'],
+  props: ['activeType', 'nameFilter', 'previewImage', 'active'],
   data: () => ({
-    nameFilter: 'Название фильтра',
     typeFilter: '',
-    isActiveFilter: false,
-    previewImage: ''
+    isActiveFilter: false
   }),
   methods: {
-    ...mapActions(['changeEffect']),
+    ...mapActions(['changeEffect', 'changeActiveFilter', 'changeURLCurFile', 'changeCurFile']),
     onClickFilter () {
       this.changeEffect(this.nameFilter)
+      this.changeActiveFilter(this.nameFilter)
+      this.isActiveFilter = true
+      this.sendFilter()
+      this.getResult()
     },
-    changeItem () {
-      this.typeFilter = this.activeType
+    // запрос на отправку текущей картинки и названия фильтра
+    sendFilter () {
+      axios.post('http://localhost:5000/', { filter: this.nameFilter, picture: this.$store.getters.CUR_FILE })
+      // Если запрос успешен
+        .then(function (response) {
+          this.changeCurFile(response.data)
+          // eslint-disable-next-line prefer-const
+          let reader = new FileReader()
+          reader.addEventListener('load', function () {
+            this.imageSrc = reader.result
+            this.changeURLCurFile(reader.result)
+          }.bind(this), false)
+          if (response.data) {
+            reader.readAsDataURL(response.data)
+          }
+        })
+      // Если запрос с ошибкой
+        .catch(function (error) {
+          console.log(error)
+        })
     }
+    // запрос на получение ФАЙЛА обработанной картинки, далее преобразую в url
   },
   computed: {
+    ...mapGetters(['CUR_FILE']),
     classObj () {
       return {
         'filter-item__classic-picture': this.activeType === 'classic',
         'filter-item__neural-picture': this.activeType === 'neural'
       }
+    },
+    itemImage () {
+      return require(`../assets/${this.previewImage}`)
     }
   }
 })
@@ -46,25 +72,18 @@ export default ({
 .filter-item:hover{
   border: 3px solid #4ac885a9;
 }
+.filter-item{
+  background-size: cover !important;
+}
 .filter-item__classic-picture{
   border: 3px solid transparent;
-  background: url("../assets/orig_picture.jpg") no-repeat;
-  /* background: url(" + {{ previewImage }} + ") no-repeat; */
-  /* object-fit:cover; */
-  background-size: cover;
   width: 200px;
-  /* height: 100%; */
   box-sizing: content-box;
   cursor: pointer;
 }
 .filter-item__neural-picture{
   border: 3px solid transparent;
-  background: url("../assets/neuron_photo.jpeg") no-repeat;
-  /* background: url(" + {{ previewImage }} + ") no-repeat; */
-  /* object-fit:cover; */
-  background-size: cover;
   width: 200px;
-  /* height: 100%; */
   box-sizing: content-box;
   cursor: pointer;
 }
@@ -74,5 +93,7 @@ export default ({
   background-color: rgba(54, 51, 51, 0.81);
   text-align: left;
 }
-
+.clicked_filter {
+  border: 3px solid #4ac885a9;
+}
 </style>
