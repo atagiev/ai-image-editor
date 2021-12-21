@@ -5,12 +5,10 @@ from PIL import Image
 
 
 def tensor_process_rgbimage(img, size=None, scale=None, keep_asp=False):
-    #img = Image.open(filename).convert('RGB')
     if size is not None:
         if keep_asp:
             size2 = int(size * 1.0 / img.shape[0] * img.shape[1])
             img = cv2.resize(img, (size2, size), interpolation=cv2.INTER_AREA)
-            #img = img.resize((size, size2), Image.ANTIALIAS)
         else:
             img = cv2.resize(img, (size, size), interpolation=cv2.INTER_AREA)
 
@@ -28,8 +26,6 @@ def tensor_postprocess_rgbimage(tensor, cuda=False):
         img = tensor.clone().clamp(0, 255).numpy()
     img = img.transpose(1, 2, 0).astype('uint8')
     return img
-    #img = Image.fromarray(img)
-    #img.save(filename)
 
 
 def tensor_postprocess_bgrimage(tensor, cuda=False):
