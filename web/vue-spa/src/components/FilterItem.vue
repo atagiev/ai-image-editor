@@ -19,7 +19,9 @@ export default ({
   data: () => ({
     typeFilter: '',
     isActiveFilter: false,
-    filterName: ''
+    filterName: '',
+    curFile: '',
+    urlCurFile: ''
   }),
   methods: {
     ...mapActions(['changeEffect', 'changeActiveFilter', 'changeURLCurFile', 'changeCurFile']),
@@ -28,12 +30,18 @@ export default ({
       this.changeActiveFilter(this.nameFilter)
       this.isActiveFilter = true
       this.filterName = this.nameFilter
+      this.curFile = this.$store.getters.CUR_FILE
+      this.urlCurFile = this.$store.getters.URL_CUR_FILE
       console.log(this.nameFilter, this.$store.getters.CUR_FILE)
+
       this.sendFilter()
     },
     // запрос на отправку текущей картинки и названия фильтра
     sendFilter () {
-      axios.post('http://localhost:5000/', { filter_name: this.filterName, image: this.$store.getters.CUR_FILE })
+      // var formData = new FormData()
+      // formData.append('image', this.urlCurFile)
+      axios.post('http://localhost:5000/', { filter_name: this.filterName, image: this.urlCurFile, headers: { 'Content-Type': 'multipart/form-data' } }
+      )
       // Если запрос успешен
         .then(function (response) {
           this.changeCurFile(response.data)
@@ -55,7 +63,7 @@ export default ({
     // запрос на получение ФАЙЛА обработанной картинки, далее преобразую в url
   },
   computed: {
-    ...mapGetters(['CUR_FILE']),
+    ...mapGetters(['CUR_FILE', 'URL_CUR_FILE']),
     classObj () {
       return {
         'filter-item__classic-picture': this.activeType === 'classic',
