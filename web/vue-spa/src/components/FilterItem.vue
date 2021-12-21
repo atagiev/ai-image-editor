@@ -31,19 +31,7 @@ export default ({
     },
     // запрос на отправку текущей картинки и названия фильтра
     sendFilter () {
-      axios.post('/', { filter: this.nameFilter, picture: this.$store.getters.CUR_FILE })
-      // Если запрос успешен
-        .then(function (response) {
-          console.log(response)
-        })
-      // Если запрос с ошибкой
-        .catch(function (error) {
-          console.log(error)
-        })
-    },
-    // запрос на получение ФАЙЛА обработанной картинки, далее преобразую в url
-    getResult () {
-      axios.get('/')
+      axios.post('http://localhost:5000/', { filter: this.nameFilter, picture: this.$store.getters.CUR_FILE })
       // Если запрос успешен
         .then(function (response) {
           this.changeCurFile(response.data)
@@ -62,6 +50,7 @@ export default ({
           console.log(error)
         })
     }
+    // запрос на получение ФАЙЛА обработанной картинки, далее преобразую в url
   },
   computed: {
     ...mapGetters(['CUR_FILE']),
