@@ -9,7 +9,7 @@ class Request:
         self.__output_image_id: int = None
         self.__filter_name: FilterNamesEnum = None
         for filter_name_enum in FilterNamesEnum:
-            if filter_name_enum.name == filter_name:
+            if filter_name_enum.value == filter_name:
                 self.__filter_name = filter_name_enum
         if self.__filter_name is None:
             error(msg=f"Filter {filter_name} not found !")

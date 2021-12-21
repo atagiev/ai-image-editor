@@ -21,7 +21,7 @@ print(f"Logging to {log_file}")
 
 basicConfig(filename=log_file, encoding='utf-8', level=DEBUG)
 tmp_folder_path = os.path.join(pathlib.Path().resolve(), "tmp")
-filters_folder_path = os.path.join(pathlib.Path().resolve(), "ai_filters")
+filters_folder_path = os.path.join(pathlib.Path().resolve(), "ai_filters", "Style_GAN", "images")
 pathlib.Path(tmp_folder_path).mkdir(parents=True, exist_ok=True)
 info(msg=f"tmp folder path: {tmp_folder_path}")
 info(msg=f"filters folder path: {filters_folder_path}")
@@ -36,7 +36,7 @@ filter_manager.import_filters()
 filter_manager.run()
 backend = Backend(storage=storage, queue=queue)
 
-app = Flask(__name__, template_folder=os.path.join(pathlib.Path().resolve(), "web", "vue-spa"))
+app = Flask(__name__)
 
 # enable CORS
 CORS(app)
@@ -50,4 +50,4 @@ def get_image():
     return send_file(path, mimetype='image')
 
 
-app.run(host='localhost', port=1234, threaded=False, processes=1, debug=False)
+app.run(host='localhost', port=8080, threaded=True, processes=1, debug=False)
