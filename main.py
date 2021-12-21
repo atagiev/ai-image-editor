@@ -50,4 +50,4 @@ def get_image():
     return send_file(path, mimetype='image')
 
 
-app.run(host='localhost', port=8080, threaded=True, processes=1, debug=False)
+app.run(host='localhost', port=5000, threaded=True, processes=1, debug=False)

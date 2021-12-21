@@ -25,4 +25,4 @@ class LocalStorage:
         os.remove(os.path.join(self.__tmp_folder_path, str(image_id) + ".jpg"))
 
     def get_filter_image(self, filter_name: FilterNamesEnum):
-        return Image.open(os.path.join(self.__filters_folder_path, filter_name.value + ".jpg"))
+        return Image.open(os.path.join(self.__filters_folder_path, filter_name.value.lower() + ".jpg"))
