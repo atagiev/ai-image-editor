@@ -41,11 +41,6 @@ app = Flask(__name__, template_folder=os.path.join(pathlib.Path().resolve(), "we
 # enable CORS
 CORS(app)
 
-@app.route('/', methods=['GET'])
-def send_web_page():
-    return backend.send_web_page()
-
-
 @app.route('/', methods=["POST"])
 def get_image():
     path, output_image_id = backend.get_image(flask_request_local=flask_request)

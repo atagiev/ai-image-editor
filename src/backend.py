@@ -2,7 +2,6 @@ from logging import info
 from time import sleep
 
 from PIL import Image
-from flask import render_template
 from flask import request as flask_request
 
 from src.local_storage import LocalStorage
@@ -20,10 +19,6 @@ class Backend:
         request = Request(input_image_id=image_id, filter_name=filter_name)
         info(msg=f"New request with id {image_id} created")
         return request
-
-    @staticmethod
-    def send_web_page():
-        return render_template("public/index.html")
 
     def delete_image(self, image_id):
         sleep(20)
