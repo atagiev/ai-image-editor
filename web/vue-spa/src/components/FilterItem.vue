@@ -48,7 +48,8 @@ export default ({
       // }
       axios.post('http://localhost:5000/', formData)
       // Если запрос успешен
-        .then(function (response) {
+        .then(response => {
+          Buffer.from(response.data, 'binary').toString('base64')
           this.changeCurFile(response.data)
           // eslint-disable-next-line prefer-const
           let reader = new FileReader()
@@ -65,7 +66,6 @@ export default ({
           console.log(error)
         })
     }
-    // запрос на получение ФАЙЛА обработанной картинки, далее преобразую в url
   },
   computed: {
     ...mapGetters(['CUR_FILE', 'URL_CUR_FILE']),
