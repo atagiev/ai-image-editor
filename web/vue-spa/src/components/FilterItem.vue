@@ -38,10 +38,15 @@ export default ({
     },
     // запрос на отправку текущей картинки и названия фильтра
     sendFilter () {
-      // var formData = new FormData()
-      // formData.append('image', this.urlCurFile)
-      axios.post('http://localhost:5000/', { filter_name: this.filterName, image: this.urlCurFile, headers: { 'Content-Type': 'multipart/form-data' } }
-      )
+      const formData = new FormData()
+      formData.append('filter_name', this.filterName)
+      formData.append('image', this.curFile)
+      // const config = {
+      //   headers: {
+      //     'content-type': 'multipart/form-data'
+      //   } comment
+      // }
+      axios.post('http://localhost:5000/', formData)
       // Если запрос успешен
         .then(function (response) {
           this.changeCurFile(response.data)
