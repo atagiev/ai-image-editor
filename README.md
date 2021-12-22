@@ -21,12 +21,17 @@
 - HTML/CSS
 - Python 3.9
 - Flask
+- PyTorch
 
 ## Структура проекта
 
 ## Необходимые условия для использования продукта
-
-Требуется установка следующих компонентов:
+### Клонирование
+```
+$ git clone https://github.com/atagiev/ai-image-editor
+```
+### Установка необходимых пакетов и компонентов:
+#### Frontend
 ```
 npm install
 ```
@@ -36,14 +41,18 @@ npm install -g yarn
 ```
 npm install -g @vue/cli`
 ```
-
-### Клонирование
+#### Backend
 ```
-$ git clone https://github.com/atagiev/ai-image-editor
+pip install -r requirements.txt
 ```
 ### Запуск
+#### Frontend
 ```
 npm run serve
+```
+#### Backend
+```
+python main.py
 ```
 
 ### Сборка
@@ -66,6 +75,16 @@ npm run lint
 4) **Node.js**: https://nodejs.org/ru/docs/
 
 5) **Axios**: https://axios-http.com/docs/intro
+
+6) **Flask**: https://flask.palletsprojects.com/
+
+7) **NumPy**: https://numpy.org/
+
+8) **OpenCV**: https://opencv.org/
+
+9) **Pillow**: https://pillow.readthedocs.io/
+
+10) **PyTorch**: https://pytorch.org/
 
 ## Команда разработки
 - Шредер Анастасия ([AnastasiaShreder](https://github.com/AnastasiaShreder))
