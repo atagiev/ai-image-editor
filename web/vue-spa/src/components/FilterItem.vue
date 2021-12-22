@@ -50,6 +50,7 @@ export default ({
       // Если запрос успешен
         .then(response => {
           Buffer.from(response.data, 'binary').toString('base64')
+
           this.changeCurFile(response.data)
           // eslint-disable-next-line prefer-const
           let reader = new FileReader()
@@ -57,9 +58,10 @@ export default ({
             this.imageSrc = reader.result
             this.changeURLCurFile(reader.result)
           }.bind(this), false)
-          if (response.data) {
-            reader.readAsDataURL(response.data)
-          }
+          this.changeURLCurFile(response.data)
+          // if (response.data) {
+          //   reader.readAsDataURL(response.data)
+          // }
         })
       // Если запрос с ошибкой
         .catch(function (error) {
