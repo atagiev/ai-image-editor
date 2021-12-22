@@ -30,7 +30,7 @@
 ```
 $ git clone https://github.com/atagiev/ai-image-editor
 ```
-###Установка необходимых пакетов и компонентов:
+### Установка необходимых пакетов и компонентов:
 #### Frontend
 ```
 npm install
