@@ -59,9 +59,9 @@ export default ({
             this.changeURLCurFile(reader.result)
           }.bind(this), false)
           this.changeURLCurFile(response.data)
-          // if (response.data) {
-          //   reader.readAsDataURL(response.data)
-          // }
+          if (response.data) {
+            reader.readAsDataURL(response.data)
+          }
         })
       // Если запрос с ошибкой
         .catch(function (error) {
