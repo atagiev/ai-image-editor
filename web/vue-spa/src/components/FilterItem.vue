@@ -44,7 +44,7 @@ export default ({
       // const config = {
       //   headers: {
       //     'content-type': 'multipart/form-data'
-      //   }
+      //   } comment
       // }
       axios.post('http://localhost:5000/', formData)
       // Если запрос успешен
