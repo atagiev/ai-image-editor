@@ -47,7 +47,7 @@ def get_image():
 
     Thread(target=lambda: backend.delete_image(image_id=output_image_id)).start()
 
-    return send_file(path, mimetype='image')
+    return send_file(path)
 
 
 app.run(host='localhost', port=5000, threaded=True, processes=1, debug=False)
