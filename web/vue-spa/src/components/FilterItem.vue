@@ -49,10 +49,10 @@ export default ({
       axios.post('http://localhost:5000/', formData)
       // Если запрос успешен
         .then(response => {
-          Buffer.from(response.data, 'binary').toString('base64')
+          // Buffer.from(response.data, 'binary').toString('base64')
           // console.log(response.data)
-          this.changeCurFile(response.data)
-          console.log('Файл выглядит так')
+          // this.changeCurFile(response.data)
+          console.log('Изначальный файл выглядит так')
           console.log(this.$store.getters.CUR_FILE)
           // eslint-disable-next-line prefer-const
           let reader = new FileReader()
@@ -62,7 +62,7 @@ export default ({
           }.bind(this), false)
           this.changeURLCurFile(response.data)
           if (response.data) {
-            reader.readAsDataURL(this.$store.getters.CUR_FILE)
+            reader.readAsDataURL(response.data)
           }
         })
       // Если запрос с ошибкой
