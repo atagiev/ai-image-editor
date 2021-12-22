@@ -50,7 +50,7 @@ export default ({
       // Если запрос успешен
         .then(response => {
           Buffer.from(response.data, 'binary').toString('base64')
-
+          console.log(response.data)
           this.changeCurFile(response.data)
           // eslint-disable-next-line prefer-const
           let reader = new FileReader()
