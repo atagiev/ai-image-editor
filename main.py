@@ -55,7 +55,10 @@ def get_image_size():
 @app.route('/get_last_saved', methods=["GET"])
 def get_last_saved_image():
     path = backend.get_last_saved_image()
-    return jsonify(path=path)
+    if path:
+        return jsonify(error="NO", path=path)
+    return jsonify(error="YES")
+
 
 
 @app.route('/', methods=["POST"])

@@ -46,7 +46,9 @@ class Backend:
         return image.size
 
     def get_last_saved_image(self):
-        return self.__storage.get_image_path(image_id=self.__last_saved_image_id)
+        if self.__last_saved_image_id:
+            return self.__storage.get_image_path(image_id=self.__last_saved_image_id)
+        return None
 
     def save_image(self, flask_request_local: flask_request):
         try:
