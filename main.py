@@ -60,7 +60,6 @@ def get_last_saved_image():
     return jsonify(error="YES")
 
 
-
 @app.route('/', methods=["POST"])
 def get_image():
     path, output_image_id = backend.get_image(flask_request_local=flask_request)
