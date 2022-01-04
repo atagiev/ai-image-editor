@@ -48,7 +48,7 @@ def ping():
 
 @app.route('/get_size', methods=["POST"])
 def get_image_size():
-    w, h = backend.get_image(flask_request_local=flask_request)
+    w, h = backend.get_image_size(flask_request_local=flask_request)
     return jsonify(w=w, h=h)
 
 
