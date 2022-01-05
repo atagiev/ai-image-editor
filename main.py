@@ -4,7 +4,7 @@ import pathlib
 from threading import Thread
 from logging import info, basicConfig, DEBUG
 
-from flask import Flask, send_file
+from flask import Flask, jsonify
 from flask import request as flask_request
 from flask_cors import CORS
 
@@ -12,7 +12,6 @@ from src.backend import Backend
 from src.filter_manager import FilterManager
 from src.local_storage import LocalStorage
 from src.queue import Queue
-
 
 log_dir = os.path.join(pathlib.Path().resolve(), "logs")
 pathlib.Path(log_dir).mkdir(parents=True, exist_ok=True)
@@ -41,13 +40,39 @@ app = Flask(__name__)
 # enable CORS
 CORS(app)
 
+
+@app.route('/ping')
+def ping():
+    return jsonify(success=True)
+
+
+@app.route('/get_size', methods=["POST"])
+def get_image_size():
+    w, h = backend.get_image_size(flask_request_local=flask_request)
+    return jsonify(w=w, h=h)
+
+
+@app.route('/get_last_saved', methods=["GET"])
+def get_last_saved_image():
+    path = backend.get_last_saved_image()
+    if path:
+        return jsonify(error="NO", path=path)
+    return jsonify(error="YES")
+
+
 @app.route('/', methods=["POST"])
 def get_image():
     path, output_image_id = backend.get_image(flask_request_local=flask_request)
 
-    Thread(target=lambda: backend.delete_image(image_id=output_image_id)).start()
+    # Thread(target=lambda: backend.delete_image(image_id=output_image_id)).start()
 
-    return send_file(path)
+    return jsonify(path=path)
+    # return path
+
+
+@app.route('/save_image', methods=["POST"])
+def save_image():
+    return jsonify(success=backend.save_image(flask_request_local=flask_request))
 
 
 app.run(host='localhost', port=5000, threaded=True, processes=1, debug=False)

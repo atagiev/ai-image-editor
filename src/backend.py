@@ -13,6 +13,7 @@ class Backend:
     def __init__(self, storage: LocalStorage, queue: Queue):
         self.__storage = storage
         self.__queue = queue
+        self.__last_saved_image_id = None
 
     def __create_request(self, filter_name: str, image: Image) -> Request:
         image_id = self.__storage.save_image(image=image)
@@ -39,3 +40,21 @@ class Backend:
 
         path = self.__storage.get_image_path(image_id=request.output_image_id)
         return path, request.output_image_id
+
+    def get_image_size(self, flask_request_local: flask_request):
+        image = Image.open(flask_request_local.files['image'])
+        return image.size
+
+    def get_last_saved_image(self):
+        if self.__last_saved_image_id:
+            return self.__storage.get_image_path(image_id=self.__last_saved_image_id)
+        return None
+
+    def save_image(self, flask_request_local: flask_request):
+        try:
+            image_id = flask_request_local.values['saved_image_id']
+            self.__storage.get_image(image_id)
+            self.__last_saved_image_id = image_id
+            return True
+        except:
+            return False
