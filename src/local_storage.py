@@ -24,5 +24,11 @@ class LocalStorage:
     def delete_image(self, image_id: int):
         os.remove(os.path.join(self.__tmp_folder_path, str(image_id) + ".jpg"))
 
+    def delete_images(self):
+        for root, dirs, files in os.walk(self.__tmp_folder_path):
+            for f in files:
+                os.remove(os.path.join(root, f))
+        self.__last_image_id = 0
+
     def get_filter_image(self, filter_name: FilterNamesEnum):
         return Image.open(os.path.join(self.__filters_folder_path, filter_name.value.lower() + ".jpg"))
