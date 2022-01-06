@@ -77,7 +77,7 @@ def save_image():
 
 @app.route('/reset', methods=["GET"])
 def reset():
-    return jsonify(error="YES" if backend.reset() else "NO")
+    return jsonify(error="NO" if backend.reset() else "YES")
 
 
 app.run(host='localhost', port=5000, threaded=True, processes=1, debug=False)
