@@ -40,7 +40,7 @@ export default ({
   components: {
     FiltersList
   },
-  props: ['isImageUploaded'],
+  props: ['isImageUploaded', 'isServerOn'],
   data: () => ({
     isImageUploaded: false,
     isActiveClassic: true,
@@ -63,7 +63,6 @@ export default ({
     },
     handleFileUpload (event) {
       this.file = event.target.files[0]
-      this.isImageUploaded = true
       // eslint-disable-next-line prefer-const
       let reader = new FileReader()
       reader.addEventListener('load', function () {
@@ -74,9 +73,30 @@ export default ({
       if (this.file) {
         reader.readAsDataURL(this.file)
       }
-      this.changeCurFile(event.target.files[0])
-      this.changeInitFile(event.target.files[0])
-      this.$emit('onChangeStatus', this.isImageUploaded)
+      // this.changeCurFile(event.target.files[0])
+      // this.changeInitFile(event.target.files[0])
+      // this.$emit('onChangeStatus', this.isImageUploaded)
+      // this.$emit('onChangeServerStatus', true)
+      axios.get('http://localhost:5000/ping')
+      // Если запрос успешен
+        .then(response => {
+          // this.isServerOn = true
+          this.isImageUploaded = true
+          this.changeCurFile(event.target.files[0])
+          this.changeInitFile(event.target.files[0])
+          this.$emit('onChangeStatus', this.isImageUploaded)
+          this.$emit('onChangeServerStatus', true)
+          console.log(response)
+        })
+      // Если запрос с ошибкой
+        .catch(error => {
+          const errorText = 'Произошла ошибка: сервер недоступен. Попробуйте перезагрузить страницу и снова загрузить фотографию'
+          this.$emit('onChangeModal', true, errorText, 'uploadPage')
+          // this.onChangeModal(true, errorText, 'uploadPage')
+          this.$emit('onChangeServerStatus', false)
+          // this.isServerOn = false
+          console.log(error)
+        })
     },
     sendPicture () {
       axios.post('/', this.file)

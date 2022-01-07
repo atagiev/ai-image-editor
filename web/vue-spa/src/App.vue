@@ -11,7 +11,13 @@
         <EffectText v-if='statusUpload'></EffectText>
       </main>
       <footer>
-        <Footer v-show="isServerOn" :isImageUploaded="statusUpload" @onChangeStatus="onChangeStatusInUpload"></Footer>
+        <Footer
+          v-show="isServerOn"
+          :isImageUploaded="statusUpload"
+          @onChangeStatus="onChangeStatusInUpload"
+          @onChangeServerStatus="onChangeServerStatus"
+          @onChangeModal="onChangeModal">
+        </Footer>
       </footer>
     </el-container>
     <modal
@@ -58,6 +64,9 @@ export default {
     onChangeStatusInUpload (status) {
       this.statusUpload = status
     },
+    onChangeServerStatus (status) {
+      this.isServerOn = status
+    },
     onChangeModal (status, msg, action) {
       this.isModalVisible = status
       this.modalMessage = msg
@@ -94,7 +103,7 @@ export default {
       }
     },
     isServerAnswer () {
-      axios.get(' http://localhost:5000/ping')
+      axios.get('http://localhost:5000/ping')
       // Если запрос успешен
         .then(response => {
           this.isServerOn = true
