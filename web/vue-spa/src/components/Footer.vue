@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import FiltersList from '@/components/FiltersList'
 import axios from 'axios'
 
@@ -42,7 +42,7 @@ export default ({
   },
   props: ['isImageUploaded', 'isServerOn'],
   data: () => ({
-    isImageUploaded: false,
+    isUploaded: false,
     isActiveClassic: true,
     isActiveNeural: false,
     activeType: 'classic',
@@ -50,7 +50,7 @@ export default ({
     imageSrc: ''
   }),
   methods: {
-    ...mapActions(['changeURLInitFile', 'changeURLCurFile', 'changeResolution', 'changeInitFile', 'changeCurFile']),
+    ...mapActions(['changeURLInitFile', 'changeURLCurFile', 'changeResolutionWidth', 'changeResolutionHeight', 'changeInitFile', 'changeCurFile']),
     onClickBtnClassic () {
       this.isActiveClassic = true
       this.isActiveNeural = false
@@ -81,20 +81,36 @@ export default ({
       // Если запрос успешен
         .then(response => {
           // this.isServerOn = true
-          this.isImageUploaded = true
+          this.isUploaded = true
           this.changeCurFile(event.target.files[0])
           this.changeInitFile(event.target.files[0])
-          this.$emit('onChangeStatus', this.isImageUploaded)
+          this.$emit('onChangeStatus', this.isUploaded)
           this.$emit('onChangeServerStatus', true)
-          console.log(response)
+          console.log('Загружена картинка и инструменты редактирвоания ', response)
         })
       // Если запрос с ошибкой
         .catch(error => {
-          const errorText = 'Произошла ошибка: сервер недоступен. Попробуйте перезагрузить страницу и снова загрузить фотографию'
+          const errorText = 'Произошла ошибка: сервер недоступен, загрузить инструменты редактирования невозможно. Попробуйте перезагрузить страницу и снова загрузить фотографию'
           this.$emit('onChangeModal', true, errorText, 'uploadPage')
           // this.onChangeModal(true, errorText, 'uploadPage')
           this.$emit('onChangeServerStatus', false)
           // this.isServerOn = false
+          console.log(error)
+        })
+      // console.log(this.$store.getters.CUR_FILE.name)
+      const formData = new FormData()
+      formData.append('image', this.file)
+      axios.post('http://localhost:5000/get_size', formData)
+      // Если запрос успешен
+        .then(response => {
+          this.changeResolutionWidth(response.data.w)
+          this.changeResolutionHeight(response.data.h)
+          console.log(this.$store.getters.CUR_RESOLUTION_WIDTH + ' ' + this.$store.getters.CUR_RESOLUTION_HEIGHT)
+          console.log(response)
+        })
+      // Если запрос с ошибкой
+        .catch(error => {
+          console.log(this.file)
           console.log(error)
         })
     },
@@ -109,6 +125,12 @@ export default ({
           console.log(error)
         })
     }
+  },
+  computed: {
+    ...mapGetters(['CUR_FILE', 'URL_CUR_FILE', 'CUR_RESOLUTION_WIDTH', 'CUR_RESOLUTION_HEIGHT'])
+  },
+  mounted () {
+    this.isUploaded = this.isImageUploaded
   }
 })
 </script>

@@ -107,7 +107,7 @@ export default {
       // Если запрос успешен
         .then(response => {
           this.isServerOn = true
-          console.log(response)
+          console.log('Сервер готов к работе ', response)
         })
       // Если запрос с ошибкой
         .catch(error => {

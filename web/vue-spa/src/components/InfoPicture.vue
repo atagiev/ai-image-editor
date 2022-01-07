@@ -3,6 +3,11 @@
     <div class="info-picture__name">
       {{ fileProperty }}
     </div>
+    <div class="info-picture__resolution">
+      {{ fileResolution }}
+      <!-- {{ this.file }} -->
+      <!-- {{ getImgSize() }} -->
+    </div>
   </div>
 </template>
 
@@ -24,9 +29,12 @@ export default ({
     }
   },
   computed: {
-    ...mapGetters(['INIT_FILE']),
+    ...mapGetters(['INIT_FILE', 'CUR_RESOLUTION_WIDTH', 'CUR_RESOLUTION_HEIGHT']),
     fileProperty () {
       return this.INIT_FILE.name
+    },
+    fileResolution () {
+      return this.CUR_RESOLUTION_WIDTH + 'x' + this.CUR_RESOLUTION_HEIGHT
     }
   }
 })
