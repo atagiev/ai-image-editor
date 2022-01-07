@@ -5,13 +5,13 @@
         <Header></Header>
       </header>
       <main>
-        <ButtonsList  @onChangeModalStatus="onChangeModal" v-if='statusUpload'></ButtonsList>
+        <ButtonsList  @onChangeModalStatus="onChangeModal" :statusUpload = statusUpload></ButtonsList>
         <InfoPicture v-if='statusUpload'></InfoPicture>
         <PictureItem v-if='statusUpload'></PictureItem>
         <EffectText v-if='statusUpload'></EffectText>
       </main>
       <footer>
-        <Footer :isImageUploaded="statusUpload" @onChangeStatus="onChangeStatusInUpload"></Footer>
+        <Footer v-show="isServerOn" :isImageUploaded="statusUpload" @onChangeStatus="onChangeStatusInUpload"></Footer>
       </footer>
     </el-container>
     <modal
@@ -33,7 +33,7 @@ import EffectText from './components/EffectText.vue'
 import ButtonsList from './components/ButtonsList.vue'
 import modal from './components/DialogBox.vue'
 import { mapGetters, mapActions } from 'vuex'
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
   name: 'App',
@@ -50,7 +50,8 @@ export default {
     statusUpload: false,
     isModalVisible: false,
     modalMessage: '',
-    userAction: ''
+    userAction: '',
+    isServerOn: false
   }),
   methods: {
     ...mapActions(['changeURLCurFile', 'changeEffect']),
@@ -91,10 +92,28 @@ export default {
       if (this.userAction === 'help') {
         this.closeModal()
       }
+    },
+    isServerAnswer () {
+      axios.get(' http://localhost:5000/ping')
+      // Если запрос успешен
+        .then(response => {
+          this.isServerOn = true
+          console.log(response)
+        })
+      // Если запрос с ошибкой
+        .catch(error => {
+          const errorText = 'Произошла ошибка: сервер недоступен. Попробуйте перезагрузить страницу'
+          this.onChangeModal(true, errorText, 'uploadPage')
+          this.isServerOn = false
+          console.log(error)
+        })
     }
   },
   computed: {
     ...mapGetters(['MODAL_STATUS', 'URL_CUR_FILE', 'CUR_FILE', 'CUR_EFFECT'])
+  },
+  created () {
+    this.isServerAnswer()
   }
 }
 </script>
