@@ -7,7 +7,7 @@
       </div>
       <div class="filters-container__upload">
         <label class="input__file-button" for="input-file">
-          <input type="file" class="input-file" ref="upload" accept="image/jpeg,image/png"
+          <input type="file" class="input-file" ref="upload" accept="image/jpeg"
             @change="handleFileUpload( $event )">
           <span class="input__file-button-text">Загрузить</span>
         </label>
@@ -73,20 +73,37 @@ export default ({
       if (this.file) {
         reader.readAsDataURL(this.file)
       }
-      // this.changeCurFile(event.target.files[0])
-      // this.changeInitFile(event.target.files[0])
-      // this.$emit('onChangeStatus', this.isImageUploaded)
-      // this.$emit('onChangeServerStatus', true)
       axios.get('http://localhost:5000/ping')
-      // Если запрос успешен
+      // Если сервер работает
         .then(response => {
-          // this.isServerOn = true
-          this.isUploaded = true
-          this.changeCurFile(event.target.files[0])
-          this.changeInitFile(event.target.files[0])
-          this.$emit('onChangeStatus', this.isUploaded)
-          this.$emit('onChangeServerStatus', true)
-          console.log('Загружена картинка и инструменты редактирвоания ', response)
+          const formData = new FormData()
+          formData.append('image', this.file)
+          axios.post('http://localhost:5000/get_size', formData)
+          // Проверка разрешения картинки
+            .then(response => {
+              if (response.data.w <= 1920 && response.data.h <= 1080) {
+                this.isUploaded = true
+                this.changeResolutionWidth(response.data.w)
+                this.changeResolutionHeight(response.data.h)
+                console.log(this.$store.getters.CUR_RESOLUTION_WIDTH + ' ' + this.$store.getters.CUR_RESOLUTION_HEIGHT)
+                console.log(response)
+                this.changeCurFile(event.target.files[0])
+                this.changeInitFile(event.target.files[0])
+                this.$emit('onChangeStatus', this.isUploaded)
+                this.$emit('onChangeServerStatus', true)
+                console.log('Загружена картинка и инструменты редактирования ', response)
+              } else {
+                const errorText = 'Фотография с разрешением ' + response.data.w + 'x' + response.data.h + ' не поддерживается.' +
+                  'Загрузите фотографию меньшего разрешения (не более 1920х1080)'
+                this.$emit('onChangeModal', true, errorText, 'uploadPhoto')
+                this.$forceUpdate()
+              }
+            })
+          // Если запрос с ошибкой
+            .catch(error => {
+              console.log(this.file)
+              console.log(error)
+            })
         })
       // Если запрос с ошибкой
         .catch(error => {
@@ -97,22 +114,12 @@ export default ({
           // this.isServerOn = false
           console.log(error)
         })
-      // console.log(this.$store.getters.CUR_FILE.name)
-      const formData = new FormData()
-      formData.append('image', this.file)
-      axios.post('http://localhost:5000/get_size', formData)
-      // Если запрос успешен
-        .then(response => {
-          this.changeResolutionWidth(response.data.w)
-          this.changeResolutionHeight(response.data.h)
-          console.log(this.$store.getters.CUR_RESOLUTION_WIDTH + ' ' + this.$store.getters.CUR_RESOLUTION_HEIGHT)
-          console.log(response)
-        })
-      // Если запрос с ошибкой
-        .catch(error => {
-          console.log(this.file)
-          console.log(error)
-        })
+      // eslint-disable-next-line prefer-const
+
+      // this.changeCurFile(event.target.files[0])
+      // this.changeInitFile(event.target.files[0])
+      // this.$emit('onChangeStatus', this.isImageUploaded)
+      // this.$emit('onChangeServerStatus', true)
     },
     sendPicture () {
       axios.post('/', this.file)

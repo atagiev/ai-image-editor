@@ -7,7 +7,7 @@
         </div>
 
         <div class="modal-footer">
-          <template v-if='userAction != "help" && userAction != "uploadPage"'>
+          <template v-if='userAction != "help" && userAction != "uploadPage" && userAction != "uploadPhoto"'>
             <button
                   type="button"
                   class="btn-green"
