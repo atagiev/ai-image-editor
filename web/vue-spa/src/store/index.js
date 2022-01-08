@@ -12,7 +12,8 @@ export default new Vuex.Store({
     modalBoxStatus: false,
     urlInitFile: '',
     urlCurFile: '',
-    resolution: '',
+    resWidth: 0,
+    resHeight: 0,
     activeFilter: ''
 
   },
@@ -24,7 +25,8 @@ export default new Vuex.Store({
     MODAL_STATUS: state => { return state.modalBoxStatus },
     INIT_FILE: state => { return state.initFile },
     URL_INIT_FILE: state => { return state.urlInitFile },
-    CUR_RESOLUTION: state => { return state.resolution },
+    CUR_RESOLUTION_WIDTH: state => { return state.resWidth },
+    CUR_RESOLUTION_HEIGHT: state => { return state.resHeight },
     ACT_FILTER: state => { return state.activeFilter }
   },
   mutations: {
@@ -46,8 +48,11 @@ export default new Vuex.Store({
     CHANGE_URL_CUR_FILE (state, url) {
       state.urlCurFile = url
     },
-    CHANGE_RES (state, res) {
-      state.resolution = res
+    CHANGE_RES_WIDTH (state, width) {
+      state.resWidth = width
+    },
+    CHANGE_RES_HEIGHT (state, height) {
+      state.resHeight = height
     },
     CHANGE_ACT_FILTER (state, actFil) {
       state.activeFilter = actFil
@@ -86,9 +91,13 @@ export default new Vuex.Store({
       const urlFile = url
       commit('CHANGE_URL_CUR_FILE', urlFile)
     },
-    changeResolution ({ commit }, res) {
-      const resFile = res
-      commit('CHANGE_RES', resFile)
+    changeResolutionWidth ({ commit }, width) {
+      const resWidth = width
+      commit('CHANGE_RES_WIDTH', resWidth)
+    },
+    changeResolutionHeight ({ commit }, height) {
+      const resHeight = height
+      commit('CHANGE_RES_HEIGHT', resHeight)
     },
     changeActiveFilter ({ commit }, act) {
       const actFil = act

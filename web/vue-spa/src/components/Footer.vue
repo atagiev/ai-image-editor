@@ -7,7 +7,7 @@
       </div>
       <div class="filters-container__upload">
         <label class="input__file-button" for="input-file">
-          <input type="file" class="input-file" ref="upload" accept="image/jpeg,image/png"
+          <input type="file" class="input-file" id='btn-input' ref="upload" accept="image/jpeg"
             @change="handleFileUpload( $event )">
           <span class="input__file-button-text">Загрузить</span>
         </label>
@@ -23,7 +23,7 @@
           @click='onClickBtnNeural'>NN</button>
       </div>
       <div class="filters__list">
-        <FiltersList :activeType='activeType'></FiltersList>
+        <FiltersList @onChangeModal="onChangeModalStatus" :activeType='activeType'></FiltersList>
       </div>
     </div>
 
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import FiltersList from '@/components/FiltersList'
 import axios from 'axios'
 
@@ -40,9 +40,9 @@ export default ({
   components: {
     FiltersList
   },
-  props: ['isImageUploaded'],
+  props: ['isImageUploaded', 'isServerOn', 'isImgChanged'],
   data: () => ({
-    isImageUploaded: false,
+    isUploaded: false,
     isActiveClassic: true,
     isActiveNeural: false,
     activeType: 'classic',
@@ -50,7 +50,7 @@ export default ({
     imageSrc: ''
   }),
   methods: {
-    ...mapActions(['changeURLInitFile', 'changeURLCurFile', 'changeResolution', 'changeInitFile', 'changeCurFile']),
+    ...mapActions(['changeURLInitFile', 'changeURLCurFile', 'changeResolutionWidth', 'changeResolutionHeight', 'changeInitFile', 'changeCurFile']),
     onClickBtnClassic () {
       this.isActiveClassic = true
       this.isActiveNeural = false
@@ -61,9 +61,15 @@ export default ({
       this.isActiveNeural = true
       this.activeType = 'neural'
     },
+    onChangeModalStatus (status, msg, action) {
+      this.$emit('onChangeModal', status, msg, action)
+    },
+    onClickFileUpload () {
+      const btn = document.querySelector('.input-file')
+      btn.click()
+    },
     handleFileUpload (event) {
       this.file = event.target.files[0]
-      this.isImageUploaded = true
       // eslint-disable-next-line prefer-const
       let reader = new FileReader()
       reader.addEventListener('load', function () {
@@ -74,9 +80,53 @@ export default ({
       if (this.file) {
         reader.readAsDataURL(this.file)
       }
-      this.changeCurFile(event.target.files[0])
-      this.changeInitFile(event.target.files[0])
-      this.$emit('onChangeStatus', this.isImageUploaded)
+      axios.get('http://localhost:5000/ping')
+      // Если сервер работает
+        .then(response => {
+          const formData = new FormData()
+          formData.append('image', this.file)
+          axios.post('http://localhost:5000/get_size', formData)
+          // Проверка разрешения картинки
+            .then(response => {
+              if ((response.data.w <= 1920 && response.data.h <= 1080) || (response.data.w <= 1080 && response.data.h <= 1920)) {
+                this.isUploaded = true
+                this.changeResolutionWidth(response.data.w)
+                this.changeResolutionHeight(response.data.h)
+                console.log(this.$store.getters.CUR_RESOLUTION_WIDTH + ' ' + this.$store.getters.CUR_RESOLUTION_HEIGHT)
+                console.log(response)
+                this.changeCurFile(event.target.files[0])
+                this.changeInitFile(event.target.files[0])
+                this.$emit('onChangeStatus', this.isUploaded)
+                this.$emit('onChangeServerStatus', true)
+                console.log('Загружена картинка и инструменты редактирования ', response)
+              } else {
+                const errorText = 'Фотография с разрешением ' + response.data.w + 'x' + response.data.h + ' не поддерживается.' +
+                  'Загрузите фотографию меньшего разрешения (не более 1920х1080)'
+                this.$emit('onChangeModal', true, errorText, 'uploadPhoto')
+                this.$forceUpdate()
+              }
+            })
+          // Если запрос с ошибкой
+            .catch(error => {
+              console.log(this.file)
+              console.log(error)
+            })
+        })
+      // Если запрос с ошибкой
+        .catch(error => {
+          const errorText = 'Произошла ошибка: сервер недоступен, загрузить инструменты редактирования невозможно. Попробуйте перезагрузить страницу и снова загрузить фотографию'
+          this.$emit('onChangeModal', true, errorText, 'uploadPage')
+          // this.onChangeModal(true, errorText, 'uploadPage')
+          this.$emit('onChangeServerStatus', false)
+          // this.isServerOn = false
+          console.log(error)
+        })
+      // eslint-disable-next-line prefer-const
+
+      // this.changeCurFile(event.target.files[0])
+      // this.changeInitFile(event.target.files[0])
+      // this.$emit('onChangeStatus', this.isImageUploaded)
+      // this.$emit('onChangeServerStatus', true)
     },
     sendPicture () {
       axios.post('/', this.file)
@@ -89,6 +139,21 @@ export default ({
           console.log(error)
         })
     }
+  },
+  computed: {
+    ...mapGetters(['CUR_FILE', 'URL_CUR_FILE', 'CUR_RESOLUTION_WIDTH', 'CUR_RESOLUTION_HEIGHT'])
+  },
+  mounted () {
+    this.isUploaded = this.isImageUploaded
+  },
+  updated () {
+    console.log(this.isImgChanged)
+    if (this.isImgChanged === true) {
+      this.onClickFileUpload()
+      console.log('ckick')
+      this.isImgChanged = false
+    }
+    this.isImgChanged = false
   }
 })
 </script>

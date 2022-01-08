@@ -1,18 +1,18 @@
 <template>
   <div class="filters">
     <div class="filters_list__classic filters_list" v-if="this.activeType == 'classic'">
-      <FilterItem :activeType='activeType' nameFilter='Черно-белое' previewImage='greyscale.jpg'></FilterItem>
-      <FilterItem :activeType='activeType' nameFilter='Сепия' previewImage='brown.jpg'></FilterItem>
-      <FilterItem :activeType='activeType' nameFilter='Инвертирование' previewImage='invert.jpg'></FilterItem>
-      <FilterItem :activeType='activeType' nameFilter='Рисунок' previewImage='handdraw.jpg'></FilterItem>
-      <FilterItem :activeType='activeType' nameFilter='Рельеф' previewImage='emboss.jpg'></FilterItem>
+      <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Черно-белое' previewImage='greyscale.jpg'></FilterItem>
+      <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Сепия' previewImage='brown.jpg'></FilterItem>
+      <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Инвертирование' previewImage='invert.jpg'></FilterItem>
+      <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Рисунок' previewImage='handdraw.jpg'></FilterItem>
+      <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Рельеф' previewImage='emboss.jpg'></FilterItem>
     </div>
     <div class="filters_list__neural filters_list" v-else-if="this.activeType == 'neural'">
-      <FilterItem :activeType='activeType' nameFilter='Candy' previewImage='candy.jpg'></FilterItem>
-      <FilterItem :activeType='activeType' nameFilter='Feathers' previewImage='feathers.jpg'></FilterItem>
-      <FilterItem :activeType='activeType' nameFilter='Mosaic' previewImage='mosaic.jpg'></FilterItem>
-      <FilterItem :activeType='activeType' nameFilter='Starry night' previewImage='starry_night.jpg'></FilterItem>
-      <FilterItem :activeType='activeType' nameFilter='Wave' previewImage='wave.jpg'></FilterItem>
+      <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Candy' previewImage='candy.jpg'></FilterItem>
+      <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Feathers' previewImage='feathers.jpg'></FilterItem>
+      <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Mosaic' previewImage='mosaic.jpg'></FilterItem>
+      <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Starry night' previewImage='starry_night.jpg'></FilterItem>
+      <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Wave' previewImage='wave.jpg'></FilterItem>
     </div>
   </div>
 </template>
@@ -28,6 +28,9 @@ export default {
   }),
   props: ['activeType', 'nameFilter', 'previewImage'],
   methods: {
+    onChangeModal (status, msg, action) {
+      this.$emit('onChangeModal', status, msg, action)
+    }
   }
 }
 </script>

@@ -26,15 +26,22 @@ export default ({
   methods: {
     ...mapActions(['changeEffect', 'changeActiveFilter', 'changeURLCurFile', 'changeCurFile']),
     onClickFilter () {
-      this.changeEffect(this.nameFilter)
-      this.changeActiveFilter(this.nameFilter)
-      this.isActiveFilter = true
-      this.filterName = this.nameFilter
-      this.curFile = this.$store.getters.CUR_FILE
-      this.urlCurFile = this.$store.getters.URL_CUR_FILE
-      console.log(this.nameFilter, this.$store.getters.CUR_FILE)
-
-      this.sendFilter()
+      axios.defaults.timeout = 10000
+      axios.get('http://localhost:5000/ping')
+        .then(response => {
+          this.changeEffect(this.nameFilter)
+          this.changeActiveFilter(this.nameFilter)
+          this.isActiveFilter = true
+          this.filterName = this.nameFilter
+          this.curFile = this.$store.getters.CUR_FILE
+          this.urlCurFile = this.$store.getters.URL_CUR_FILE
+          console.log(this.nameFilter, this.$store.getters.CUR_FILE)
+          this.sendFilter()
+        })
+        .catch(error => {
+          this.sendWaitingError()
+          console.log(error)
+        })
     },
     // запрос на отправку текущей картинки и названия фильтра
     sendFilter () {
@@ -49,22 +56,35 @@ export default ({
       axios.post('http://localhost:5000/', formData)
       // Если запрос успешен
         .then(response => {
-          Buffer.from(response.data, 'binary').toString('base64')
-          this.changeCurFile(response.data)
+          this.changeURLCurFile(response.data.path)
+          fetch(response.data.path)
+            .then(res => res.blob()) // Gets the response and returns it as a blob
+            .then(blob => {
+              this.changeCurFile(blob)
+              // let objectURL = URL.createObjectURL(blob);
+              // let myImage = new Image();
+              // myImage.src = objectURL;
+              // document.getElementById('myImg').appendChild(myImage)
+            })
           // eslint-disable-next-line prefer-const
-          let reader = new FileReader()
-          reader.addEventListener('load', function () {
-            this.imageSrc = reader.result
-            this.changeURLCurFile(reader.result)
-          }.bind(this), false)
-          if (response.data) {
-            reader.readAsDataURL(response.data)
-          }
+          // let reader = new FileReader()
+          // reader.addEventListener('load', function () {
+          //   this.imageSrc = reader.result
+          //   this.changeURLCurFile(reader.result)
+          // }.bind(this), false)
+          // if (response.data) {
+          //   reader.readAsDataURL(response.data)
+          // }
         })
       // Если запрос с ошибкой
         .catch(function (error) {
           console.log(error)
         })
+    },
+    sendWaitingError () {
+      const errorText = 'Произошла ошибка: в данный момент сервер недоступен. Попробуйте применить фильтр еще раз или выберите другой.'
+      this.$emit('onChangeModal', true, errorText, 'uploadPage')
+      // console.log(error)
     }
   },
   computed: {

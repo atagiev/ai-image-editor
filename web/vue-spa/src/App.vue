@@ -5,13 +5,20 @@
         <Header></Header>
       </header>
       <main>
-        <ButtonsList  @onChangeModalStatus="onChangeModal" v-if='statusUpload'></ButtonsList>
+        <ButtonsList  @onChangeModalStatus="onChangeModal" :statusUpload = statusUpload :isImgChanged = isImgChanged></ButtonsList>
         <InfoPicture v-if='statusUpload'></InfoPicture>
         <PictureItem v-if='statusUpload'></PictureItem>
         <EffectText v-if='statusUpload'></EffectText>
       </main>
       <footer>
-        <Footer :isImageUploaded="statusUpload" @onChangeStatus="onChangeStatusInUpload"></Footer>
+        <Footer
+          v-show="isServerOn"
+          :isImageUploaded="statusUpload"
+          :isImgChanged="isImgChanged"
+          @onChangeStatus="onChangeStatusInUpload"
+          @onChangeServerStatus="onChangeServerStatus"
+          @onChangeModal="onChangeModal">
+        </Footer>
       </footer>
     </el-container>
     <modal
@@ -33,7 +40,7 @@ import EffectText from './components/EffectText.vue'
 import ButtonsList from './components/ButtonsList.vue'
 import modal from './components/DialogBox.vue'
 import { mapGetters, mapActions } from 'vuex'
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
   name: 'App',
@@ -48,14 +55,19 @@ export default {
   },
   data: () => ({
     statusUpload: false,
+    isImgChanged: false,
     isModalVisible: false,
     modalMessage: '',
-    userAction: ''
+    userAction: '',
+    isServerOn: false
   }),
   methods: {
-    ...mapActions(['changeURLCurFile', 'changeEffect']),
+    ...mapActions(['changeURLCurFile', 'changeEffect', 'changeCurFile']),
     onChangeStatusInUpload (status) {
       this.statusUpload = status
+    },
+    onChangeServerStatus (status) {
+      this.isServerOn = status
     },
     onChangeModal (status, msg, action) {
       this.isModalVisible = status
@@ -69,10 +81,35 @@ export default {
       this.isModalVisible = false
     },
     acceptAction () {
+      if (this.userAction === 'accept') {
+        const formData = new FormData()
+        formData.append('saved_image_id', this.URL_CUR_FILE) // пока что здесь лежит путь к файлу
+        axios.post('http://localhost:5000/save_image', formData)
+        // Если запрос успешен
+          .then(response => {
+            console.log(response)
+            this.closeModal()
+            if (response.data.success === false) {
+              throw new Error('Произошла ошибка: не удалось сохранить файл. Попробуйте снова')
+            }
+            // let objectURL = URL.createObjectURL(blob);
+            // let myImage = new Image();
+            // myImage.src = objectURL;
+            // document.getElementById('myImg').appendChild(myImage)
+          })
+        // Если запрос с ошибкой
+          .catch(error => {
+            const errorText = 'Произошла ошибка: не удалось сохранить файл. Попробуйте снова'
+            this.onChangeModal(true, errorText, 'acceptError')
+            console.log(error)
+          })
+        this.closeModal()
+      }
       if (this.userAction === 'upload') {
         this.onChangeStatusInUpload(false)
         this.changeEffect('отсутствует')
         this.closeModal()
+        this.isImgChanged = true
       }
       if (this.userAction === 'download') {
         // eslint-disable-next-line prefer-const
@@ -91,10 +128,28 @@ export default {
       if (this.userAction === 'help') {
         this.closeModal()
       }
+    },
+    isServerAnswer () {
+      axios.get('http://localhost:5000/ping')
+      // Если запрос успешен
+        .then(response => {
+          this.isServerOn = true
+          console.log('Сервер готов к работе ', response)
+        })
+      // Если запрос с ошибкой
+        .catch(error => {
+          const errorText = 'Произошла ошибка: сервер недоступен. Попробуйте перезагрузить страницу'
+          this.onChangeModal(true, errorText, 'uploadPage')
+          this.isServerOn = false
+          console.log(error)
+        })
     }
   },
   computed: {
     ...mapGetters(['MODAL_STATUS', 'URL_CUR_FILE', 'CUR_FILE', 'CUR_EFFECT'])
+  },
+  created () {
+    this.isServerAnswer()
   }
 }
 </script>

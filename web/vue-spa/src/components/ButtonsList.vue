@@ -1,22 +1,32 @@
 <template>
   <div class='btns-list'>
-    <div class="delete-button">
-      <button class="dlt-btn btn" @click='onClickDelete'>
+    <div class="accept-button">
+      <button class="acpt-btn btn" @click='onClickAccept' :class="classObjAccept">
+        <i class="el-icon-check"></i>
+      </button>
+    </div>
+    <div class="reset-button">
+      <button class="rst-btn btn" @click='onClickReset' :class="classObj">
+        <i class="el-icon-refresh-left"></i>
+      </button>
+    </div>
+    <div class="delete-button" >
+      <button class="dlt-btn btn" @click='onClickDelete' :class="classObj">
         <i class="el-icon-delete-solid"></i>
       </button>
     </div>
     <div class="upload-button">
-      <button class="upld-btn btn" @click='onClickUpload'>
+      <button class="upld-btn btn" @click='onClickUpload' :class="classObj">
         <i class="el-icon-upload2"></i>
       </button>
     </div>
     <div class="download-button">
-      <button class="dwld-btn btn" @click='onClickDownload'>
+      <button class="dwld-btn btn" @click='onClickDownload' :class="classObj">
         <i class="el-icon-download"></i>
       </button>
     </div>
     <div class="help-button">
-      <button class="help-btn btn" @click='onClickHelp'>
+      <button class="help-btn btn" @click='onClickHelp' :class="classObj">
         <i class="el-icon-s-help"></i>
       </button>
     </div>
@@ -24,7 +34,7 @@
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'ButtonsList',
   components: {
@@ -34,7 +44,18 @@ export default {
     msg: '',
     typeAction: ''
   }),
+  props: ['statusUpload', 'isImgChanged'],
   methods: {
+    onClickAccept () {
+      this.msg = 'Применить к изображению выбранный эффект?'
+      this.typeAction = 'accept'
+      this.showModal()
+    },
+    onClickReset () {
+      this.msg = 'Вы действительно хотите сбросить последний примененный эффект?'
+      this.typeAction = 'reset'
+      this.showModal()
+    },
     onClickUpload () {
       this.msg = 'Вы действительно хотите загрузить новое изображение?'
       this.typeAction = 'upload'
@@ -59,6 +80,19 @@ export default {
     showModal () {
       this.isModalVisible = true
       this.$emit('onChangeModalStatus', this.isModalVisible, this.msg, this.typeAction)
+    }
+  },
+  computed: {
+    ...mapGetters(['CUR_EFFECT']),
+    classObj () {
+      return {
+        'btn-disabled': this.statusUpload === false
+      }
+    },
+    classObjAccept () {
+      return {
+        'btn-disabled': this.CUR_EFFECT === 'отсутствует'
+      }
     }
   }
 }
@@ -101,5 +135,10 @@ button{
 }
 .btn:active i{
   transform: scale(1.4);
+}
+.btn-disabled {
+  background-color: #a09d9d;
+  cursor: default;
+  pointer-events: none;
 }
 </style>
