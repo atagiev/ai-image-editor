@@ -7,7 +7,7 @@
       </div>
       <div class="filters-container__upload">
         <label class="input__file-button" for="input-file">
-          <input type="file" class="input-file" ref="upload" accept="image/jpeg"
+          <input type="file" class="input-file" id='btn-input' ref="upload" accept="image/jpeg"
             @change="handleFileUpload( $event )">
           <span class="input__file-button-text">Загрузить</span>
         </label>
@@ -40,7 +40,7 @@ export default ({
   components: {
     FiltersList
   },
-  props: ['isImageUploaded', 'isServerOn'],
+  props: ['isImageUploaded', 'isServerOn', 'isImgChanged'],
   data: () => ({
     isUploaded: false,
     isActiveClassic: true,
@@ -63,6 +63,10 @@ export default ({
     },
     onChangeModalStatus (status, msg, action) {
       this.$emit('onChangeModal', status, msg, action)
+    },
+    onClickFileUpload () {
+      const btn = document.querySelector('.input-file')
+      btn.click()
     },
     handleFileUpload (event) {
       this.file = event.target.files[0]
@@ -141,6 +145,15 @@ export default ({
   },
   mounted () {
     this.isUploaded = this.isImageUploaded
+  },
+  updated () {
+    console.log(this.isImgChanged)
+    if (this.isImgChanged === true) {
+      this.onClickFileUpload()
+      console.log('ckick')
+      this.isImgChanged = false
+    }
+    this.isImgChanged = false
   }
 })
 </script>

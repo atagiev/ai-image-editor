@@ -1,7 +1,7 @@
 <template>
   <div class='btns-list'>
     <div class="accept-button">
-      <button class="acpt-btn btn" @click='onClickAccept' :class="classObj">
+      <button class="acpt-btn btn" @click='onClickAccept' :class="classObjAccept">
         <i class="el-icon-check"></i>
       </button>
     </div>
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'ButtonsList',
   components: {
@@ -44,7 +44,7 @@ export default {
     msg: '',
     typeAction: ''
   }),
-  props: ['statusUpload'],
+  props: ['statusUpload', 'isImgChanged'],
   methods: {
     onClickAccept () {
       this.msg = 'Применить к изображению выбранный эффект?'
@@ -83,9 +83,15 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['CUR_EFFECT']),
     classObj () {
       return {
         'btn-disabled': this.statusUpload === false
+      }
+    },
+    classObjAccept () {
+      return {
+        'btn-disabled': this.CUR_EFFECT === 'отсутствует'
       }
     }
   }
