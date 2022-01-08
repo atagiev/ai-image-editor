@@ -26,15 +26,22 @@ export default ({
   methods: {
     ...mapActions(['changeEffect', 'changeActiveFilter', 'changeURLCurFile', 'changeCurFile']),
     onClickFilter () {
-      this.changeEffect(this.nameFilter)
-      this.changeActiveFilter(this.nameFilter)
-      this.isActiveFilter = true
-      this.filterName = this.nameFilter
-      this.curFile = this.$store.getters.CUR_FILE
-      this.urlCurFile = this.$store.getters.URL_CUR_FILE
-      console.log(this.nameFilter, this.$store.getters.CUR_FILE)
-
-      this.sendFilter()
+      axios.defaults.timeout = 10000
+      axios.get('http://localhost:5000/ping')
+        .then(response => {
+          this.changeEffect(this.nameFilter)
+          this.changeActiveFilter(this.nameFilter)
+          this.isActiveFilter = true
+          this.filterName = this.nameFilter
+          this.curFile = this.$store.getters.CUR_FILE
+          this.urlCurFile = this.$store.getters.URL_CUR_FILE
+          console.log(this.nameFilter, this.$store.getters.CUR_FILE)
+          this.sendFilter()
+        })
+        .catch(error => {
+          this.sendWaitingError()
+          console.log(error)
+        })
     },
     // запрос на отправку текущей картинки и названия фильтра
     sendFilter () {
@@ -65,6 +72,11 @@ export default ({
         .catch(function (error) {
           console.log(error)
         })
+    },
+    sendWaitingError () {
+      const errorText = 'Произошла ошибка: в данный момент сервер недоступен. Попробуйте применить фильтр еще раз или выберите другой.'
+      this.$emit('onChangeModal', true, errorText, 'uploadPage')
+      // console.log(error)
     }
   },
   computed: {

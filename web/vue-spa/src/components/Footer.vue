@@ -23,7 +23,7 @@
           @click='onClickBtnNeural'>NN</button>
       </div>
       <div class="filters__list">
-        <FiltersList :activeType='activeType'></FiltersList>
+        <FiltersList @onChangeModal="onChangeModalStatus" :activeType='activeType'></FiltersList>
       </div>
     </div>
 
@@ -61,6 +61,9 @@ export default ({
       this.isActiveNeural = true
       this.activeType = 'neural'
     },
+    onChangeModalStatus (status, msg, action) {
+      this.$emit('onChangeModal', status, msg, action)
+    },
     handleFileUpload (event) {
       this.file = event.target.files[0]
       // eslint-disable-next-line prefer-const
@@ -81,7 +84,7 @@ export default ({
           axios.post('http://localhost:5000/get_size', formData)
           // Проверка разрешения картинки
             .then(response => {
-              if (response.data.w <= 1920 && response.data.h <= 1080) {
+              if ((response.data.w <= 1920 && response.data.h <= 1080) || (response.data.w <= 1080 && response.data.h <= 1920)) {
                 this.isUploaded = true
                 this.changeResolutionWidth(response.data.w)
                 this.changeResolutionHeight(response.data.h)
