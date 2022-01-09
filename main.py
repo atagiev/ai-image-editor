@@ -1,8 +1,9 @@
 import datetime
 import os
 import pathlib
-from threading import Thread
+from http.server import HTTPServer, SimpleHTTPRequestHandler
 from logging import info, basicConfig, DEBUG
+from threading import Thread
 
 from flask import Flask, jsonify
 from flask import request as flask_request
@@ -34,6 +35,20 @@ filter_manager = FilterManager(storage=storage, queue=queue)
 filter_manager.import_filters()
 filter_manager.run()
 backend = Backend(storage=storage, queue=queue)
+
+
+class Handler(SimpleHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, directory=tmp_folder_path, **kwargs)
+
+
+def run_http_server(server_class=HTTPServer, handler_class=Handler):
+    server_address = ('', 8000)
+    httpd = server_class(server_address, handler_class)
+    httpd.serve_forever()
+
+
+Thread(target=lambda: run_http_server()).start()
 
 app = Flask(__name__)
 
