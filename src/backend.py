@@ -59,3 +59,11 @@ class Backend:
             return True
         except:
             return False
+
+    def reset(self):
+        try:
+            self.__last_saved_image_id = None
+            self.__storage.delete_images()
+            return True
+        except:
+            return False
