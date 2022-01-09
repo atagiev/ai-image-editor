@@ -54,9 +54,9 @@ def get_image_size():
 
 @app.route('/get_last_saved', methods=["GET"])
 def get_last_saved_image():
-    path = backend.get_last_saved_image()
-    if path:
-        return jsonify(error="NO", path=path)
+    id = backend.get_last_saved_image()
+    if id:
+        return jsonify(error="NO", id=id)
     return jsonify(error="YES")
 
 
@@ -66,7 +66,7 @@ def get_image():
 
     # Thread(target=lambda: backend.delete_image(image_id=output_image_id)).start()
 
-    return jsonify(path=path)
+    return jsonify(id=output_image_id)
     # return path
 
 
