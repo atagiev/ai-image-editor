@@ -56,16 +56,25 @@ export default ({
       axios.post('http://localhost:5000/', formData)
       // Если запрос успешен
         .then(response => {
-          this.changeURLCurFile(response.data.path)
-          fetch(response.data.path)
-            .then(res => res.blob()) // Gets the response and returns it as a blob
-            .then(blob => {
-              this.changeCurFile(blob)
-              // let objectURL = URL.createObjectURL(blob);
-              // let myImage = new Image();
-              // myImage.src = objectURL;
-              // document.getElementById('myImg').appendChild(myImage)
+          console.log(response.data.id)
+          const id = response.data.id
+          axios.get(`http://localhost:8000/${id}.jpg`)
+            .then(response => {
+              console.log(response.data)
             })
+            .catch(function (error) {
+              console.log(error)
+            })
+          // this.changeURLCurFile(response.data.path)
+          // fetch(response.data.path)
+          //   .then(res => res.blob()) // Gets the response and returns it as a blob
+          //   .then(blob => {
+          //     this.changeCurFile(blob)
+          // let objectURL = URL.createObjectURL(blob);
+          // let myImage = new Image();
+          // myImage.src = objectURL;
+          // document.getElementById('myImg').appendChild(myImage)
+          // })
           // eslint-disable-next-line prefer-const
           // let reader = new FileReader()
           // reader.addEventListener('load', function () {
