@@ -103,7 +103,7 @@ export default ({
                 const errorText = 'Фотография с разрешением ' + response.data.w + 'x' + response.data.h + ' не поддерживается.' +
                   'Загрузите фотографию меньшего разрешения (не более 1920х1080)'
                 this.$emit('onChangeModal', true, errorText, 'uploadPhoto')
-                this.$forceUpdate()
+                // this.$forceUpdate()
               }
             })
           // Если запрос с ошибкой
