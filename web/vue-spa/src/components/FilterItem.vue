@@ -26,7 +26,7 @@ export default ({
   methods: {
     ...mapActions(['changeEffect', 'changeActiveFilter', 'changeURLCurFile', 'changeCurFile']),
     onClickFilter () {
-      axios.defaults.timeout = 10000
+      // axios.defaults.timeout = 40000
       axios.get('http://localhost:5000/ping')
         .then(response => {
           this.changeEffect(this.nameFilter)
@@ -43,6 +43,28 @@ export default ({
           console.log(error)
         })
     },
+    convertToBlob () {
+      // eslint-disable-next-line no-unused-vars
+      const b64toBlob = (b64Data, contentType = 'image/jpeg', sliceSize = 512) => {
+        const byteCharacters = Buffer.from(b64Data, 'base64')
+        const byteArrays = []
+
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+          const slice = byteCharacters.slice(offset, offset + sliceSize)
+
+          const byteNumbers = new Array(slice.length)
+          for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i)
+          }
+
+          const byteArray = new Uint8Array(byteNumbers)
+          byteArrays.push(byteArray)
+        }
+
+        const blob = new Blob(byteArrays, { type: contentType })
+        return blob
+      }
+    },
     // запрос на отправку текущей картинки и названия фильтра
     sendFilter () {
       const formData = new FormData()
@@ -58,10 +80,78 @@ export default ({
         .then(response => {
           console.log(response.data.id)
           const id = response.data.id
-          axios.get(`http://localhost:8000/${id}.jpg`)
-            .then(response => {
-              console.log(response.data)
-            })
+          axios({
+            method: 'get',
+            url: `http://localhost:8000/${id}.jpg`,
+            responseType: 'blob'
+          }).then(response => {
+            console.log(response)
+            const reader = new FileReader()
+            reader.addEventListener('load', function () {
+              this.imageSrc = reader.result
+              this.changeURLCurFile(reader.result)
+            }.bind(this), false)
+            if (response.data) {
+              reader.readAsDataURL(response.data)
+            }
+          })
+          // console.log(response.data)
+          // const base64Str = Buffer.from(new Uint8Array(response).reduce((data, byte) => data + String.fromCharCode(byte), ''), 'utf8').toString('base64')
+          // 1 способ
+          // const base64Str = (response.data).toString('utf8')
+          // console.log(base64Str)
+          // const fileURL = 'data:image/jpeg;base64,' + base64Str
+          // console.log(fileURL)
+          // 2 способ
+          // fetch(`http://localhost:8000/${id}.jpg`)
+          //   .then(response => {
+          //     console.log(response.body)
+          //     const buffer = response.arrayBuffer()
+          //     const bytes = new Uint8Array(buffer)
+          //     const blob = new Blob([bytes.buffer])
+
+          //     // const image = document.createElement('img')
+          //     const reader = new FileReader()
+          //     reader.addEventListener('load', (e) => {
+          //       console.log(reader.result)
+          //       // image.src = e.target.result
+          //       this.changeURLCurFile(reader.result)
+          //       // this.$el.append(image)
+          //     })
+          //     reader.readAsDataURL(blob)
+          //   })
+            // 3 способ
+            // const file = this.convertToBlob(response.data, 'image/jpeg')
+            // console.log(typeof (file))
+            // const reader = new FileReader()
+            // reader.addEventListener('load', function () {
+            //   this.imageSrc = reader.result
+            //   this.changeURLCurFile(reader.result)
+            // }.bind(this), false)
+            // if (file) {
+            //   reader.readAsDataURL(file)
+            // }
+            // 4 способ
+            // const str2blob = txt => new Blob([txt], { type: 'image/jpeg' })
+            // const file = str2blob(response.data)
+            // console.log(file)
+            // const imageUrl = URL.createObjectURL(file)
+            // console.log(imageUrl)
+            // this.changeURLCurFile(imageUrl)
+            // 5 способ
+            // const base64Str = (response.data).toString('base64')
+            // const uint8str = new Uint8Array(response.data)
+            // console.log(base64Str)
+            // console.log(uint8str)
+            // const reader = new FileReader()
+            // reader.addEventListener('load', function () {
+            //   this.imageSrc = reader.result
+            //   this.changeURLCurFile(reader.result)
+            // }.bind(this), false)
+            // if (file) {
+            //   reader.readAsDataURL(file)
+            // }
+            // })
             .catch(function (error) {
               console.log(error)
             })
