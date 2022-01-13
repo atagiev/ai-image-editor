@@ -41,6 +41,10 @@ class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=tmp_folder_path, **kwargs)
 
+    def end_headers(self):
+        self.send_header('Access-Control-Allow-Origin', '*')
+        SimpleHTTPRequestHandler.end_headers(self)
+
 
 def run_http_server(server_class=HTTPServer, handler_class=Handler):
     server_address = ('', 8000)
