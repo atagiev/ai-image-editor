@@ -83,15 +83,16 @@ export default {
     acceptAction () {
       if (this.userAction === 'accept') {
         const formData = new FormData()
-        formData.append('saved_image_id', this.URL_CUR_FILE) // пока что здесь лежит путь к файлу
+        formData.append('saved_image_id', this.CUR_FILE_ID) // пока что здесь лежит путь к файлу
         axios.post('http://localhost:5000/save_image', formData)
         // Если запрос успешен
           .then(response => {
-            console.log(response)
+            console.log(response.data, 'Фото сохранено')
             this.closeModal()
             if (response.data.success === false) {
               throw new Error('Произошла ошибка: не удалось сохранить файл. Попробуйте снова')
             }
+            this.isImgChanged = true
             // let objectURL = URL.createObjectURL(blob);
             // let myImage = new Image();
             // myImage.src = objectURL;
@@ -105,11 +106,45 @@ export default {
           })
         this.closeModal()
       }
+      if (this.userAction === 'reset') {
+        axios.get('http://localhost:5000/get_last_saved')
+        // Если запрос успешен
+          .then(response => {
+            const id = response.data.id
+            axios({
+              method: 'get',
+              url: `http://localhost:8000/${id}.jpg`,
+              responseType: 'blob'
+            }).then(response => {
+              console.log(response)
+              this.changeCurFile(response.data)
+              const reader = new FileReader()
+              reader.addEventListener('load', function () {
+                this.imageSrc = reader.result
+                this.changeURLCurFile(reader.result)
+              }.bind(this), false)
+              if (response.data) {
+                reader.readAsDataURL(response.data)
+              }
+              this.changeEffect('отсутствует')
+            })
+          })
+        // Если запрос с ошибкой
+          .catch(error => {
+            const errorText = 'Произошла ошибка: сервер недоступен. Попробуйте перезагрузить страницу'
+            this.onChangeModal(true, errorText, 'uploadPage')
+            this.isServerOn = false
+            console.log(error)
+          })
+
+        this.closeModal()
+        // this.isImgChanged = true
+      }
       if (this.userAction === 'upload') {
         this.onChangeStatusInUpload(false)
         this.changeEffect('отсутствует')
         this.closeModal()
-        this.isImgChanged = true
+        // this.isImgChanged = true
       }
       if (this.userAction === 'download') {
         // eslint-disable-next-line prefer-const
@@ -146,7 +181,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['MODAL_STATUS', 'URL_CUR_FILE', 'CUR_FILE', 'CUR_EFFECT'])
+    ...mapGetters(['MODAL_STATUS', 'URL_CUR_FILE', 'CUR_FILE', 'CUR_EFFECT', 'CUR_FILE_ID'])
   },
   created () {
     this.isServerAnswer()

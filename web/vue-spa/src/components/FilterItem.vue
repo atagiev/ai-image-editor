@@ -24,7 +24,7 @@ export default ({
     urlCurFile: ''
   }),
   methods: {
-    ...mapActions(['changeEffect', 'changeActiveFilter', 'changeURLCurFile', 'changeCurFile']),
+    ...mapActions(['changeEffect', 'changeActiveFilter', 'changeURLCurFile', 'changeCurFile', 'changeCurFileId']),
     onClickFilter () {
       // axios.defaults.timeout = 40000
       axios.get('http://localhost:5000/ping')
@@ -70,11 +70,6 @@ export default ({
       const formData = new FormData()
       formData.append('filter_name', this.filterName)
       formData.append('image', this.curFile)
-      // const config = {
-      //   headers: {
-      //     'content-type': 'multipart/form-data'
-      //   } comment
-      // }
       axios.post('http://localhost:5000/', formData)
       // Если запрос успешен
         .then(response => {
@@ -86,6 +81,8 @@ export default ({
             responseType: 'blob'
           }).then(response => {
             console.log(response)
+            this.changeCurFileId(id)
+            this.changeCurFile(response.data)
             const reader = new FileReader()
             reader.addEventListener('load', function () {
               this.imageSrc = reader.result
@@ -95,85 +92,9 @@ export default ({
               reader.readAsDataURL(response.data)
             }
           })
-          // console.log(response.data)
-          // const base64Str = Buffer.from(new Uint8Array(response).reduce((data, byte) => data + String.fromCharCode(byte), ''), 'utf8').toString('base64')
-          // 1 способ
-          // const base64Str = (response.data).toString('utf8')
-          // console.log(base64Str)
-          // const fileURL = 'data:image/jpeg;base64,' + base64Str
-          // console.log(fileURL)
-          // 2 способ
-          // fetch(`http://localhost:8000/${id}.jpg`)
-          //   .then(response => {
-          //     console.log(response.body)
-          //     const buffer = response.arrayBuffer()
-          //     const bytes = new Uint8Array(buffer)
-          //     const blob = new Blob([bytes.buffer])
-
-          //     // const image = document.createElement('img')
-          //     const reader = new FileReader()
-          //     reader.addEventListener('load', (e) => {
-          //       console.log(reader.result)
-          //       // image.src = e.target.result
-          //       this.changeURLCurFile(reader.result)
-          //       // this.$el.append(image)
-          //     })
-          //     reader.readAsDataURL(blob)
-          //   })
-            // 3 способ
-            // const file = this.convertToBlob(response.data, 'image/jpeg')
-            // console.log(typeof (file))
-            // const reader = new FileReader()
-            // reader.addEventListener('load', function () {
-            //   this.imageSrc = reader.result
-            //   this.changeURLCurFile(reader.result)
-            // }.bind(this), false)
-            // if (file) {
-            //   reader.readAsDataURL(file)
-            // }
-            // 4 способ
-            // const str2blob = txt => new Blob([txt], { type: 'image/jpeg' })
-            // const file = str2blob(response.data)
-            // console.log(file)
-            // const imageUrl = URL.createObjectURL(file)
-            // console.log(imageUrl)
-            // this.changeURLCurFile(imageUrl)
-            // 5 способ
-            // const base64Str = (response.data).toString('base64')
-            // const uint8str = new Uint8Array(response.data)
-            // console.log(base64Str)
-            // console.log(uint8str)
-            // const reader = new FileReader()
-            // reader.addEventListener('load', function () {
-            //   this.imageSrc = reader.result
-            //   this.changeURLCurFile(reader.result)
-            // }.bind(this), false)
-            // if (file) {
-            //   reader.readAsDataURL(file)
-            // }
-            // })
             .catch(function (error) {
               console.log(error)
             })
-          // this.changeURLCurFile(response.data.path)
-          // fetch(response.data.path)
-          //   .then(res => res.blob()) // Gets the response and returns it as a blob
-          //   .then(blob => {
-          //     this.changeCurFile(blob)
-          // let objectURL = URL.createObjectURL(blob);
-          // let myImage = new Image();
-          // myImage.src = objectURL;
-          // document.getElementById('myImg').appendChild(myImage)
-          // })
-          // eslint-disable-next-line prefer-const
-          // let reader = new FileReader()
-          // reader.addEventListener('load', function () {
-          //   this.imageSrc = reader.result
-          //   this.changeURLCurFile(reader.result)
-          // }.bind(this), false)
-          // if (response.data) {
-          //   reader.readAsDataURL(response.data)
-          // }
         })
       // Если запрос с ошибкой
         .catch(function (error) {
