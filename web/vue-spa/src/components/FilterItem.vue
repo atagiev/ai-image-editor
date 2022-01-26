@@ -24,9 +24,9 @@ export default ({
     urlCurFile: ''
   }),
   methods: {
-    ...mapActions(['changeEffect', 'changeActiveFilter', 'changeURLCurFile', 'changeCurFile']),
+    ...mapActions(['changeEffect', 'changeActiveFilter', 'changeURLCurFile', 'changeCurFile', 'changeCurFileId']),
     onClickFilter () {
-      axios.defaults.timeout = 10000
+      // axios.defaults.timeout = 40000
       axios.get('http://localhost:5000/ping')
         .then(response => {
           this.changeEffect(this.nameFilter)
@@ -43,47 +43,58 @@ export default ({
           console.log(error)
         })
     },
+    convertToBlob () {
+      // eslint-disable-next-line no-unused-vars
+      const b64toBlob = (b64Data, contentType = 'image/jpeg', sliceSize = 512) => {
+        const byteCharacters = Buffer.from(b64Data, 'base64')
+        const byteArrays = []
+
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+          const slice = byteCharacters.slice(offset, offset + sliceSize)
+
+          const byteNumbers = new Array(slice.length)
+          for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i)
+          }
+
+          const byteArray = new Uint8Array(byteNumbers)
+          byteArrays.push(byteArray)
+        }
+
+        const blob = new Blob(byteArrays, { type: contentType })
+        return blob
+      }
+    },
     // запрос на отправку текущей картинки и названия фильтра
     sendFilter () {
       const formData = new FormData()
       formData.append('filter_name', this.filterName)
       formData.append('image', this.curFile)
-      // const config = {
-      //   headers: {
-      //     'content-type': 'multipart/form-data'
-      //   } comment
-      // }
       axios.post('http://localhost:5000/', formData)
       // Если запрос успешен
         .then(response => {
           console.log(response.data.id)
           const id = response.data.id
-          axios.get(`http://localhost:8000/${id}.jpg`)
-            .then(response => {
-              console.log(response.data)
-            })
+          axios({
+            method: 'get',
+            url: `http://localhost:8000/${id}.jpg`,
+            responseType: 'blob'
+          }).then(response => {
+            console.log(response)
+            this.changeCurFileId(id)
+            this.changeCurFile(response.data)
+            const reader = new FileReader()
+            reader.addEventListener('load', function () {
+              this.imageSrc = reader.result
+              this.changeURLCurFile(reader.result)
+            }.bind(this), false)
+            if (response.data) {
+              reader.readAsDataURL(response.data)
+            }
+          })
             .catch(function (error) {
               console.log(error)
             })
-          // this.changeURLCurFile(response.data.path)
-          // fetch(response.data.path)
-          //   .then(res => res.blob()) // Gets the response and returns it as a blob
-          //   .then(blob => {
-          //     this.changeCurFile(blob)
-          // let objectURL = URL.createObjectURL(blob);
-          // let myImage = new Image();
-          // myImage.src = objectURL;
-          // document.getElementById('myImg').appendChild(myImage)
-          // })
-          // eslint-disable-next-line prefer-const
-          // let reader = new FileReader()
-          // reader.addEventListener('load', function () {
-          //   this.imageSrc = reader.result
-          //   this.changeURLCurFile(reader.result)
-          // }.bind(this), false)
-          // if (response.data) {
-          //   reader.readAsDataURL(response.data)
-          // }
         })
       // Если запрос с ошибкой
         .catch(function (error) {

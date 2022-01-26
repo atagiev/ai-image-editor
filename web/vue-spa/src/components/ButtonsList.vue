@@ -6,7 +6,7 @@
       </button>
     </div>
     <div class="reset-button">
-      <button class="rst-btn btn" @click='onClickReset' :class="classObj">
+      <button class="rst-btn btn" @click='onClickReset' :class="classObjReset">
         <i class="el-icon-refresh-left"></i>
       </button>
     </div>
@@ -92,6 +92,11 @@ export default {
     classObjAccept () {
       return {
         'btn-disabled': this.CUR_EFFECT === 'отсутствует'
+      }
+    },
+    classObjReset () {
+      return {
+        'btn-disabled': this.isImgChanged === false
       }
     }
   }
