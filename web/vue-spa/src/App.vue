@@ -82,6 +82,18 @@ export default {
     },
     acceptAction () {
       if (this.userAction === 'accept') {
+        const id = this.CUR_FILE_ID
+        axios({
+          method: 'get',
+          url: `http://localhost:8000/${id}.jpg`,
+          responseType: 'blob'
+        }).then(response => {
+          console.log(response)
+          this.changeCurFile(response.data)
+        })
+          .catch(function (error) {
+            console.log(error)
+          })
         const formData = new FormData()
         formData.append('saved_image_id', this.CUR_FILE_ID) // пока что здесь лежит путь к файлу
         axios.post('http://localhost:5000/save_image', formData)
@@ -93,9 +105,9 @@ export default {
               throw new Error('Произошла ошибка: не удалось сохранить файл. Попробуйте снова')
             }
             this.isImgChanged = true
-            // let objectURL = URL.createObjectURL(blob);
-            // let myImage = new Image();
-            // myImage.src = objectURL;
+            // const curImage = new Blob()
+            // curImage.url = this.URL_CUR_FILE
+            // this.changeCurFile(curImage)
             // document.getElementById('myImg').appendChild(myImage)
           })
         // Если запрос с ошибкой
@@ -147,12 +159,57 @@ export default {
         // this.isImgChanged = true
       }
       if (this.userAction === 'download') {
-        // eslint-disable-next-line prefer-const
-        let link = document.createElement('a')
-        link.href = this.$store.getters.URL_CUR_FILE
-        link.download = this.$store.getters.CUR_FILE.name
-        link._target = 'blank'
-        link.click()
+        axios.get('http://localhost:5000/get_last_saved')
+        // Если запрос успешен
+          .then(response => {
+            const id = response.data.id
+            axios({
+              method: 'get',
+              url: `http://localhost:8000/${id}.jpg`,
+              responseType: 'blob'
+            }).then(response => {
+              console.log(response)
+              // this.changeCurFile(response.data)
+              const reader = new FileReader()
+              reader.addEventListener('load', function () {
+                this.imageSrc = reader.result
+                const urlSavedFile = reader.result
+                console.log(urlSavedFile)
+                const link = document.createElement('a')
+                link.href = urlSavedFile
+                // link.download = this.$store.getters.CUR_FILE.name
+                link.download = 'file.jpg'
+                link._target = 'blank'
+                link.click()
+                // this.changeURLCurFile(reader.result)
+              }.bind(this), false)
+              if (response.data) {
+                reader.readAsDataURL(response.data)
+              }
+              // this.changeEffect('отсутствует')
+              // const urlSavedFile = reader.result
+              // const link = document.createElement('a')
+              // link.href = urlSavedFile
+              // // link.download = this.$store.getters.CUR_FILE.name
+              // link.download = 'file.jpg'
+              // link._target = 'blank'
+              // link.click()
+            })
+              .catch(error => {
+                const errorText = 'Произошла ошибка: сервер недоступен. Попробуйте перезагрузить страницу'
+                this.onChangeModal(true, errorText, 'uploadPage')
+                this.isServerOn = false
+                console.log(error)
+              })
+          })
+        // Если запрос с ошибкой
+          .catch(error => {
+            const errorText = 'Произошла ошибка: сервер недоступен. Попробуйте перезагрузить страницу'
+            this.onChangeModal(true, errorText, 'uploadPage')
+            this.isServerOn = false
+            console.log(error)
+          })
+
         this.closeModal()
       }
       if (this.userAction === 'delete') {
