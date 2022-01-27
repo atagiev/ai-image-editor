@@ -5,15 +5,6 @@ from PIL import Image
 
 
 def tensor_process_rgbimage(img, size=None, scale=None, keep_asp=False):
-    if size is not None:
-        if keep_asp:
-            size2 = int(size * 1.0 / img.shape[0] * img.shape[1])
-            img = cv2.resize(img, (size2, size), interpolation=cv2.INTER_AREA)
-        else:
-            img = cv2.resize(img, (size, size), interpolation=cv2.INTER_AREA)
-
-    elif scale is not None:
-        img = cv2.resize(img, (int(img.shape[0] / scale), int(img.shape[1] / scale)), interpolation=cv2.INTER_AREA)
     img = img.transpose(2, 0, 1)
     img = torch.from_numpy(img).float()
     return img
