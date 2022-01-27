@@ -105,10 +105,6 @@ export default {
               throw new Error('Произошла ошибка: не удалось сохранить файл. Попробуйте снова')
             }
             this.isImgChanged = true
-            // const curImage = new Blob()
-            // curImage.url = this.URL_CUR_FILE
-            // this.changeCurFile(curImage)
-            // document.getElementById('myImg').appendChild(myImage)
           })
         // Если запрос с ошибкой
           .catch(error => {
@@ -186,14 +182,6 @@ export default {
               if (response.data) {
                 reader.readAsDataURL(response.data)
               }
-              // this.changeEffect('отсутствует')
-              // const urlSavedFile = reader.result
-              // const link = document.createElement('a')
-              // link.href = urlSavedFile
-              // // link.download = this.$store.getters.CUR_FILE.name
-              // link.download = 'file.jpg'
-              // link._target = 'blank'
-              // link.click()
             })
               .catch(error => {
                 const errorText = 'Произошла ошибка: сервер недоступен. Попробуйте перезагрузить страницу'
