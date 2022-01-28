@@ -4,7 +4,7 @@ from src.filter_names_enum import FilterNamesEnum
 
 
 class Request:
-    def __init__(self, input_image_id: int, filter_name: str, request):
+    def __init__(self, input_image_id: int, filter_name: str):
         self.__input_image_id: int = input_image_id
         self.__output_image_id: int = None
         self.__filter_name: FilterNamesEnum = None
@@ -13,8 +13,7 @@ class Request:
                 self.__filter_name = filter_name_enum
         if self.__filter_name is None:
             error(msg=f"Filter {filter_name} not found !")
-        self.__is_ai_filter: bool = self.filter_name.name.startswith("ai_")
-        self.__request = request
+        self.__is_ai_filter: bool = self.__filter_name.name.lower().startswith("ai_")
 
     @property
     def input_image_id(self):
@@ -35,7 +34,3 @@ class Request:
     @property
     def is_ai_filter(self):
         return self.__is_ai_filter
-
-    @property
-    def request(self):
-        return self.__request

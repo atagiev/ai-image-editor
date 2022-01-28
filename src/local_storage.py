@@ -18,8 +18,11 @@ class LocalStorage:
     def get_image(self, image_id: int) -> Image:
         return Image.open(os.path.join(self.__tmp_folder_path, str(image_id) + ".jpg"))
 
+    def get_image_path(self, image_id: int) -> str:
+        return os.path.join(self.__tmp_folder_path, str(image_id) + ".jpg")
+
     def delete_image(self, image_id: int):
         os.remove(os.path.join(self.__tmp_folder_path, str(image_id) + ".jpg"))
 
     def get_filter_image(self, filter_name: FilterNamesEnum):
-        return Image.open(os.path.join(self.__filters_folder_path, filter_name.value + ".jpg"))
+        return Image.open(os.path.join(self.__filters_folder_path, filter_name.value.lower() + ".jpg"))
