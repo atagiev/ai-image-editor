@@ -3,7 +3,7 @@ import numpy as np
 
 
 def greyscale_filter(image: Image) -> Image:
-    return image.convert('L')
+    return image.convert('L').convert('RGB')
 
 
 def brown_filter(image: Image) -> Image:
@@ -47,7 +47,7 @@ def hand_drawn_filter(image: Image) -> Image:
     dz = np.sin(vec_el)
     output = 255 * (dx * uni_x + dy * uni_y + dz * uni_z)
     output = output.clip(0, 255)
-    return Image.fromarray(output.astype('uint8'))
+    return Image.fromarray(output.astype('uint8')).convert('RGB')
 
 
 def emboss_filter(image: Image) -> Image:
@@ -75,4 +75,4 @@ def emboss_filter(image: Image) -> Image:
                 output[y, x, c] = min(max(int(factor * color[c] + bias), 0), 255)
 
     output = Image.fromarray(output.astype('uint8'))
-    return output.convert('L')
+    return output.convert('L').convert('RGB')
