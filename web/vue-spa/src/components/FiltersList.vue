@@ -8,10 +8,10 @@
       <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Рельеф' previewImage='emboss.jpg'></FilterItem>
     </div>
     <div class="filters_list__neural filters_list" v-else-if="this.activeType == 'neural'">
-      <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Candy' previewImage='candy.jpg'></FilterItem>
+      <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Starry night' previewImage='candy.jpg'></FilterItem>
       <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Feathers' previewImage='feathers.jpg'></FilterItem>
       <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Mosaic' previewImage='mosaic.jpg'></FilterItem>
-      <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Starry night' previewImage='starry_night.jpg'></FilterItem>
+      <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Candy' previewImage='starry_night.jpg'></FilterItem>
       <FilterItem @onChangeModal ="onChangeModal" :activeType='activeType' nameFilter='Wave' previewImage='wave.jpg'></FilterItem>
     </div>
   </div>

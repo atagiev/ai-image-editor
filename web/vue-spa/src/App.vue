@@ -113,6 +113,7 @@ export default {
             console.log(error)
           })
         this.closeModal()
+        this.changeEffect('отсутствует')
       }
       if (this.userAction === 'reset') {
         axios.get('http://localhost:5000/get_last_saved')
@@ -152,7 +153,7 @@ export default {
         this.onChangeStatusInUpload(false)
         this.changeEffect('отсутствует')
         this.closeModal()
-        // this.isImgChanged = true
+        this.resetBackendStore()
       }
       if (this.userAction === 'download') {
         axios.get('http://localhost:5000/get_last_saved')
@@ -202,8 +203,10 @@ export default {
       }
       if (this.userAction === 'delete') {
         this.changeURLCurFile(this.$store.getters.URL_INIT_FILE)
+        this.changeCurFile(this.$store.getters.INIT_FILE)
         this.changeEffect('отсутствует')
         this.closeModal()
+        this.resetBackendStore()
       }
       if (this.userAction === 'help') {
         this.closeModal()
@@ -223,10 +226,20 @@ export default {
           this.isServerOn = false
           console.log(error)
         })
+    },
+    resetBackendStore () {
+      axios.get('http://localhost:5000/reset')
+        // Если запрос успешен
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
   computed: {
-    ...mapGetters(['MODAL_STATUS', 'URL_CUR_FILE', 'CUR_FILE', 'CUR_EFFECT', 'CUR_FILE_ID'])
+    ...mapGetters(['MODAL_STATUS', 'URL_CUR_FILE', 'CUR_FILE', 'CUR_EFFECT', 'CUR_FILE_ID', 'INIT_FILE'])
   },
   created () {
     this.isServerAnswer()

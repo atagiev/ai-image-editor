@@ -96,7 +96,8 @@ export default {
     },
     classObjReset () {
       return {
-        'btn-disabled': this.isImgChanged === false
+        'btn-disabled': this.CUR_EFFECT === 'отсутствует'
+        // 'btn-disabled': this.isImgChanged === false
       }
     }
   }
