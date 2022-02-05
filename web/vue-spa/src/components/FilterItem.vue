@@ -24,12 +24,11 @@ export default ({
     urlCurFile: ''
   }),
   methods: {
-    ...mapActions(['changeEffect', 'changeActiveFilter', 'changeURLCurFile', 'changeCurFile', 'changeCurFileId']),
+    ...mapActions(['changeEffect', 'changeActiveFilter', 'changeURLCurFile', 'changeCurFile', 'changeCurFileId', 'changeLoading']),
     onClickFilter () {
       // axios.defaults.timeout = 40000
       axios.get('http://localhost:5000/ping')
         .then(response => {
-          this.changeEffect(this.nameFilter)
           this.changeActiveFilter(this.nameFilter)
           this.isActiveFilter = true
           this.filterName = this.nameFilter
@@ -45,6 +44,7 @@ export default ({
     },
     // запрос на отправку текущей картинки и названия фильтра
     sendFilter () {
+      this.changeLoading(true)
       const formData = new FormData()
       formData.append('filter_name', this.filterName)
       formData.append('image', this.curFile)
@@ -53,6 +53,7 @@ export default ({
         .then(response => {
           console.log(response.data.id)
           const id = response.data.id
+          // axios.defaults.timeout = 5000
           axios({
             method: 'get',
             url: `http://localhost:8000/${id}.jpg`,
@@ -69,6 +70,8 @@ export default ({
             if (response.data) {
               reader.readAsDataURL(response.data)
             }
+            this.changeEffect(this.nameFilter)
+            this.changeLoading(false)
           })
             .catch(function (error) {
               console.log(error)

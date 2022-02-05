@@ -15,7 +15,8 @@ export default new Vuex.Store({
     resWidth: 0,
     resHeight: 0,
     activeFilter: '',
-    curFileId: -1
+    curFileId: -1,
+    isLoading: false
 
   },
   getters: {
@@ -29,7 +30,8 @@ export default new Vuex.Store({
     CUR_RESOLUTION_WIDTH: state => { return state.resWidth },
     CUR_RESOLUTION_HEIGHT: state => { return state.resHeight },
     ACT_FILTER: state => { return state.activeFilter },
-    CUR_FILE_ID: state => { return state.curFileId }
+    CUR_FILE_ID: state => { return state.curFileId },
+    IS_LOADING: state => { return state.isLoading }
   },
   mutations: {
     CHANGE_EFF (state, effect) {
@@ -64,8 +66,10 @@ export default new Vuex.Store({
     },
     CHANGE_CUR_FILE_ID (state, id) {
       state.curFileId = id
+    },
+    CHANGE_LOAD (state, flag) {
+      state.isLoading = flag
     }
-
   },
   actions: {
     changeEffect ({ commit }, effect) {
@@ -111,6 +115,10 @@ export default new Vuex.Store({
     changeCurFileId ({ commit }, id) {
       const idFil = id
       commit('CHANGE_CUR_FILE_ID', idFil)
+    },
+    changeLoading ({ commit }, flag) {
+      const fl = flag
+      commit('CHANGE_LOAD', fl)
     }
   },
   modules: {
