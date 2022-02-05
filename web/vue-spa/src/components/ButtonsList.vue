@@ -83,7 +83,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['CUR_EFFECT', 'IS_LOADING']),
+    ...mapGetters(['CUR_EFFECT', 'IS_LOADING', 'ACT_FILTER']),
     classObj () {
       return {
         'btn-disabled': this.statusUpload === false || this.IS_LOADING === true
@@ -91,12 +91,12 @@ export default {
     },
     classObjAccept () {
       return {
-        'btn-disabled': this.CUR_EFFECT === 'отсутствует' || this.IS_LOADING === true
+        'btn-disabled': this.CUR_EFFECT === 'отсутствует' || this.IS_LOADING === true || this.ACT_FILTER === this.CUR_EFFECT
       }
     },
     classObjReset () {
       return {
-        'btn-disabled': this.CUR_EFFECT === 'отсутствует' || this.IS_LOADING === true
+        'btn-disabled': this.CUR_EFFECT === 'отсутствует' || this.IS_LOADING === true || this.ACT_FILTER === this.CUR_EFFECT
         // 'btn-disabled': this.isImgChanged === false
       }
     }

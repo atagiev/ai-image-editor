@@ -14,7 +14,7 @@ export default new Vuex.Store({
     urlCurFile: '',
     resWidth: 0,
     resHeight: 0,
-    activeFilter: '',
+    activeFilter: 'отсутствует',
     curFileId: -1,
     isLoading: false
 

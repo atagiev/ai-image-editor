@@ -29,7 +29,7 @@ export default ({
       // axios.defaults.timeout = 40000
       axios.get('http://localhost:5000/ping')
         .then(response => {
-          this.changeActiveFilter(this.nameFilter)
+          // this.changeActiveFilter(this.nameFilter)
           this.isActiveFilter = true
           this.filterName = this.nameFilter
           this.curFile = this.$store.getters.CUR_FILE

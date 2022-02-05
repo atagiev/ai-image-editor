@@ -62,7 +62,7 @@ export default {
     isServerOn: false
   }),
   methods: {
-    ...mapActions(['changeURLCurFile', 'changeEffect', 'changeCurFile']),
+    ...mapActions(['changeURLCurFile', 'changeEffect', 'changeCurFile', 'changeActiveFilter']),
     onChangeStatusInUpload (status) {
       this.statusUpload = status
     },
@@ -95,7 +95,7 @@ export default {
             console.log(error)
           })
         const formData = new FormData()
-        formData.append('saved_image_id', this.CUR_FILE_ID) // пока что здесь лежит путь к файлу
+        formData.append('saved_image_id', this.CUR_FILE_ID)
         axios.post('http://localhost:5000/save_image', formData)
         // Если запрос успешен
           .then(response => {
@@ -113,45 +113,52 @@ export default {
             console.log(error)
           })
         this.closeModal()
-        this.changeEffect('отсутствует')
+        this.changeActiveFilter(this.CUR_EFFECT)
+        // this.changeEffect('отсутствует')
       }
       if (this.userAction === 'reset') {
-        axios.get('http://localhost:5000/get_last_saved')
-        // Если запрос успешен
-          .then(response => {
-            const id = response.data.id
-            axios({
-              method: 'get',
-              url: `http://localhost:8000/${id}.jpg`,
-              responseType: 'blob'
-            }).then(response => {
-              console.log(response)
-              this.changeCurFile(response.data)
-              const reader = new FileReader()
-              reader.addEventListener('load', function () {
-                this.imageSrc = reader.result
-                this.changeURLCurFile(reader.result)
-              }.bind(this), false)
-              if (response.data) {
-                reader.readAsDataURL(response.data)
-              }
-              this.changeEffect('отсутствует')
+        if (this.ACT_FILTER === 'отсутствует') {
+          this.changeCurFile(this.INIT_FILE)
+          this.changeURLCurFile(this.URL_INIT_FILE)
+          this.changeEffect('отсутствует')
+        } else {
+          axios.get('http://localhost:5000/get_last_saved')
+          // Если запрос успешен
+            .then(response => {
+              const id = response.data.id
+              axios({
+                method: 'get',
+                url: `http://localhost:8000/${id}.jpg`,
+                responseType: 'blob'
+              }).then(response => {
+                console.log(response)
+                this.changeCurFile(response.data)
+                const reader = new FileReader()
+                reader.addEventListener('load', function () {
+                  this.imageSrc = reader.result
+                  this.changeURLCurFile(reader.result)
+                }.bind(this), false)
+                if (response.data) {
+                  reader.readAsDataURL(response.data)
+                }
+                this.changeEffect(this.ACT_FILTER)
+              })
             })
-          })
-        // Если запрос с ошибкой
-          .catch(error => {
-            const errorText = 'Произошла ошибка: сервер недоступен. Попробуйте перезагрузить страницу'
-            this.onChangeModal(true, errorText, 'uploadPage')
-            this.isServerOn = false
-            console.log(error)
-          })
-
+          // Если запрос с ошибкой
+            .catch(error => {
+              const errorText = 'Произошла ошибка: сервер недоступен. Попробуйте перезагрузить страницу'
+              this.onChangeModal(true, errorText, 'uploadPage')
+              this.isServerOn = false
+              console.log(error)
+            })
+        }
         this.closeModal()
         // this.isImgChanged = true
       }
       if (this.userAction === 'upload') {
         this.onChangeStatusInUpload(false)
         this.changeEffect('отсутствует')
+        this.changeActiveFilter('отсутствует')
         this.closeModal()
         this.resetBackendStore()
       }
@@ -239,7 +246,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['MODAL_STATUS', 'URL_CUR_FILE', 'CUR_FILE', 'CUR_EFFECT', 'CUR_FILE_ID', 'INIT_FILE'])
+    ...mapGetters(['MODAL_STATUS', 'URL_CUR_FILE', 'CUR_FILE', 'CUR_EFFECT', 'CUR_FILE_ID', 'INIT_FILE', 'URL_INIT_FILE', 'ACT_FILTER'])
   },
   created () {
     this.isServerAnswer()
