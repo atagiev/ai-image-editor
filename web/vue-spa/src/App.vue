@@ -62,7 +62,7 @@ export default {
     isServerOn: false
   }),
   methods: {
-    ...mapActions(['changeURLCurFile', 'changeEffect', 'changeCurFile', 'changeActiveFilter']),
+    ...mapActions(['changeURLCurFile', 'changeEffect', 'changeCurFile', 'changeActiveFilter', 'changeCurrentFilter']),
     onChangeStatusInUpload (status) {
       this.statusUpload = status
     },
@@ -121,6 +121,7 @@ export default {
           this.changeCurFile(this.INIT_FILE)
           this.changeURLCurFile(this.URL_INIT_FILE)
           this.changeEffect('отсутствует')
+          // this.changeCurrentFilter('отсутствует')
         } else {
           axios.get('http://localhost:5000/get_last_saved')
           // Если запрос успешен
@@ -142,6 +143,7 @@ export default {
                   reader.readAsDataURL(response.data)
                 }
                 this.changeEffect(this.ACT_FILTER)
+                // this.changeCurrentFilter('отсутствует')
               })
             })
           // Если запрос с ошибкой
@@ -152,6 +154,7 @@ export default {
               console.log(error)
             })
         }
+        this.changeCurrentFilter('отсутствует')
         this.closeModal()
         // this.isImgChanged = true
       }
@@ -212,6 +215,7 @@ export default {
         this.changeURLCurFile(this.$store.getters.URL_INIT_FILE)
         this.changeCurFile(this.$store.getters.INIT_FILE)
         this.changeEffect('отсутствует')
+        this.changeActiveFilter('отсутствует')
         this.closeModal()
         this.resetBackendStore()
       }

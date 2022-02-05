@@ -24,7 +24,7 @@ export default ({
     urlCurFile: ''
   }),
   methods: {
-    ...mapActions(['changeEffect', 'changeActiveFilter', 'changeURLCurFile', 'changeCurFile', 'changeCurFileId', 'changeLoading']),
+    ...mapActions(['changeEffect', 'changeActiveFilter', 'changeURLCurFile', 'changeCurFile', 'changeCurFileId', 'changeLoading', 'changeCurrentFilter']),
     onClickFilter () {
       // axios.defaults.timeout = 40000
       axios.get('http://localhost:5000/ping')
@@ -71,6 +71,7 @@ export default ({
               reader.readAsDataURL(response.data)
             }
             this.changeEffect(this.nameFilter)
+            this.changeCurrentFilter(this.nameFilter)
             this.changeLoading(false)
           })
             .catch(function (error) {

@@ -5,7 +5,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    currentEffect: 'отсутствует',
+    currentEffect: 'отсутствует', // отображает текущий примененный фильтр к картинке, динамически отображается в поле "эффект"
+    currentFilter: '', // фильтр, выбранный в текущей итерации, обнуляется каждый раз при применении очередного фильтра
+    activeFilter: 'отсутствует', // последний сохраненный фильтр
     currentFile: '',
     initFile: '',
     imgUploadStatus: false,
@@ -14,13 +16,13 @@ export default new Vuex.Store({
     urlCurFile: '',
     resWidth: 0,
     resHeight: 0,
-    activeFilter: 'отсутствует',
     curFileId: -1,
     isLoading: false
 
   },
   getters: {
     CUR_EFFECT: state => { return state.currentEffect },
+    CUR_FILTER: state => { return state.currentFilter },
     CUR_FILE: state => { return state.currentFile },
     URL_CUR_FILE: state => { return state.urlCurFile },
     CUR_STATUS: state => { return state.imgUploadStatus },
@@ -60,6 +62,10 @@ export default new Vuex.Store({
     },
     CHANGE_ACT_FILTER (state, actFil) {
       state.activeFilter = actFil
+      state.currentFilter = 'отсутствует'
+    },
+    CHANGE_CUR_FILTER (state, curFil) {
+      state.currentFilter = curFil
     },
     CHANGE_INIT_FILE (state, file) {
       state.initFile = file
@@ -111,6 +117,10 @@ export default new Vuex.Store({
     changeActiveFilter ({ commit }, act) {
       const actFil = act
       commit('CHANGE_ACT_FILTER', actFil)
+    },
+    changeCurrentFilter ({ commit }, cur) {
+      const curFil = cur
+      commit('CHANGE_CUR_FILTER', curFil)
     },
     changeCurFileId ({ commit }, id) {
       const idFil = id
