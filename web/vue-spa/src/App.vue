@@ -265,6 +265,10 @@ export default {
   },
   created () {
     this.isServerAnswer()
+    this.resetBackendStore()
+  },
+  updated () {
+    this.isServerAnswer()
   }
 }
 </script>
