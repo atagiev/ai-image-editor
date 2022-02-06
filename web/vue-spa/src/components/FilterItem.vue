@@ -75,16 +75,20 @@ export default ({
             this.changeLoading(false)
           })
             .catch(function (error) {
+              this.sendWaitingError()
               console.log(error)
+              this.changeLoading(false)
             })
         })
       // Если запрос с ошибкой
-        .catch(function (error) {
+        .catch(error => {
+          this.sendWaitingError()
           console.log(error)
+          this.changeLoading(false)
         })
     },
     sendWaitingError () {
-      const errorText = 'Произошла ошибка: в данный момент сервер недоступен. Попробуйте применить фильтр еще раз или выберите другой.'
+      const errorText = 'Произошла ошибка: в данный момент сервер недоступен. Попробуйте перезагрузить страницу и применить фильтр еще раз.'
       this.$emit('onChangeModal', true, errorText, 'uploadPage')
       // console.log(error)
     }

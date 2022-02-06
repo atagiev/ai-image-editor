@@ -166,49 +166,61 @@ export default {
         this.resetBackendStore()
       }
       if (this.userAction === 'download') {
-        axios.get('http://localhost:5000/get_last_saved')
-        // Если запрос успешен
-          .then(response => {
-            const id = response.data.id
-            axios({
-              method: 'get',
-              url: `http://localhost:8000/${id}.jpg`,
-              responseType: 'blob'
-            }).then(response => {
-              console.log(response)
-              // this.changeCurFile(response.data)
-              const reader = new FileReader()
-              reader.addEventListener('load', function () {
-                this.imageSrc = reader.result
-                const urlSavedFile = reader.result
-                console.log(urlSavedFile)
-                const link = document.createElement('a')
-                link.href = urlSavedFile
-                // link.download = this.$store.getters.CUR_FILE.name
-                link.download = 'file.jpg'
-                link._target = 'blank'
-                link.click()
-                // this.changeURLCurFile(reader.result)
-              }.bind(this), false)
-              if (response.data) {
-                reader.readAsDataURL(response.data)
-              }
-            })
-              .catch(error => {
-                const errorText = 'Произошла ошибка: сервер недоступен. Попробуйте перезагрузить страницу'
-                this.onChangeModal(true, errorText, 'uploadPage')
-                this.isServerOn = false
-                console.log(error)
+        if (this.ACT_FILTER === 'отсутствует') {
+          const link = document.createElement('a')
+          link.href = this.URL_INIT_FILE
+          // link.download = this.$store.getters.CUR_FILE.name
+          link.download = 'file.jpg'
+          link._target = 'blank'
+          link.click()
+        } else {
+        // if (this.CUR_EFFECT !== 'отсутствует') {
+        //   const mesText = 'Сохранить выбранный фильтр перед началом загрузки? Для загрузки предыдущего сохраненного изображения нажмите кнопку "Сброс" и затем снова кнопку "Скачать"'
+        //   this.onChangeModal(true, mesText, 'accept')
+        // }
+          axios.get('http://localhost:5000/get_last_saved')
+          // Если запрос успешен
+            .then(response => {
+              const id = response.data.id
+              axios({
+                method: 'get',
+                url: `http://localhost:8000/${id}.jpg`,
+                responseType: 'blob'
+              }).then(response => {
+                console.log(response)
+                // this.changeCurFile(response.data)
+                const reader = new FileReader()
+                reader.addEventListener('load', function () {
+                  this.imageSrc = reader.result
+                  const urlSavedFile = reader.result
+                  console.log(urlSavedFile)
+                  const link = document.createElement('a')
+                  link.href = urlSavedFile
+                  // link.download = this.$store.getters.CUR_FILE.name
+                  link.download = 'file.jpg'
+                  link._target = 'blank'
+                  link.click()
+                  // this.changeURLCurFile(reader.result)
+                }.bind(this), false)
+                if (response.data) {
+                  reader.readAsDataURL(response.data)
+                }
               })
-          })
-        // Если запрос с ошибкой
-          .catch(error => {
-            const errorText = 'Произошла ошибка: сервер недоступен. Попробуйте перезагрузить страницу'
-            this.onChangeModal(true, errorText, 'uploadPage')
-            this.isServerOn = false
-            console.log(error)
-          })
-
+                .catch(error => {
+                  const errorText = 'Произошла ошибка: сервер недоступен. Попробуйте перезагрузить страницу'
+                  this.onChangeModal(true, errorText, 'uploadPage')
+                  this.isServerOn = false
+                  console.log(error)
+                })
+            })
+          // Если запрос с ошибкой
+            .catch(error => {
+              const errorText = 'Произошла ошибка: сервер недоступен. Попробуйте перезагрузить страницу'
+              this.onChangeModal(true, errorText, 'uploadPage')
+              this.isServerOn = false
+              console.log(error)
+            })
+        }
         this.closeModal()
       }
       if (this.userAction === 'delete') {
