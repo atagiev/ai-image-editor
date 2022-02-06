@@ -96,7 +96,7 @@ export default ({
             .then(response => {
               if (((response.data.w <= 1920 && response.data.h <= 1080) ||
                   (response.data.w <= 1080 && response.data.h <= 1920)) &&
-                  (response.data.w >= 100 && response.data.h >= 100)) {
+                  (Math.max(response.data.w, response.data.h) / Math.min(response.data.w, response.data.h) <= 2)) {
                 this.isUploaded = true
                 this.changeResolutionWidth(response.data.w)
                 this.changeResolutionHeight(response.data.h)
@@ -109,7 +109,7 @@ export default ({
                 console.log('Загружена картинка и инструменты редактирования ', response)
               } else {
                 const errorText = 'Фотография с разрешением ' + response.data.w + 'x' + response.data.h + ' не поддерживается.' +
-                  ' Загрузите фотографию меньшего разрешения (от 100х100 до 1920х1080)'
+                  ' Загрузите фотографию меньшего разрешения (до 1920х1080) и соотношением сторон не более чем 2 к 1'
                 this.$emit('onChangeModal', true, errorText, 'uploadPhoto')
                 // this.$forceUpdate()
               }
