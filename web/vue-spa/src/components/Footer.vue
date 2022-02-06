@@ -110,7 +110,7 @@ export default ({
                 console.log('Загружена картинка и инструменты редактирования ', response)
               } else {
                 const errorText = 'Фотография с разрешением ' + response.data.w + 'x' + response.data.h + ' не поддерживается.' +
-                  ' Загрузите фотографию меньшего разрешения (до 1920х1080) и соотношением сторон не более чем 2 к 1'
+                  ' Загрузите фотографию меньшего разрешения (от 20x20 до 1920х1080) и соотношением сторон не более чем 2 к 1'
                 this.$emit('onChangeModal', true, errorText, 'uploadPhoto')
                 // this.$forceUpdate()
               }
