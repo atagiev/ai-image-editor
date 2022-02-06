@@ -166,18 +166,17 @@ export default {
         this.resetBackendStore()
       }
       if (this.userAction === 'download') {
-        if (this.ACT_FILTER === 'отсутствует') {
+        if (this.ACT_FILTER === 'отсутствует' && this.CUR_EFFECT === 'отсутствует') {
           const link = document.createElement('a')
           link.href = this.URL_INIT_FILE
           // link.download = this.$store.getters.CUR_FILE.name
           link.download = 'file.jpg'
           link._target = 'blank'
           link.click()
+        } else if (this.CUR_EFFECT !== this.ACT_FILTER) {
+          const mesText = 'На данный момент у вас есть несохраненные изменения. Для загрузки изображения сохраните текущий фильтр и вновь нажмите кнопку "Скачать"'
+          this.onChangeModal(true, mesText, 'downloadUnsaved')
         } else {
-        // if (this.CUR_EFFECT !== 'отсутствует') {
-        //   const mesText = 'Сохранить выбранный фильтр перед началом загрузки? Для загрузки предыдущего сохраненного изображения нажмите кнопку "Сброс" и затем снова кнопку "Скачать"'
-        //   this.onChangeModal(true, mesText, 'accept')
-        // }
           axios.get('http://localhost:5000/get_last_saved')
           // Если запрос успешен
             .then(response => {
@@ -220,8 +219,8 @@ export default {
               this.isServerOn = false
               console.log(error)
             })
+          this.closeModal()
         }
-        this.closeModal()
       }
       if (this.userAction === 'delete') {
         this.changeURLCurFile(this.$store.getters.URL_INIT_FILE)
