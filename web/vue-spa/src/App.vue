@@ -173,7 +173,7 @@ export default {
           link.download = 'file.jpg'
           link._target = 'blank'
           link.click()
-        } else if (this.CUR_EFFECT !== this.ACT_FILTER) {
+        } else if ((this.CUR_EFFECT !== this.ACT_FILTER) || (this.ACT_FILTER === this.CUR_FILTER)) {
           const mesText = 'На данный момент у вас есть несохраненные изменения. Для загрузки изображения сохраните текущий фильтр и вновь нажмите кнопку "Скачать"'
           this.onChangeModal(true, mesText, 'downloadUnsaved')
         } else {
@@ -261,7 +261,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['MODAL_STATUS', 'URL_CUR_FILE', 'CUR_FILE', 'CUR_EFFECT', 'CUR_FILE_ID', 'INIT_FILE', 'URL_INIT_FILE', 'ACT_FILTER'])
+    ...mapGetters(['MODAL_STATUS', 'URL_CUR_FILE', 'CUR_FILE', 'CUR_EFFECT', 'CUR_FILE_ID', 'INIT_FILE', 'URL_INIT_FILE', 'ACT_FILTER', 'CUR_FILTER'])
   },
   created () {
     this.isServerAnswer()
