@@ -1,6 +1,7 @@
 <template>
-  <div class="effect-text">
-    Эффект: {{ CUR_EFFECT }}
+  <div class="text-wrapper">
+    <div class="effect-text">Эффект: {{ CUR_EFFECT }}</div>
+    <div class="effect-preloader"><img src="../assets/Spinner.gif" alt="spin" :class="classObjLoader"></div>
   </div>
 </template>
 
@@ -10,7 +11,12 @@ import { mapGetters } from 'vuex'
 export default ({
   name: 'EffectText',
   computed: {
-    ...mapGetters(['CUR_EFFECT'])
+    ...mapGetters(['CUR_EFFECT', 'IS_LOADING']),
+    classObjLoader () {
+      return {
+        'loader-disabled': this.IS_LOADING === false
+      }
+    }
   }
 })
 </script>
@@ -25,5 +31,12 @@ export default ({
     padding: 5px 20px;
     border-radius: 20px;
     margin-top: 10px;
+  }
+  .loader-disabled {
+    display: none;
+  }
+  .effect-preloader {
+    display: inline-block;
+    vertical-align: middle;
   }
 </style>

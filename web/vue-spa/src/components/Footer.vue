@@ -94,7 +94,9 @@ export default ({
           axios.post('http://localhost:5000/get_size', formData)
           // Проверка разрешения картинки
             .then(response => {
-              if ((response.data.w <= 1920 && response.data.h <= 1080) || (response.data.w <= 1080 && response.data.h <= 1920)) {
+              if (((response.data.w <= 1920 && response.data.h <= 1080) ||
+                  (response.data.w <= 1080 && response.data.h <= 1920)) &&
+                  (response.data.w >= 100 && response.data.h >= 100)) {
                 this.isUploaded = true
                 this.changeResolutionWidth(response.data.w)
                 this.changeResolutionHeight(response.data.h)
@@ -107,7 +109,7 @@ export default ({
                 console.log('Загружена картинка и инструменты редактирования ', response)
               } else {
                 const errorText = 'Фотография с разрешением ' + response.data.w + 'x' + response.data.h + ' не поддерживается.' +
-                  'Загрузите фотографию меньшего разрешения (не более 1920х1080)'
+                  ' Загрузите фотографию меньшего разрешения (от 100х100 до 1920х1080)'
                 this.$emit('onChangeModal', true, errorText, 'uploadPhoto')
                 // this.$forceUpdate()
               }

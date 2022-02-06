@@ -24,13 +24,12 @@ export default ({
     urlCurFile: ''
   }),
   methods: {
-    ...mapActions(['changeEffect', 'changeActiveFilter', 'changeURLCurFile', 'changeCurFile', 'changeCurFileId']),
+    ...mapActions(['changeEffect', 'changeActiveFilter', 'changeURLCurFile', 'changeCurFile', 'changeCurFileId', 'changeLoading', 'changeCurrentFilter']),
     onClickFilter () {
       // axios.defaults.timeout = 40000
       axios.get('http://localhost:5000/ping')
         .then(response => {
-          this.changeEffect(this.nameFilter)
-          this.changeActiveFilter(this.nameFilter)
+          // this.changeActiveFilter(this.nameFilter)
           this.isActiveFilter = true
           this.filterName = this.nameFilter
           this.curFile = this.$store.getters.CUR_FILE
@@ -45,6 +44,7 @@ export default ({
     },
     // запрос на отправку текущей картинки и названия фильтра
     sendFilter () {
+      this.changeLoading(true)
       const formData = new FormData()
       formData.append('filter_name', this.filterName)
       formData.append('image', this.curFile)
@@ -53,6 +53,7 @@ export default ({
         .then(response => {
           console.log(response.data.id)
           const id = response.data.id
+          // axios.defaults.timeout = 5000
           axios({
             method: 'get',
             url: `http://localhost:8000/${id}.jpg`,
@@ -69,18 +70,25 @@ export default ({
             if (response.data) {
               reader.readAsDataURL(response.data)
             }
+            this.changeEffect(this.nameFilter)
+            this.changeCurrentFilter(this.nameFilter)
+            this.changeLoading(false)
           })
             .catch(function (error) {
+              this.sendWaitingError()
               console.log(error)
+              this.changeLoading(false)
             })
         })
       // Если запрос с ошибкой
-        .catch(function (error) {
+        .catch(error => {
+          this.sendWaitingError()
           console.log(error)
+          this.changeLoading(false)
         })
     },
     sendWaitingError () {
-      const errorText = 'Произошла ошибка: в данный момент сервер недоступен. Попробуйте применить фильтр еще раз или выберите другой.'
+      const errorText = 'Произошла ошибка: в данный момент сервер недоступен. Попробуйте перезагрузить страницу и применить фильтр еще раз.'
       this.$emit('onChangeModal', true, errorText, 'uploadPage')
       // console.log(error)
     }

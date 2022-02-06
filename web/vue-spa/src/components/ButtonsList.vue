@@ -83,20 +83,20 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['CUR_EFFECT']),
+    ...mapGetters(['CUR_EFFECT', 'IS_LOADING', 'ACT_FILTER', 'CUR_FILTER']),
     classObj () {
       return {
-        'btn-disabled': this.statusUpload === false
+        'btn-disabled': this.statusUpload === false || this.IS_LOADING === true
       }
     },
     classObjAccept () {
       return {
-        'btn-disabled': this.CUR_EFFECT === 'отсутствует'
+        'btn-disabled': this.CUR_EFFECT === 'отсутствует' || this.IS_LOADING === true || this.CUR_FILTER === 'отсутствует'
       }
     },
     classObjReset () {
       return {
-        'btn-disabled': this.CUR_EFFECT === 'отсутствует'
+        'btn-disabled': this.CUR_EFFECT === 'отсутствует' || this.IS_LOADING === true || this.CUR_FILTER === 'отсутствует'
         // 'btn-disabled': this.isImgChanged === false
       }
     }

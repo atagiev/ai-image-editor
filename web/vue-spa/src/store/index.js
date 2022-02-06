@@ -5,7 +5,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    currentEffect: 'отсутствует',
+    currentEffect: 'отсутствует', // отображает текущий примененный фильтр к картинке, динамически отображается в поле "эффект"
+    currentFilter: 'отсутствует', // фильтр, выбранный в текущей итерации, обнуляется каждый раз при применении очередного фильтра
+    activeFilter: 'отсутствует', // последний сохраненный фильтр
     currentFile: '',
     initFile: '',
     imgUploadStatus: false,
@@ -14,12 +16,13 @@ export default new Vuex.Store({
     urlCurFile: '',
     resWidth: 0,
     resHeight: 0,
-    activeFilter: '',
-    curFileId: -1
+    curFileId: -1,
+    isLoading: false
 
   },
   getters: {
     CUR_EFFECT: state => { return state.currentEffect },
+    CUR_FILTER: state => { return state.currentFilter },
     CUR_FILE: state => { return state.currentFile },
     URL_CUR_FILE: state => { return state.urlCurFile },
     CUR_STATUS: state => { return state.imgUploadStatus },
@@ -29,7 +32,8 @@ export default new Vuex.Store({
     CUR_RESOLUTION_WIDTH: state => { return state.resWidth },
     CUR_RESOLUTION_HEIGHT: state => { return state.resHeight },
     ACT_FILTER: state => { return state.activeFilter },
-    CUR_FILE_ID: state => { return state.curFileId }
+    CUR_FILE_ID: state => { return state.curFileId },
+    IS_LOADING: state => { return state.isLoading }
   },
   mutations: {
     CHANGE_EFF (state, effect) {
@@ -58,14 +62,20 @@ export default new Vuex.Store({
     },
     CHANGE_ACT_FILTER (state, actFil) {
       state.activeFilter = actFil
+      state.currentFilter = 'отсутствует'
+    },
+    CHANGE_CUR_FILTER (state, curFil) {
+      state.currentFilter = curFil
     },
     CHANGE_INIT_FILE (state, file) {
       state.initFile = file
     },
     CHANGE_CUR_FILE_ID (state, id) {
       state.curFileId = id
+    },
+    CHANGE_LOAD (state, flag) {
+      state.isLoading = flag
     }
-
   },
   actions: {
     changeEffect ({ commit }, effect) {
@@ -108,9 +118,17 @@ export default new Vuex.Store({
       const actFil = act
       commit('CHANGE_ACT_FILTER', actFil)
     },
+    changeCurrentFilter ({ commit }, cur) {
+      const curFil = cur
+      commit('CHANGE_CUR_FILTER', curFil)
+    },
     changeCurFileId ({ commit }, id) {
       const idFil = id
       commit('CHANGE_CUR_FILE_ID', idFil)
+    },
+    changeLoading ({ commit }, flag) {
+      const fl = flag
+      commit('CHANGE_LOAD', fl)
     }
   },
   modules: {
