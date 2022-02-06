@@ -96,7 +96,8 @@ export default ({
             .then(response => {
               if (((response.data.w <= 1920 && response.data.h <= 1080) ||
                   (response.data.w <= 1080 && response.data.h <= 1920)) &&
-                  (Math.max(response.data.w, response.data.h) / Math.min(response.data.w, response.data.h) <= 2)) {
+                  (Math.max(response.data.w, response.data.h) / Math.min(response.data.w, response.data.h) <= 2) &&
+                  ((response.data.w >= 20 && response.data.h >= 20))) {
                 this.isUploaded = true
                 this.changeResolutionWidth(response.data.w)
                 this.changeResolutionHeight(response.data.h)
