@@ -16,7 +16,7 @@ class LocalStorage:
         return self.__last_image_id
 
     def get_image(self, image_id: int) -> Image:
-        return Image.open(os.path.join(self.__tmp_folder_path, str(image_id) + ".jpg"))
+        return Image.open(os.path.join(self.__tmp_folder_path, str(image_id) + ".jpg")).convert('RGB')
 
     def get_image_path(self, image_id: int) -> str:
         return os.path.join(self.__tmp_folder_path, str(image_id) + ".jpg")
