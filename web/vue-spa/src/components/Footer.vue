@@ -130,12 +130,6 @@ export default ({
           // this.isServerOn = false
           console.log(error)
         })
-      // eslint-disable-next-line prefer-const
-
-      // this.changeCurFile(event.target.files[0])
-      // this.changeInitFile(event.target.files[0])
-      // this.$emit('onChangeStatus', this.isImageUploaded)
-      // this.$emit('onChangeServerStatus', true)
     },
     sendPicture () {
       axios.post('/', this.file)
