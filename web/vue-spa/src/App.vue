@@ -105,6 +105,7 @@ export default {
               throw new Error('Произошла ошибка: не удалось сохранить файл. Попробуйте снова')
             }
             this.isImgChanged = true
+            this.changeActiveFilter(this.CUR_EFFECT)
           })
         // Если запрос с ошибкой
           .catch(error => {
@@ -113,7 +114,7 @@ export default {
             console.log(error)
           })
         this.closeModal()
-        this.changeActiveFilter(this.CUR_EFFECT)
+        // this.changeActiveFilter(this.CUR_EFFECT)
         // this.changeEffect('отсутствует')
       }
       if (this.userAction === 'reset') {
@@ -268,7 +269,7 @@ export default {
     this.resetBackendStore()
   },
   updated () {
-    this.isServerAnswer()
+    // this.isServerAnswer()
   }
 }
 </script>
