@@ -4,15 +4,15 @@ import unittest
 
 from PIL import Image
 
-from src.filter_names_enum import FilterNamesEnum
+from filter_names_enum import FilterNamesEnum
 from src.local_storage import LocalStorage
-from src.request import Request
 
 
 class LocalStorageTest(unittest.TestCase):
     def setUp(self) -> None:
-        self.tmp_folder_path = os.path.join(pathlib.Path().resolve(), "..", "tmp")
-        self.filters_folder_path = os.path.join(pathlib.Path().resolve(), "..", "ai_filters", "Style_GAN", "images")
+        self.tmp_folder_path = os.path.normpath(os.path.join(pathlib.Path().resolve(), "..", "tmp"))
+        self.filters_folder_path = os.path.normpath(
+            os.path.join(pathlib.Path().resolve(), "..", "ai_filters", "Style_GAN", "images"))
 
         self.image1 = Image.open(os.path.join(pathlib.Path().resolve(), "..", "tests", "images", "unnamed.jpg"))
         self.image2 = Image.open(os.path.join(pathlib.Path().resolve(), "..", "tests", "images", "unnamed_3.jpg"))
@@ -67,7 +67,8 @@ class LocalStorageTest(unittest.TestCase):
 
         img_path = ls.get_image_path(image_id=img_id)
 
-        self.assertEqual(img_path, os.path.join(pathlib.Path().resolve(), "..", "tmp", str(img_id) + ".jpg"))
+        self.assertEqual(img_path,
+                         os.path.normpath(os.path.join(pathlib.Path().resolve(), "..", "tmp", str(img_id) + ".jpg")))
 
         img = Image.open(img_path)
 
@@ -132,14 +133,74 @@ class LocalStorageTest(unittest.TestCase):
             is_failed = True
         self.assertTrue(is_failed)
 
+    def test_get_not_image(self):
+        with open(os.path.normpath(os.path.join(self.tmp_folder_path, "file.jpg")), "w") as f:
+            f.write("1111111111111111")
+        is_failed = False
+        try:
+            ls = LocalStorage(tmp_folder_path=self.tmp_folder_path, filters_folder_path=self.filters_folder_path)
+            ls.get_image(image_id="file")
+        except:
+            is_failed = True
+
+        self.assertTrue(is_failed)
+
+    def test_many_images(self):
+        import threading
+        ls = LocalStorage(tmp_folder_path=self.tmp_folder_path, filters_folder_path=self.filters_folder_path)
+
+        def save_image():
+            id = ls.save_image(image=self.image1)
+            ls.get_image(image_id=id)
+
+        lst = []
+        for i in range(100):
+            my_thread = threading.Thread(target=save_image())
+            my_thread.start()
+            lst.append(my_thread)
+        for i in lst:
+            i.join()
+
+        ls.delete_images()
+
+
+    def test_delete_images(self):
+        ls = LocalStorage(tmp_folder_path=self.tmp_folder_path, filters_folder_path=self.filters_folder_path)
+        ls.save_image(image=self.image1)
+        import pathlib
+        initial_count = 0
+        for path in pathlib.Path(self.tmp_folder_path).iterdir():
+            if path.is_file():
+                initial_count += 1
+        self.assertEqual(1, initial_count)
+
+        ls.delete_images()
+        initial_count = 0
+        for path in pathlib.Path(self.tmp_folder_path).iterdir():
+            if path.is_file():
+                initial_count += 1
+        self.assertEqual(0, initial_count)
+
+    def test_filter_image(self):
+        ls = LocalStorage(tmp_folder_path=self.tmp_folder_path, filters_folder_path=self.filters_folder_path)
+        img = ls.get_filter_image(filter_name=FilterNamesEnum.AI_STARRY_NIGHT)
+        self.assertEqual(type(img), type(self.image1))
+
+    def test_classic_filter_image(self):
+        ls = LocalStorage(tmp_folder_path=self.tmp_folder_path, filters_folder_path=self.filters_folder_path)
+        is_failed = False
+        try:
+            ls.get_filter_image(filter_name=FilterNamesEnum.GREYSCALE)
+        except:
+            is_failed = True
+        self.assertTrue(is_failed)
+
+
+
     def tearDown(self) -> None:
         ls = LocalStorage(tmp_folder_path=self.tmp_folder_path, filters_folder_path=self.filters_folder_path)
         ls.delete_images()
         self.notimage.close()
-# тест на сохранение 100 картинок и удаление
-
-# тест get_image(main.py)
-
 
 
 if __name__ == '__main__':

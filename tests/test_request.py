@@ -1,26 +1,13 @@
-import os
-import pathlib
 import unittest
 
-from PIL import Image
 
 from src.filter_names_enum import FilterNamesEnum
-from src.local_storage import LocalStorage
 from src.request import Request
 
 class RequestTest(unittest.TestCase):
     def setUp(self) -> None:
-        tmp_folder_path = os.path.join(pathlib.Path().resolve(),"..", "tmp")
-        filters_folder_path = os.path.join(pathlib.Path().resolve(),"..", "ai_filters", "Style_GAN", "images")
-
-        self.ls = LocalStorage(tmp_folder_path=tmp_folder_path, filters_folder_path=filters_folder_path)
-        image1 = Image.open(os.path.join(pathlib.Path().resolve(), "images", "unnamed.jpg"))
-        image2 = Image.open(os.path.join(pathlib.Path().resolve(),  "images", "unnamed_3.jpg"))
-        self.id1 = self.ls.save_image(image=image1)
-        self.id2 = self.ls.save_image(image=image2)
-
-    def tearDown(self) -> None:
-        self.ls.delete_images()
+        self.id1 = 1
+        self.id2 = 2
 
     def testRequestParams(self):
         r = Request(input_image_id=self.id1, filter_name=FilterNamesEnum.GREYSCALE.value)
