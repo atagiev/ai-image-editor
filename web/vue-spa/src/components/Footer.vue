@@ -34,7 +34,6 @@
 import { mapActions, mapGetters } from 'vuex'
 import FiltersList from '@/components/FiltersList'
 import axios from 'axios'
-
 export default ({
   name: 'Footer',
   components: {
@@ -89,37 +88,7 @@ export default ({
       axios.get('http://localhost:5000/ping')
       // Если сервер работает
         .then(response => {
-          const formData = new FormData()
-          formData.append('image', this.file)
-          axios.post('http://localhost:5000/get_size', formData)
-          // Проверка разрешения картинки
-            .then(response => {
-              if (((response.data.w <= 1920 && response.data.h <= 1080) ||
-                  (response.data.w <= 1080 && response.data.h <= 1920)) &&
-                  (Math.max(response.data.w, response.data.h) / Math.min(response.data.w, response.data.h) <= 2) &&
-                  ((response.data.w >= 20 && response.data.h >= 20))) {
-                this.isUploaded = true
-                this.changeResolutionWidth(response.data.w)
-                this.changeResolutionHeight(response.data.h)
-                console.log(this.$store.getters.CUR_RESOLUTION_WIDTH + ' ' + this.$store.getters.CUR_RESOLUTION_HEIGHT)
-                console.log(response)
-                this.changeCurFile(event.target.files[0])
-                this.changeInitFile(event.target.files[0])
-                this.$emit('onChangeStatus', this.isUploaded)
-                this.$emit('onChangeServerStatus', true)
-                console.log('Загружена картинка и инструменты редактирования ', response)
-              } else {
-                const errorText = 'Фотография с разрешением ' + response.data.w + 'x' + response.data.h + ' не поддерживается.' +
-                  ' Загрузите другую фотографию в рамках ограничений: от 20x20 до 1920х1080 и соотношением сторон не более чем 2 к 1'
-                this.$emit('onChangeModal', true, errorText, 'uploadPhoto')
-                // this.$forceUpdate()
-              }
-            })
-          // Если запрос с ошибкой
-            .catch(error => {
-              console.log(this.file)
-              console.log(error)
-            })
+          this.uploadPicture(event)
         })
       // Если запрос с ошибкой
         .catch(error => {
@@ -139,6 +108,39 @@ export default ({
         })
       // Если запрос с ошибкой
         .catch(function (error) {
+          console.log(error)
+        })
+    },
+    uploadPicture (event) {
+      const formData = new FormData()
+      formData.append('image', this.file)
+      axios.post('http://localhost:5000/get_size', formData)
+      // Проверка разрешения картинки
+        .then(response => {
+          if (((response.data.w <= 1920 && response.data.h <= 1080) ||
+              (response.data.w <= 1080 && response.data.h <= 1920)) &&
+              (Math.max(response.data.w, response.data.h) / Math.min(response.data.w, response.data.h) <= 2) &&
+              ((response.data.w >= 20 && response.data.h >= 20))) {
+            this.isUploaded = true
+            this.changeResolutionWidth(response.data.w)
+            this.changeResolutionHeight(response.data.h)
+            console.log(this.$store.getters.CUR_RESOLUTION_WIDTH + ' ' + this.$store.getters.CUR_RESOLUTION_HEIGHT)
+            console.log(response)
+            this.changeCurFile(event.target.files[0])
+            this.changeInitFile(event.target.files[0])
+            this.$emit('onChangeStatus', this.isUploaded)
+            this.$emit('onChangeServerStatus', true)
+            console.log('Загружена картинка и инструменты редактирования ', response)
+          } else {
+            const errorText = 'Фотография с разрешением ' + response.data.w + 'x' + response.data.h + ' не поддерживается.' +
+              ' Загрузите другую фотографию в рамках ограничений: от 20x20 до 1920х1080 и соотношением сторон не более чем 2 к 1'
+            this.$emit('onChangeModal', true, errorText, 'uploadPhoto')
+            // this.$forceUpdate()
+          }
+        })
+      // Если запрос с ошибкой
+        .catch(error => {
+          console.log(this.file)
           console.log(error)
         })
     }
@@ -234,7 +236,6 @@ export default ({
   align-items: center;
   padding: 9px 49px;
   border-radius: 6px;
-
 }
 .input__file-button:hover {
   background:#4ac885a9;
