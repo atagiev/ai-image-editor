@@ -1,5 +1,6 @@
-import { createLocalVue, mount } from '@vue/test-utils'
+import { createLocalVue, mount, shallowMount } from '@vue/test-utils'
 import Footer from '../../src/components/Footer.vue'
+import axios from 'axios'
 
 const event = {
   target: {
@@ -12,6 +13,7 @@ const event = {
     ]
   }
 }
+jest.mock('axios')
 
 describe('Footer.vue testing', () => {
   // создаем новый экземпляр Vue приложения с помощью функции  “createLocalVue”
@@ -29,19 +31,66 @@ describe('Footer.vue testing', () => {
   })
 })
 
-describe('Testing limitations of pictures', () => {
+describe('Testing handlefileupload', () => {
   const wrapper = mount(Footer)
   it('initialized correctly', () => {
+    const responseGet = {
+      data:
+      {
+        success: true
+      }
+    }
     const fileReaderSpy = jest.spyOn(FileReader.prototype, 'readAsDataURL').mockImplementation(() => null)
+    axios.get.mockResolvedValue(responseGet)
     wrapper.vm.handleFileUpload(event)
-
     // Assert that the FileReader object was called with the uploaded image
     expect(fileReaderSpy).toHaveBeenCalledWith(event.target.files[0])
   })
 })
 
-// Тест план:
-// 1) Картинка с допустимыми разрешениями проходит без ошибкой
+describe('Testing limitation of pictures', () => {
+  const wrapper = shallowMount(Footer)
+  beforeEach(() => {
+    const responseGet = {
+      data:
+        {
+          h: 20,
+          w: 10
+        }
+    }
+    // Set the mock call to GET to return a successful GET response
+    // axios.post.mockResolvedValue(responseGet)
+    axios.post = jest.fn().mockResolvedValue(responseGet)
+
+    // render the component
+    // eslint-disable-next-line no-unused-vars
+  })
+
+  afterEach(() => {
+    jest.resetModules()
+    jest.clearAllMocks()
+  })
+
+  it('correct resolution accepting without errors', () => {
+    wrapper.vm.uploadPicture(event)
+    expect(axios.get).toHaveBeenCalledTimes(1)
+
+    wrapper.vm.$nextTick().then(function () {
+      expect(this.isUploaded).toMatch('true')
+      console.log(this.isUploaded)
+    })
+  })
+  it('incorrect resolution accepting with errors', () => {
+    wrapper.vm.uploadPicture(event)
+    // expect(axios.get).toHaveBeenCalledTimes(1)
+
+    wrapper.vm.$nextTick().then(function () {
+
+    })
+  })
+})
+
+// 1) Картинка с допустимыми разрешениями проходит без ошибки
 // 2) Картинка с недопустимым разрешением не загружается и выкидывает ошибку
 // 3) Загруженная картинка появляется на экране
 // 4) Проверка, что без примененного фильтра текст эффекта = "отсутствует"
@@ -49,22 +98,15 @@ describe('Testing limitations of pictures', () => {
 // 6) Проверка, что при нажатии на кнопки выбора типов фильтров меняется список фильтров
 // 7) Проверка, что текст эффекта соотвествует примененному эффекту пользователем
 // 8) Проверка, что при загрузке нвоого изображения автоматически нажимается кнопка "загрузить" на главном экране
-// 9) Проверка, что при нажатии кнопки "удалить", загрузки новой картинки, и обновлении страницы отправляется и выполняется запрос на удаление картинок на сервере
 // 10) Проверка, что при загрузке слишком большйо картинки лсит с нейронными фильтрами будет недоступен.
 // 11) Проверка, что при нажатии на фильтр, картинка на экране меняется
 // 12) Проверка, что при загрузке картинки до применения фильтра кнопки сохранить и сброс недоступны
-// 13) Проверка, что при сохранении картинки выполняется сохранение и картинка остаетися на экране
 // 14) Проверка, что при сбросе картинки, изменяется изображение на экране и кнопки сохранить и сброс недоступны
 // 15) Проверка, что на начальном экране кнопки недоступны
-// 16) Проверка, что при последовательным нажатии фильтров будет выдан последний выбранный фильтр
-// 17) Проверка, что фильтры до сохранения применяются к изначальному изображению.
-// 18) Проверка, что фильтры после сохранения применяются к новому изображению
 // 19) Проверка, что картинку с иным форматом (или другой файл в принципе) загрузить невозможно
 // 20) Проверка, что при нажатии кнопок появляется окно с предупреждением/пояснением/вопросом
 // 21) Проверка, что в поле "разрешение" отображается разрешение картинки
 // 22) Проверка, что в поле "название файла" отображается название файла
-// 23) Проверка, что при недоступности севрера появляется предупреждение
-// 24) Проверка, что при недоступности севрера интерфейс страницы пропадает
 // 25) Проверка, что при наведении мышкой фильтр подсвечивается
 // 26) Проверка, что при наведении на активную кнопку она также подсвечивается
 // 27) Проверка, что при нажатии кнопки "нет" в диалоговом окне оно закрывается и ничего не происходит
