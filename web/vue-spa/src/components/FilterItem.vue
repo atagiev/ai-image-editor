@@ -88,7 +88,7 @@ export default ({
         })
     },
     sendWaitingError () {
-      const errorText = 'Произошла ошибка: в данный момент сервер недоступен. Попробуйте перезагрузить страницу и применить фильтр еще раз.'
+      const errorText = 'Произошла ошибка: в данный момент сервер недоступен. Попробуйте применить другой фильтр или перезагрузите страницу.'
       this.$emit('onChangeModal', true, errorText, 'uploadPage')
       // console.log(error)
     }
