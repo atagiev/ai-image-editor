@@ -8,10 +8,10 @@ from .utils import *
 
 
 def run(input_image, input_size=512, style="candy", style_size=512):
-    content_image = tensor_process_rgbimage(input_image, input_size, keep_asp=True).unsqueeze(0)
+    content_image = tensor_process_rgbimage(input_image).unsqueeze(0)
     style_image = cv2.imread(f'ai_filters/Style_GAN/images/{style}.jpg', cv2.IMREAD_UNCHANGED)
     style_image = cv2.cvtColor(style_image, cv2.COLOR_BGR2RGB)
-    style_image = tensor_process_rgbimage(style_image, style_size, keep_asp=True).unsqueeze(0)
+    style_image = tensor_process_rgbimage(style_image).unsqueeze(0)
     style_image = preprocess_batch(style_image)
     
     style_model = Net(ngf=128)
