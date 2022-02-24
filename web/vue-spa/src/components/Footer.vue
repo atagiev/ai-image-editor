@@ -60,7 +60,7 @@ export default ({
       this.isActiveClassic = false
       this.isActiveNeural = true
       this.activeType = 'neural'
-      if ((this.CUR_RESOLUTION_WIDTH >= 800 && this.CUR_RESOLUTION_HEIGHT >= 450) || (this.CUR_RESOLUTION_WIDTH >= 450 && this.CUR_RESOLUTION_HEIGHT >= 800)) {
+      if (!(this.CUR_RESOLUTION_WIDTH <= 800 && this.CUR_RESOLUTION_HEIGHT <= 450) && !(this.CUR_RESOLUTION_WIDTH <= 450 && this.CUR_RESOLUTION_HEIGHT <= 800)) {
         const messageText = 'Обратите внимание: фотография с разрешением ' + this.CUR_RESOLUTION_WIDTH + 'x' + this.CUR_RESOLUTION_HEIGHT + ' не поддерживает нейронные фильтры.' +
             'Для применения нейронных фильтров загрузите фотографию меньшего разрешения (не более 800х450)'
         this.$emit('onChangeModal', true, messageText, 'neuralPhoto')
@@ -76,6 +76,14 @@ export default ({
     },
     handleFileUpload (event) {
       this.file = event.target.files[0]
+      const str = this.file.name
+      console.log(typeof str)
+      console.log(str.slice(str.lastIndexOf('.')) + (str.slice(str.lastIndexOf('.')).length))
+      if ((str.slice(str.lastIndexOf('.')) !== '.jpg') && (str.slice(str.lastIndexOf('.')) !== '.jpeg')) {
+        const errorText = 'Поддерживается загрузка только файлов с расширением jpg/jpeg'
+        this.$emit('onChangeModal', true, errorText, 'help')
+        return
+      }
       // eslint-disable-next-line prefer-const
       let reader = new FileReader()
       reader.addEventListener('load', function () {
@@ -108,6 +116,7 @@ export default ({
                 this.$emit('onChangeStatus', this.isUploaded)
                 this.$emit('onChangeServerStatus', true)
                 console.log('Загружена картинка и инструменты редактирования ', response)
+                this.onClickBtnClassic()
               } else {
                 const errorText = 'Фотография с разрешением ' + response.data.w + 'x' + response.data.h + ' не поддерживается.' +
                   ' Загрузите другую фотографию в рамках ограничений: от 20x20 до 1920х1080 и соотношением сторон не более чем 2 к 1'
