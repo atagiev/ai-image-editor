@@ -49,7 +49,16 @@ describe('Testing handlefileupload', () => {
 })
 
 describe('Testing limitation of pictures', () => {
-  const wrapper = shallowMount(Footer)
+  const wrapper = shallowMount(Footer, {
+    propsData: {
+      isUploaded: false,
+      isActiveClassic: true,
+      isActiveNeural: false,
+      activeType: 'classic',
+      file: '',
+      imageSrc: ''
+    }
+  })
   beforeEach(() => {
     const responseGet = {
       data:
@@ -73,11 +82,18 @@ describe('Testing limitation of pictures', () => {
 
   it('correct resolution accepting without errors', () => {
     wrapper.vm.uploadPicture(event)
-    expect(axios.get).toHaveBeenCalledTimes(1)
-
+    const responseGet = {
+      data:
+        {
+          h: 20,
+          w: 10
+        }
+    }
+    axios.post = jest.fn().mockResolvedValue(responseGet)
     wrapper.vm.$nextTick().then(function () {
-      expect(this.isUploaded).toMatch('true')
-      console.log(this.isUploaded)
+      expect(axios.get).toHaveBeenCalledTimes(1)
+      expect(wrapper.vm.isUploaded).toBeTruthy()
+      console.log(wrapper.vm.isUploaded)
     })
   })
   it('incorrect resolution accepting with errors', () => {
