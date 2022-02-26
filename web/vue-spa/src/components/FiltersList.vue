@@ -26,7 +26,7 @@ export default {
   },
   data: () => ({
   }),
-  props: ['activeType', 'nameFilter', 'previewImage'],
+  props: ['activeType', 'nameFilter'],
   methods: {
     onChangeModal (status, msg, action) {
       this.$emit('onChangeModal', status, msg, action)

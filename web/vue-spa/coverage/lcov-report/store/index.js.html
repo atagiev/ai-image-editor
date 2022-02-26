@@ -22,9 +22,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">5.56% </span>
+                <span class="strong">14.81% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/54</span>
+                <span class='fraction'>8/54</span>
             </div>
         
             
@@ -36,16 +36,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">5.13% </span>
+                <span class="strong">17.95% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/39</span>
+                <span class='fraction'>7/39</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">5.56% </span>
+                <span class="strong">14.81% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/54</span>
+                <span class='fraction'>8/54</span>
             </div>
         
             
@@ -195,7 +195,7 @@
 <a name='L137'></a><a href='#L137'>137</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -215,19 +215,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -354,13 +354,13 @@ export default new Vuex.Store({
     CUR_EFFECT: state =&gt; { return state.currentEffect },
     CUR_FILTER: <span class="fstat-no" title="function not covered" >st</span>ate =&gt; { <span class="cstat-no" title="statement not covered" >return state.currentFilter </span>},
     CUR_FILE: <span class="fstat-no" title="function not covered" >st</span>ate =&gt; { <span class="cstat-no" title="statement not covered" >return state.currentFile </span>},
-    URL_CUR_FILE: <span class="fstat-no" title="function not covered" >st</span>ate =&gt; { <span class="cstat-no" title="statement not covered" >return state.urlCurFile </span>},
+    URL_CUR_FILE: state =&gt; { return state.urlCurFile },
     CUR_STATUS: <span class="fstat-no" title="function not covered" >st</span>ate =&gt; { <span class="cstat-no" title="statement not covered" >return state.imgUploadStatus </span>},
     MODAL_STATUS: <span class="fstat-no" title="function not covered" >st</span>ate =&gt; { <span class="cstat-no" title="statement not covered" >return state.modalBoxStatus </span>},
-    INIT_FILE: <span class="fstat-no" title="function not covered" >st</span>ate =&gt; { <span class="cstat-no" title="statement not covered" >return state.initFile </span>},
-    URL_INIT_FILE: <span class="fstat-no" title="function not covered" >st</span>ate =&gt; { <span class="cstat-no" title="statement not covered" >return state.urlInitFile </span>},
-    CUR_RESOLUTION_WIDTH: <span class="fstat-no" title="function not covered" >st</span>ate =&gt; { <span class="cstat-no" title="statement not covered" >return state.resWidth </span>},
-    CUR_RESOLUTION_HEIGHT: <span class="fstat-no" title="function not covered" >st</span>ate =&gt; { <span class="cstat-no" title="statement not covered" >return state.resHeight </span>},
+    INIT_FILE: state =&gt; { return state.initFile },
+    URL_INIT_FILE: state =&gt; { return state.urlInitFile },
+    CUR_RESOLUTION_WIDTH: state =&gt; { return state.resWidth },
+    CUR_RESOLUTION_HEIGHT: state =&gt; { return state.resHeight },
     ACT_FILTER: <span class="fstat-no" title="function not covered" >st</span>ate =&gt; { <span class="cstat-no" title="statement not covered" >return state.activeFilter </span>},
     CUR_FILE_ID: <span class="fstat-no" title="function not covered" >st</span>ate =&gt; { <span class="cstat-no" title="statement not covered" >return state.curFileId </span>},
     IS_LOADING: state =&gt; { return state.isLoading }
@@ -471,7 +471,7 @@ export default new Vuex.Store({
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sun Feb 20 2022 17:00:03 GMT+0300 (Москва, стандартное время)
+                at Sat Feb 26 2022 17:28:05 GMT+0300 (Москва, стандартное время)
             </div>
         </div>
         <script src="..\prettify.js"></script>
