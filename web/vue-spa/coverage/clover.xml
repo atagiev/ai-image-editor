@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1645885685375" clover="3.2.0">
-  <project timestamp="1645885685375" name="All files">
-    <metrics statements="192" coveredstatements="48" conditionals="27" coveredconditionals="5" methods="86" coveredmethods="25" elements="305" coveredelements="78" complexity="0" loc="192" ncloc="192" packages="3" files="10" classes="10"/>
+<coverage generated="1645954697622" clover="3.2.0">
+  <project timestamp="1645954697623" name="All files">
+    <metrics statements="192" coveredstatements="49" conditionals="27" coveredconditionals="5" methods="86" coveredmethods="26" elements="305" coveredelements="80" complexity="0" loc="192" ncloc="192" packages="3" files="10" classes="10"/>
     <package name="assets">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="candy.jpg" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\assets\candy.jpg">
@@ -10,7 +10,7 @@
       </file>
     </package>
     <package name="components">
-      <metrics statements="137" coveredstatements="39" conditionals="27" coveredconditionals="5" methods="47" coveredmethods="18"/>
+      <metrics statements="137" coveredstatements="40" conditionals="27" coveredconditionals="5" methods="47" coveredmethods="19"/>
       <file name="ButtonsList.vue" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\ButtonsList.vue">
         <metrics statements="25" coveredstatements="5" conditionals="8" coveredconditionals="4" methods="11" coveredmethods="4"/>
         <line num="37" count="1" type="stmt"/>
@@ -40,8 +40,8 @@
         <line num="98" count="1" type="stmt"/>
       </file>
       <file name="DialogBox.vue" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\DialogBox.vue">
-        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="48" count="0" type="stmt"/>
+        <metrics statements="2" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="48" count="1" type="stmt"/>
         <line num="51" count="0" type="stmt"/>
       </file>
       <file name="EffectText.vue" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\EffectText.vue">

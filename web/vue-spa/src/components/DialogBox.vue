@@ -11,14 +11,14 @@
             && userAction != "acceptError" && userAction != "downloadUnsaved"'>
             <button
                   type="button"
-                  class="btn-green"
+                  class="btn-green yes"
                   @click="submit"
                 >
                   Да
             </button>
             <button
                   type="button"
-                  class="btn-green"
+                  class="btn-green no"
                   @click="cancel"
                 >
                   Нет

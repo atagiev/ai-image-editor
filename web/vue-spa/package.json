@@ -13,6 +13,7 @@
     "base-64": "^1.0.0",
     "core-js": "^3.6.5",
     "element-ui": "^2.15.6",
+    "sinon": "^13.0.1",
     "vue": "^2.6.11",
     "vuex": "^3.6.2"
   },
@@ -35,7 +36,14 @@
   },
   "jest": {
     "collectCoverage": true,
-    "collectCoverageFrom": ["**/*.{js,vue}", "!**/node_modules/**"],
-    "moduleFileExtensions": ["js", "vue"]
+    "collectCoverageFrom": [
+      "**/*.{js,vue}",
+      "!**/node_modules/**",
+      "!**/src/assets/**"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "vue"
+    ]
   }
 }

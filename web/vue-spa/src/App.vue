@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <el-container direction="vertical">
+    <div>
       <header>
         <Header></Header>
       </header>
@@ -20,7 +20,7 @@
           @onChangeModal="onChangeModal">
         </Footer>
       </footer>
-    </el-container>
+    </div>
     <modal
       :userAction = userAction
       :msg = modalMessage
