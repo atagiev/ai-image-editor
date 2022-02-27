@@ -1,32 +1,32 @@
 <template>
   <div class='btns-list'>
     <div class="accept-button">
-      <button class="acpt-btn btn" @click='onClickAccept' :class="classObjAccept">
+      <button class="acpt-btn btn" @click='onClickAccept()' :class="classObjAccept">
         <i class="el-icon-check"></i>
       </button>
     </div>
     <div class="reset-button">
-      <button class="rst-btn btn" @click='onClickReset' :class="classObjReset">
+      <button class="rst-btn btn" @click='onClickReset()' :class="classObjReset">
         <i class="el-icon-refresh-left"></i>
       </button>
     </div>
     <div class="delete-button" >
-      <button class="dlt-btn btn" @click='onClickDelete' :class="classObj">
+      <button class="dlt-btn btn" @click='onClickDelete()' :class="classObj">
         <i class="el-icon-delete-solid"></i>
       </button>
     </div>
     <div class="upload-button">
-      <button class="upld-btn btn" @click='onClickUpload' :class="classObj">
+      <button class="upld-btn btn" @click='onClickUpload()' :class="classObj">
         <i class="el-icon-upload2"></i>
       </button>
     </div>
     <div class="download-button">
-      <button class="dwld-btn btn" @click='onClickDownload' :class="classObj">
+      <button class="dwld-btn btn" @click='onClickDownload()' :class="classObj">
         <i class="el-icon-download"></i>
       </button>
     </div>
     <div class="help-button">
-      <button class="help-btn btn" @click='onClickHelp' :class="classObj">
+      <button class="help-btn btn" @click='onClickHelp()' :class="classObj">
         <i class="el-icon-s-help"></i>
       </button>
     </div>

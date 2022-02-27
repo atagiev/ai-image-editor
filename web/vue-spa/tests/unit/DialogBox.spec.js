@@ -21,9 +21,9 @@ describe('DialogBox instance testing', () => {
 describe('DialogBox buttons are correct', () => {
   let wrapper
   beforeEach (() => {
-    const vueInstance = createLocalVue()
+    const localVue = createLocalVue()
     wrapper = mount(DialogBox, {
-      vueInstance
+      localVue
     })
   })
   // const vueInstance = createLocalVue()
@@ -32,14 +32,13 @@ describe('DialogBox buttons are correct', () => {
   // })
   it('Click is calling method "cancel"', async () => {
     jest.spyOn(wrapper.vm, 'cancel')
-    await wrapper.find('button.no').trigger('click')
-    expext(wrapper.vm.cancel).toHaveBeenCalled()
-    // expect(wrapper.vm.cancel).toBeCalled()
-
-    // wrapper.vm.$emit('cancel')
-    // wrapper.vm.$emit('cancel', 'close')
-    // await wrapper.vm.$nextTick()
-    // expect(wrapper.emitted().cancel[1]).toEqual(['close'])
+    await wrapper.find('button.no').trigger('click');
+    expect(wrapper.vm.cancel).toHaveBeenCalled();
+  })
+  it('Click is calling method "submit"', async () => {
+    jest.spyOn(wrapper.vm, 'submit')
+    await wrapper.find('button.yes').trigger('click');
+    expect(wrapper.vm.submit).toHaveBeenCalled();
   })
   it('Clicks were emitted', async () => {
     wrapper.vm.$emit('submit')
@@ -49,13 +48,13 @@ describe('DialogBox buttons are correct', () => {
   })
   it('emits return "close" if button is clicked', () => {
     const cmp = wrapper.findComponent('.no')
-    expect(cmp.contains('.no')).toBe(true);
+    expect(cmp.getComponent('.no').exists()).toBe(true);
     wrapper.vm.$emit('cancel', 'close')
     expect(wrapper.emitted()["cancel"][0]).toEqual(['close'])
   })
   it('emits return "accept" if button is clicked', () => {
     const cmp = wrapper.findComponent('.yes')
-    expect(cmp.contains('.yes')).toBe(true);
+    expect(cmp.getComponent('.yes').exists()).toBe(true);
     wrapper.vm.$emit('submit', 'accept')
     expect(wrapper.emitted()["submit"][0]).toEqual(['accept'])
   })

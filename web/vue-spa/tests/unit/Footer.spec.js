@@ -1,6 +1,7 @@
 import { createLocalVue, mount, shallowMount } from '@vue/test-utils'
 import Footer from '../../src/components/Footer.vue'
 import axios from 'axios'
+import store from '@/store'
 
 const event = {
   target: {
@@ -13,7 +14,31 @@ const event = {
     ]
   }
 }
+
+const formData = {
+  "image":
+  {
+    "name": 'image.jpg',
+    "size": 50000,
+    "type": 'image/jpg'
+  }
+}
 jest.mock('axios')
+
+const mockData = [
+  {success: true}
+]
+const mockDataPost = [
+  {h: 40, w: 40}
+]
+
+jest.mock('axios', () => ({
+  get: jest.fn(() => mockData),
+  post: jest.fn(() => mockDataPost)
+}))
+// jest.mock('axios', () => ({
+//   post: jest.fn(() => mockDataPost)
+// }))
 
 describe('Footer.vue testing', () => {
   // создаем новый экземпляр Vue приложения с помощью функции  “createLocalVue”
@@ -32,81 +57,67 @@ describe('Footer.vue testing', () => {
 
 describe('Testing handlefileupload', () => {
   const wrapper = mount(Footer)
-  it('initialized correctly', () => {
-    const responseGet = {
-      data:
-      {
-        success: true
-      }
+  const responseGet = {
+    data:
+    {
+      success: true
     }
+  }
+  const responseGetSize = {
+    data:
+    {
+      h: 40,
+      w: 40
+    }
+  }
+  it('Testing filereader', () => {
     const fileReaderSpy = jest.spyOn(FileReader.prototype, 'readAsDataURL').mockImplementation(() => null)
     axios.get.mockResolvedValue(responseGet)
     wrapper.vm.handleFileUpload(event)
     // Assert that the FileReader object was called with the uploaded image
     expect(fileReaderSpy).toHaveBeenCalledWith(event.target.files[0])
   })
+  it('Testing axios get', async () => {
+    jest.spyOn(wrapper.vm, 'handleFileUpload')
+    axios.get.mockResolvedValue(responseGet)
+    expect(axios.get).toHaveBeenCalled()
+    expect(axios.get).toHaveBeenCalledWith('http://localhost:5000/ping')
+  })
+  it('Testing axios post', async () => {
+    jest.spyOn(wrapper.vm, 'handleFileUpload')
+    axios.post.mockImplementationOnce(() => Promise.resolve(responseGetSize))
+    // axios.post.mockResolvedValue(responseGetSize)
+    expect(axios.post).toHaveBeenCalled()
+    expect(axios.post).toHaveBeenCalledWith('http://localhost:5000/get_size', formData)
+  })
 })
 
-// describe('Testing limitation of pictures', () => {
-//   const wrapper = shallowMount(Footer, {
-//     propsData: {
-//       isUploaded: false,
-//       isActiveClassic: true,
-//       isActiveNeural: false,
-//       activeType: 'classic',
-//       file: '',
-//       imageSrc: ''
-//     }
-//   })
-//   beforeEach(() => {
-//     const responseGet = {
-//       data:
-//         {
-//           h: 20,
-//           w: 10
-//         }
-//     }
-//     // Set the mock call to GET to return a successful GET response
-//     // axios.post.mockResolvedValue(responseGet)
-//     axios.post = jest.fn().mockResolvedValue(responseGet)
+describe('Testing buttons', () => {
+  let wrapper
+  beforeEach (() => {
+    const localVue = createLocalVue()
+    wrapper = mount(Footer, {
+      localVue, store,
+      propsData: {
+        isImageUploaded: true,
+      }
+    })
+  })
+  it('Click classic button is changing type of filters', async () => {
+    jest.spyOn(wrapper.vm, 'onClickBtnClassic')
+    await wrapper.find('button.classic-btn').trigger('click');
+    expect(wrapper.vm.onClickBtnClassic).toHaveBeenCalled();
+  })
+  it('Click neural button is changing type of filters', async () => {
+    jest.spyOn(wrapper.vm, 'onClickBtnNeural')
+    await wrapper.find('button.neural-btn').trigger('click');
+    expect(wrapper.vm.onClickBtnNeural).toHaveBeenCalled();
+  })
+})
 
-//     // render the component
-//     // eslint-disable-next-line no-unused-vars
-//   })
+describe('Testing buttons', () => {
 
-//   afterEach(() => {
-//     jest.resetModules()
-//     jest.clearAllMocks()
-//   })
-
-//   it('correct resolution accepting without errors', () => {
-//     wrapper.vm.uploadPicture(event)
-//     const responseGet = {
-//       data:
-//         {
-//           h: 20,
-//           w: 10
-//         }
-//     }
-//     axios.post = jest.fn().mockResolvedValue(responseGet)
-//     wrapper.vm.$nextTick().then(function () {
-//       expect(axios.post).toHaveBeenCalledTimes(1)
-//       expect(wrapper.vm.isUploaded).toBeTruthy()
-//       console.log(wrapper.vm.isUploaded)
-//     })
-//   })
-
-//   it('incorrect resolution accepting with errors', () => {
-//     wrapper.vm.uploadPicture(event)
-//     // expect(axios.get).toHaveBeenCalledTimes(1)
-
-//     wrapper.vm.$nextTick().then(function () {
-//       expect(axios.get).toHaveBeenCalledTimes(1)
-//       expect(wrapper.vm.isUploaded).toBeFalsy()
-//     })
-//   })
-// })
-
+})
 // 1) Картинка с допустимыми разрешениями проходит без ошибки
 // 2) Картинка с недопустимым разрешением не загружается и выкидывает ошибку
 // 3) Загруженная картинка появляется на экране

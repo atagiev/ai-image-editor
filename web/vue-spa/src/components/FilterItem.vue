@@ -1,5 +1,5 @@
 <template>
-  <div @click='onClickFilter' class="filter">
+  <div @click='onClickFilter()' class="filter">
     <div class="filter-item" :class="classObj"
     :style="{'background': 'url('+ itemImage + ') no-repeat'}">
       <div class="filter-item__filter-name">

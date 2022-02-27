@@ -1,48 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1645954697622" clover="3.2.0">
-  <project timestamp="1645954697623" name="All files">
-    <metrics statements="192" coveredstatements="49" conditionals="27" coveredconditionals="5" methods="86" coveredmethods="26" elements="305" coveredelements="80" complexity="0" loc="192" ncloc="192" packages="3" files="10" classes="10"/>
+<coverage generated="1645979287362" clover="3.2.0">
+  <project timestamp="1645979287362" name="All files">
+    <metrics statements="201" coveredstatements="91" conditionals="27" coveredconditionals="8" methods="86" coveredmethods="39" elements="314" coveredelements="138" complexity="0" loc="201" ncloc="201" packages="3" files="19" classes="19"/>
     <package name="assets">
-      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="brown.jpg" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\assets\brown.jpg">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
       <file name="candy.jpg" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\assets\candy.jpg">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="2" type="stmt"/>
+      </file>
+      <file name="emboss.jpg" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\assets\emboss.jpg">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
+      <file name="feathers.jpg" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\assets\feathers.jpg">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
+      <file name="greyscale.jpg" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\assets\greyscale.jpg">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
+      <file name="handdraw.jpg" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\assets\handdraw.jpg">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
+      <file name="invert.jpg" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\assets\invert.jpg">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
+      <file name="mosaic.jpg" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\assets\mosaic.jpg">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
+      <file name="starry_night.jpg" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\assets\starry_night.jpg">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
+      <file name="wave.jpg" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\assets\wave.jpg">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
       </file>
     </package>
     <package name="components">
-      <metrics statements="137" coveredstatements="40" conditionals="27" coveredconditionals="5" methods="47" coveredmethods="19"/>
+      <metrics statements="137" coveredstatements="73" conditionals="27" coveredconditionals="8" methods="47" coveredmethods="32"/>
       <file name="ButtonsList.vue" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\ButtonsList.vue">
-        <metrics statements="25" coveredstatements="5" conditionals="8" coveredconditionals="4" methods="11" coveredmethods="4"/>
+        <metrics statements="25" coveredstatements="25" conditionals="8" coveredconditionals="4" methods="11" coveredmethods="11"/>
         <line num="37" count="1" type="stmt"/>
-        <line num="42" count="1" type="stmt"/>
-        <line num="50" count="0" type="stmt"/>
-        <line num="51" count="0" type="stmt"/>
-        <line num="52" count="0" type="stmt"/>
-        <line num="55" count="0" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
-        <line num="57" count="0" type="stmt"/>
-        <line num="60" count="0" type="stmt"/>
-        <line num="61" count="0" type="stmt"/>
-        <line num="62" count="0" type="stmt"/>
-        <line num="65" count="0" type="stmt"/>
-        <line num="66" count="0" type="stmt"/>
-        <line num="67" count="0" type="stmt"/>
-        <line num="70" count="0" type="stmt"/>
-        <line num="71" count="0" type="stmt"/>
-        <line num="72" count="0" type="stmt"/>
-        <line num="75" count="0" type="stmt"/>
-        <line num="77" count="0" type="stmt"/>
-        <line num="78" count="0" type="stmt"/>
-        <line num="81" count="0" type="stmt"/>
-        <line num="82" count="0" type="stmt"/>
-        <line num="88" count="1" type="stmt"/>
-        <line num="93" count="1" type="stmt"/>
-        <line num="98" count="1" type="stmt"/>
+        <line num="42" count="7" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="65" count="1" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="67" count="1" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="75" count="1" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="81" count="6" type="stmt"/>
+        <line num="82" count="6" type="stmt"/>
+        <line num="88" count="7" type="stmt"/>
+        <line num="93" count="7" type="stmt"/>
+        <line num="98" count="7" type="stmt"/>
       </file>
       <file name="DialogBox.vue" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\DialogBox.vue">
-        <metrics statements="2" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="48" count="1" type="stmt"/>
-        <line num="51" count="0" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
       </file>
       <file name="EffectText.vue" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\EffectText.vue">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
@@ -50,11 +86,11 @@
         <line num="16" count="2" type="stmt"/>
       </file>
       <file name="FilterItem.vue" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\FilterItem.vue">
-        <metrics statements="41" coveredstatements="5" conditionals="2" coveredconditionals="0" methods="12" coveredmethods="3"/>
+        <metrics statements="41" coveredstatements="6" conditionals="2" coveredconditionals="0" methods="12" coveredmethods="4"/>
         <line num="13" count="3" type="stmt"/>
         <line num="14" count="3" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
+        <line num="19" count="12" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
         <line num="33" count="0" type="stmt"/>
         <line num="34" count="0" type="stmt"/>
         <line num="35" count="0" type="stmt"/>
@@ -90,34 +126,34 @@
         <line num="87" count="0" type="stmt"/>
         <line num="91" count="0" type="stmt"/>
         <line num="92" count="0" type="stmt"/>
-        <line num="99" count="1" type="stmt"/>
-        <line num="105" count="1" type="stmt"/>
+        <line num="99" count="17" type="stmt"/>
+        <line num="105" count="17" type="stmt"/>
       </file>
       <file name="FiltersList.vue" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\FiltersList.vue">
         <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
         <line num="21" count="2" type="stmt"/>
-        <line num="27" count="1" type="stmt"/>
+        <line num="27" count="3" type="stmt"/>
         <line num="32" count="0" type="stmt"/>
       </file>
       <file name="Footer.vue" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\Footer.vue">
-        <metrics statements="56" coveredstatements="18" conditionals="17" coveredconditionals="1" methods="13" coveredmethods="4"/>
+        <metrics statements="56" coveredstatements="29" conditionals="17" coveredconditionals="4" methods="13" coveredmethods="8"/>
         <line num="34" count="1" type="stmt"/>
         <line num="35" count="1" type="stmt"/>
         <line num="36" count="1" type="stmt"/>
-        <line num="43" count="2" type="stmt"/>
-        <line num="54" count="0" type="stmt"/>
-        <line num="55" count="0" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
-        <line num="59" count="0" type="stmt"/>
-        <line num="60" count="0" type="stmt"/>
-        <line num="61" count="0" type="stmt"/>
-        <line num="62" count="0" type="cond" truecount="0" falsecount="6"/>
+        <line num="43" count="4" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="62" count="1" type="cond" truecount="3" falsecount="3"/>
         <line num="63" count="0" type="stmt"/>
         <line num="65" count="0" type="stmt"/>
         <line num="66" count="0" type="stmt"/>
         <line num="70" count="0" type="stmt"/>
-        <line num="73" count="0" type="stmt"/>
-        <line num="74" count="0" type="stmt"/>
+        <line num="73" count="1" type="stmt"/>
+        <line num="74" count="1" type="stmt"/>
         <line num="77" count="1" type="stmt"/>
         <line num="79" count="1" type="stmt"/>
         <line num="80" count="1" type="stmt"/>
@@ -152,9 +188,9 @@
         <line num="134" count="0" type="stmt"/>
         <line num="137" count="0" type="stmt"/>
         <line num="141" count="0" type="stmt"/>
-        <line num="182" count="2" type="stmt"/>
-        <line num="185" count="0" type="stmt"/>
-        <line num="187" count="0" type="stmt"/>
+        <line num="182" count="4" type="stmt"/>
+        <line num="185" count="1" type="stmt"/>
+        <line num="187" count="1" type="stmt"/>
         <line num="188" count="0" type="stmt"/>
         <line num="189" count="0" type="stmt"/>
       </file>
@@ -177,7 +213,7 @@
       <metrics statements="54" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="39" coveredmethods="7"/>
       <file name="index.js" path="D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\store\index.js">
         <metrics statements="54" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="39" coveredmethods="7"/>
-        <line num="4" count="4" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
         <line num="24" count="2" type="stmt"/>
         <line num="25" count="0" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
@@ -186,7 +222,7 @@
         <line num="29" count="0" type="stmt"/>
         <line num="30" count="1" type="stmt"/>
         <line num="31" count="1" type="stmt"/>
-        <line num="32" count="1" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
         <line num="33" count="1" type="stmt"/>
         <line num="34" count="0" type="stmt"/>
         <line num="35" count="0" type="stmt"/>

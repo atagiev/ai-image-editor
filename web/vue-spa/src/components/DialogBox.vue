@@ -12,14 +12,14 @@
             <button
                   type="button"
                   class="btn-green yes"
-                  @click="submit"
+                  @click="submit()"
                 >
                   Да
             </button>
             <button
                   type="button"
                   class="btn-green no"
-                  @click="cancel"
+                  @click="cancel()"
                 >
                   Нет
             </button>
@@ -28,7 +28,7 @@
             <button
                   type="button"
                   class="btn-green ok"
-                  @click="cancel"
+                  @click="cancel()"
                 >
                   Понятно
             </button>

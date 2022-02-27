@@ -17,10 +17,10 @@
       <div class="filters__buttons">
         <button class="classic-btn btn"
           :class="{'active-btn':isActiveClassic}"
-          @click='onClickBtnClassic'>C</button>
+          @click='onClickBtnClassic()'>C</button>
         <button class="neural-btn btn"
           :class="{'active-btn':isActiveNeural}"
-          @click='onClickBtnNeural'>NN</button>
+          @click='onClickBtnNeural()'>NN</button>
       </div>
       <div class="filters__list">
         <FiltersList @onChangeModal="onChangeModalStatus" :activeType='activeType'></FiltersList>
