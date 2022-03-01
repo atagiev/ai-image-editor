@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createLocalVue, mount, shallowMount } from '@vue/test-utils'
 import ButtonsList from '../../src/components/ButtonsList.vue'
 import store from '@/store'

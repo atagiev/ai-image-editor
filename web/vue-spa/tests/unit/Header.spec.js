@@ -1,6 +1,7 @@
-import { createLocalVue, mount, shallowMount } from '@vue/test-utils'
+/* eslint-disable */
+import { createLocalVue, mount } from '@vue/test-utils'
 import Header from '../../src/components/Header.vue'
-import axios from 'axios'
+// import axios from 'axios'
 
 describe('Header testing', () => {
   // создаем новый экземпляр Vue приложения с помощью функции  “createLocalVue”
@@ -23,5 +24,4 @@ describe('Header testing', () => {
     expect(wrapper.is(Header)).toBe(true)
     expect(wrapper.findAll('div').at(0).text()).toMatch('YourEditor')
   })
-
 })

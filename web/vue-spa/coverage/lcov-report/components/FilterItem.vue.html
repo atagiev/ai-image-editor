@@ -22,9 +22,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.63% </span>
+                <span class="strong">46.34% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/41</span>
+                <span class='fraction'>19/41</span>
             </div>
         
             
@@ -36,16 +36,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">58.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/12</span>
+                <span class='fraction'>7/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.63% </span>
+                <span class="strong">46.34% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/41</span>
+                <span class='fraction'>19/41</span>
             </div>
         
             
@@ -242,25 +242,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -271,13 +271,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -286,8 +279,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -381,18 +381,18 @@ export default ({
         })
     },
     // запрос на отправку текущей картинки и названия фильтра
-<span class="fstat-no" title="function not covered" >    sendFilter () {</span>
-<span class="cstat-no" title="statement not covered" >      this.changeLoading(true)</span>
-<span class="cstat-no" title="statement not covered" >      const formData = new FormData()</span>
-<span class="cstat-no" title="statement not covered" >      formData.append('filter_name', this.filterName)</span>
-<span class="cstat-no" title="statement not covered" >      formData.append('image', this.curFile)</span>
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      axios.post('http://localhost:5000/', formData)</span></span>
+    sendFilter () {
+      this.changeLoading(true)
+      const formData = new FormData()
+      formData.append('filter_name', this.filterName)
+      formData.append('image', this.curFile)
+      axios.post('http://localhost:5000/', formData)
       // Если запрос успешен
         .then(response =&gt; {
-<span class="cstat-no" title="statement not covered" >          console.log(response.data.id)</span>
-<span class="cstat-no" title="statement not covered" >          const id = response.data.id</span>
+          console.log(response.data.id)
+          const id = response.data.id
           // axios.defaults.timeout = 5000
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >          axios({</span></span>
+<span class="fstat-no" title="function not covered" >          axios({</span>
             method: 'get',
             url: `http://localhost:8000/${id}.jpg`,
             responseType: 'blob'
@@ -420,14 +420,14 @@ export default ({
         })
       // Если запрос с ошибкой
         .catch(error =&gt; {
-<span class="cstat-no" title="statement not covered" >          this.sendWaitingError()</span>
-<span class="cstat-no" title="statement not covered" >          console.log(error)</span>
-<span class="cstat-no" title="statement not covered" >          this.changeLoading(false)</span>
+          this.sendWaitingError()
+          console.log(error)
+          this.changeLoading(false)
         })
     },
-<span class="fstat-no" title="function not covered" >    sendWaitingError () {</span>
-<span class="cstat-no" title="statement not covered" >      const errorText = 'Произошла ошибка: в данный момент сервер недоступен. Попробуйте применить другой фильтр или перезагрузите страницу.'</span>
-<span class="cstat-no" title="statement not covered" >      this.$emit('onChangeModal', true, errorText, 'uploadPage')</span>
+    sendWaitingError () {
+      const errorText = 'Произошла ошибка: в данный момент сервер недоступен. Попробуйте применить другой фильтр или перезагрузите страницу.'
+      this.$emit('onChangeModal', true, errorText, 'uploadPage')
       // console.log(error)
     }
   },
@@ -483,7 +483,7 @@ export default ({
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Mar 01 2022 16:55:32 GMT+0300 (Москва, стандартное время)
+                at Tue Mar 01 2022 20:57:46 GMT+0300 (Москва, стандартное время)
             </div>
         </div>
         <script src="..\prettify.js"></script>

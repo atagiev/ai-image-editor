@@ -85,13 +85,6 @@ describe('FilterItem testing vuex', () => {
       previewImage: 'candy.jpg',
     }
   })
-
-
-  // it('initialized correctly', () => {
-  //   jest.spyOn(wrapper.vm, 'sendFilter');
-  //   wrapper.vm.sendFilter();
-  //   expect(actions.changeLoading).toHaveBeenCalled();
-  // })
 })
 
 describe('FilterItem testing axios', () => {
@@ -102,12 +95,6 @@ describe('FilterItem testing axios', () => {
       previewImage: 'candy.jpg',
     }
   })
-  // const responseGet = {
-  //   data:
-  //   {
-  //     success: true
-  //   }
-  // }
   const responseGet = {
     data:
     {
@@ -120,17 +107,21 @@ describe('FilterItem testing axios', () => {
     formData.append('filter_name', filter)
     formData.append('image', file)
     jest.spyOn(wrapper.vm, 'sendFilter')
-    // wrapper.vm.sendFilter();
     axios.post.mockImplementationOnce(() => Promise.resolve(responseGet))
+    wrapper.vm.sendFilter();
+
     // axios.post.mockResolvedValue(responseGetSize)
     expect(axios.post).toHaveBeenCalled()
-    // expect(axios.post).toHaveBeenCalledWith('http://localhost:5000/', formData)
+    expect(axios.post).toHaveBeenCalledWith('http://localhost:5000/', expect.any(FormData))
   })
-  it('Testing axios get"', async () => {
+  it('Testing axios get"', () => {
     jest.spyOn(wrapper.vm, 'sendFilter')
+    axios.post.mockImplementationOnce(() => Promise.resolve(responseGet))
+    expect(axios.post).toHaveBeenCalled()
     axios.get.mockResolvedValue(file)
+    wrapper.vm.sendFilter();
     expect(axios.get).toHaveBeenCalled()
-    expect(axios.get).toHaveBeenCalledWith('http://localhost:5000/ping')
+    expect(axios.get).toHaveBeenCalledWith('http://localhost:5000/5.jpg')
   })
   // it('"Testing axios get"', async () => {
 

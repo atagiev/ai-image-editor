@@ -36,21 +36,6 @@
     "vue-template-compiler": "^2.6.11"
   },
   "jest": {
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "**/*.{js,vue}",
-      "!**/node_modules/**"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "vue"
-    ],
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/assets/**"
-    ],
-    "modulePathIgnorePatterns": [
-      "<rootDir>/assets/**"
-    ],
-    "rootDir": "src"
+    
   }
 }

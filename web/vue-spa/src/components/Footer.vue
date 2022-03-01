@@ -180,7 +180,7 @@ export default ({
   },
   mounted () {
     this.isUploaded = this.isImageUploaded
-  },
+  }
   // updated () {
   //   console.log(this.isImgChanged)
   //   // if (this.isImgChanged === true) {

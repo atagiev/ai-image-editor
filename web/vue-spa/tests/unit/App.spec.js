@@ -1,18 +1,29 @@
-import { createLocalVue, mount } from '@vue/test-utils'
-import FiltersList from '../../src/components/FiltersList.vue'
+/* eslint-disable */
+import { createLocalVue, shallowMount } from '@vue/test-utils'
+import App from '../../src/App.vue'
+import store from '@/store'
+import Vuex from 'vuex'
 import axios from 'axios'
 
-describe('FiltersList testing', () => {
+const mockData = [
+  { success: true }
+]
+
+jest.mock('axios', () => ({
+  get: jest.fn(() => mockData),
+  post: jest.fn()
+}))
+
+describe('App testing', () => {
   // создаем новый экземпляр Vue приложения с помощью функции  “createLocalVue”
   const vueInstance = createLocalVue()
   // создаем и помещаем в переменную “wrapper” обертку, в которую передаем наш компонент, дополнительно помещая в объект опций созданный экземпляр вью, чтобы  смонтировать и отрендерить наш компонент во Vue-приложении
-  const wrapper = mount(FiltersList, {
+  const wrapper = shallowMount(App, {
     vueInstance
   })
   // используем функцию от Jest “it”, в которой описываем наш первый тест с двумя ожидаемыми результатами:
-  it('initialized correctly', () => {
-    // ожидаем, что созданная обертка является экземпляром Vue
+  it('initialized correctly', async () => {
     expect(wrapper).toBeTruthy()
-    expect(wrapper.is(FiltersList)).toBe(true)
+    expect(wrapper.is(App)).toBe(true)
   })
 })
