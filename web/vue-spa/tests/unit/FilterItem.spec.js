@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createLocalVue, mount, shallowMount } from '@vue/test-utils'
 import FilterItem from '../../src/components/FilterItem.vue'
 import flushPromises from 'flush-promises'
@@ -119,7 +120,7 @@ describe('FilterItem testing axios', () => {
     formData.append('filter_name', filter)
     formData.append('image', file)
     jest.spyOn(wrapper.vm, 'sendFilter')
-    wrapper.vm.sendFilter();
+    // wrapper.vm.sendFilter();
     axios.post.mockImplementationOnce(() => Promise.resolve(responseGet))
     // axios.post.mockResolvedValue(responseGetSize)
     expect(axios.post).toHaveBeenCalled()
@@ -129,7 +130,7 @@ describe('FilterItem testing axios', () => {
     jest.spyOn(wrapper.vm, 'sendFilter')
     axios.get.mockResolvedValue(file)
     expect(axios.get).toHaveBeenCalled()
-    // expect(axios.get).toHaveBeenCalledWith('http://localhost:5000/ping')
+    expect(axios.get).toHaveBeenCalledWith('http://localhost:5000/ping')
   })
   // it('"Testing axios get"', async () => {
 

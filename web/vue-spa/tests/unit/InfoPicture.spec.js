@@ -1,7 +1,7 @@
 import { createLocalVue, mount } from '@vue/test-utils'
 import InfoPicture from '../../src/components/InfoPicture.vue'
 import store from '@/store'
-import Vuex from 'vuex'
+// import Vuex from 'vuex'
 
 describe('InfoPicture testing', () => {
   // создаем новый экземпляр Vue приложения с помощью функции  “createLocalVue”

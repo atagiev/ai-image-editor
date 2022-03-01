@@ -1,4 +1,5 @@
-import { createLocalVue, mount, shallowMount } from '@vue/test-utils'
+/* eslint-disable semi */
+import { createLocalVue, mount } from '@vue/test-utils'
 import Footer from '../../src/components/Footer.vue'
 import axios from 'axios'
 import store from '@/store'
@@ -24,10 +25,10 @@ const file = {
 jest.mock('axios')
 
 const mockData = [
-  {success: true}
+  { success: true }
 ]
 const mockDataPost = [
-  {h: 40, w: 40}
+  { h: 40, w: 40 }
 ]
 
 jest.mock('axios', () => ({
@@ -94,12 +95,13 @@ describe('Testing handlefileupload', () => {
 
 describe('Testing buttons', () => {
   let wrapper
-  beforeEach (() => {
+  beforeEach(() => {
     const localVue = createLocalVue()
     wrapper = mount(Footer, {
-      localVue, store,
+      localVue,
+      store,
       propsData: {
-        isImageUploaded: true,
+        isImageUploaded: true
       }
     })
   })
