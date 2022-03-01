@@ -181,15 +181,15 @@ export default ({
   mounted () {
     this.isUploaded = this.isImageUploaded
   },
-  updated () {
-    console.log(this.isImgChanged)
-    // if (this.isImgChanged === true) {
-    this.onClickFileUpload()
-    console.log('ckick')
-    this.isImgChanged = false
-    // }
-    // this.isImgChanged = false
-  }
+  // updated () {
+  //   console.log(this.isImgChanged)
+  //   // if (this.isImgChanged === true) {
+  //   this.onClickFileUpload()
+  //   console.log('ckick')
+  //   this.isImgChanged = false
+  //   // }
+  //   // this.isImgChanged = false
+  // }
 })
 </script>
 

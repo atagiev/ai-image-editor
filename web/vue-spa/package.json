@@ -39,15 +39,18 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "**/*.{js,vue}",
-      "!**/node_modules/**",
-      "!**/src/assets/**"
+      "!**/node_modules/**"
     ],
     "moduleFileExtensions": [
       "js",
       "vue"
     ],
-    "modulePathIgnorePatterns":["/assets"],
-    "testPathIgnorePatterns" :["<rootDir>/assets/**"],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/assets/**"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/assets/**"
+    ],
     "rootDir": "src"
   }
 }

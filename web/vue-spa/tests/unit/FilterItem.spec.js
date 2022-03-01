@@ -2,31 +2,41 @@ import { createLocalVue, mount, shallowMount } from '@vue/test-utils'
 import FilterItem from '../../src/components/FilterItem.vue'
 import flushPromises from 'flush-promises'
 import axios from 'axios'
+import Vuex from 'vuex'
+import store from '@/store'
+
+const localVue = createLocalVue()
+localVue.use(Vuex)
+
+jest.mock('axios')
 
 const mockData = [
   {success: true}
 ]
+const mockDataPost = [
+  {h: 40, w: 40}
+]
 
-jest.mock('axios', () => ({
-  get: jest.fn(() => mockData)
-}))
+// jest.mock('axios', () => ({
+//   get: jest.fn(() => mockData),
+//   post: jest.fn(() => mockDataPost)
+// }))
 
-
-// const mock = jest.fn()
+const file = {
+  name: 'image.jpg',
+  size: 50000,
+  type: 'image/jpg'
+}
 
 describe('FilterItem testing', () => {
-  // создаем новый экземпляр Vue приложения с помощью функции  “createLocalVue”
   const vueInstance = createLocalVue()
-  // создаем и помещаем в переменную “wrapper” обертку, в которую передаем наш компонент, дополнительно помещая в объект опций созданный экземпляр вью, чтобы  смонтировать и отрендерить наш компонент во Vue-приложении
   const wrapper = shallowMount(FilterItem, {
     vueInstance,
     propsData: {
       previewImage: 'candy.jpg',
     }
   })
-  // используем функцию от Jest “it”, в которой описываем наш первый тест с двумя ожидаемыми результатами:
   it('initialized correctly', () => {
-    // ожидаем, что созданная обертка является экземпляром Vue
     expect(wrapper).toBeTruthy()
     expect(wrapper.is(FilterItem)).toBe(true)
   })
@@ -34,7 +44,6 @@ describe('FilterItem testing', () => {
 
 describe('FilterItem testing', () => {
   let wrapper
-  const localVue = createLocalVue()
   wrapper = mount(FilterItem, {
     localVue,
     propsData: {
@@ -57,4 +66,72 @@ describe('FilterItem testing', () => {
   })
 })
 
+describe('FilterItem testing vuex', () => {
+  let actions
+  let store
+  let wrapper
+  actions = {
+    changeLoading: jest.fn(),
+    actionInput: jest.fn()
+  }
+  store = new Vuex.Store({
+    actions
+  })
+  wrapper = mount(FilterItem, {
+    localVue,
+    store,
+    propsData: {
+      previewImage: 'candy.jpg',
+    }
+  })
 
+
+  // it('initialized correctly', () => {
+  //   jest.spyOn(wrapper.vm, 'sendFilter');
+  //   wrapper.vm.sendFilter();
+  //   expect(actions.changeLoading).toHaveBeenCalled();
+  // })
+})
+
+describe('FilterItem testing axios', () => {
+  const wrapper = mount(FilterItem, {
+    localVue,
+    store,
+    propsData: {
+      previewImage: 'candy.jpg',
+    }
+  })
+  // const responseGet = {
+  //   data:
+  //   {
+  //     success: true
+  //   }
+  // }
+  const responseGet = {
+    data:
+    {
+      id: 5
+    }
+  }
+  it('Testing axios post"', async () => {
+    const filter = 'kek'
+    const formData = new FormData()
+    formData.append('filter_name', filter)
+    formData.append('image', file)
+    jest.spyOn(wrapper.vm, 'sendFilter')
+    wrapper.vm.sendFilter();
+    axios.post.mockImplementationOnce(() => Promise.resolve(responseGet))
+    // axios.post.mockResolvedValue(responseGetSize)
+    expect(axios.post).toHaveBeenCalled()
+    // expect(axios.post).toHaveBeenCalledWith('http://localhost:5000/', formData)
+  })
+  it('Testing axios get"', async () => {
+    jest.spyOn(wrapper.vm, 'sendFilter')
+    axios.get.mockResolvedValue(file)
+    expect(axios.get).toHaveBeenCalled()
+    // expect(axios.get).toHaveBeenCalledWith('http://localhost:5000/ping')
+  })
+  // it('"Testing axios get"', async () => {
+
+  // })
+})

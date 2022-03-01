@@ -15,14 +15,12 @@ const event = {
   }
 }
 
-const formData = {
-  "image":
-  {
-    "name": 'image.jpg',
-    "size": 50000,
-    "type": 'image/jpg'
-  }
+const file = {
+  name: 'image.jpg',
+  size: 50000,
+  type: 'image/jpg'
 }
+
 jest.mock('axios')
 
 const mockData = [
@@ -84,6 +82,8 @@ describe('Testing handlefileupload', () => {
     expect(axios.get).toHaveBeenCalledWith('http://localhost:5000/ping')
   })
   it('Testing axios post', async () => {
+    const formData = new FormData()
+    formData.append('image', file)
     jest.spyOn(wrapper.vm, 'handleFileUpload')
     axios.post.mockImplementationOnce(() => Promise.resolve(responseGetSize))
     // axios.post.mockResolvedValue(responseGetSize)
