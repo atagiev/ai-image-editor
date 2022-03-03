@@ -267,11 +267,11 @@ export default {
   },
   computed: {
     ...mapGetters(['MODAL_STATUS', 'URL_CUR_FILE', 'CUR_FILE', 'CUR_EFFECT', 'CUR_FILE_ID', 'INIT_FILE', 'URL_INIT_FILE', 'ACT_FILTER', 'CUR_FILTER'])
+  },
+  created () {
+    this.isServerAnswer()
+    this.resetBackendStore()
   }
-  // created () {
-  //   this.isServerAnswer()
-  //   this.resetBackendStore()
-  // },
   // updated () {
   //   this.isServerAnswer()
   // }

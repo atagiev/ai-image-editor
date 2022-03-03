@@ -98,6 +98,7 @@ export default ({
           // Если запрос с ошибкой
             .catch(error => {
               // console.log(this.file)
+              // eslint-disable-next-line no-unused-vars
               const er = error
             })
         })
@@ -108,6 +109,7 @@ export default ({
           // this.onChangeModal(true, errorText, 'uploadPage')
           this.$emit('onChangeServerStatus', false)
           // this.isServerOn = false
+          // eslint-disable-next-line no-unused-vars
           const er = error
         })
     },

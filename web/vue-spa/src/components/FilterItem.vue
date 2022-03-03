@@ -39,6 +39,7 @@ export default ({
         })
         .catch(error => {
           this.sendWaitingError()
+          // eslint-disable-next-line no-unused-vars
           const er = error
         })
     },
@@ -76,6 +77,7 @@ export default ({
           })
             .catch(function (error) {
               this.sendWaitingError()
+              // eslint-disable-next-line no-unused-vars
               const er = error
               this.changeLoading(false)
             })
@@ -83,6 +85,7 @@ export default ({
       // Если запрос с ошибкой
         .catch(error => {
           this.sendWaitingError()
+          // eslint-disable-next-line no-unused-vars
           const er = error
           this.changeLoading(false)
         })
