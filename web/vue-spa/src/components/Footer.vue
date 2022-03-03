@@ -93,31 +93,12 @@ export default ({
           axios.post('http://localhost:5000/get_size', formData)
           // Проверка разрешения картинки
             .then(response => {
-              if (((response.data.w <= 1920 && response.data.h <= 1080) ||
-                (response.data.w <= 1080 && response.data.h <= 1920)) &&
-                (Math.max(response.data.w, response.data.h) / Math.min(response.data.w, response.data.h) <= 2) &&
-                ((response.data.w >= 20 && response.data.h >= 20))) {
-                this.isUploaded = true
-                this.changeResolutionWidth(response.data.w)
-                this.changeResolutionHeight(response.data.h)
-                console.log(this.$store.getters.CUR_RESOLUTION_WIDTH + ' ' + this.$store.getters.CUR_RESOLUTION_HEIGHT)
-                console.log(response)
-                this.changeCurFile(event.target.files[0])
-                this.changeInitFile(event.target.files[0])
-                this.$emit('onChangeStatus', this.isUploaded)
-                this.$emit('onChangeServerStatus', true)
-                console.log('Загружена картинка и инструменты редактирования ', response)
-              } else {
-                const errorText = 'Фотография с разрешением ' + response.data.w + 'x' + response.data.h + ' не поддерживается.' +
-                  ' Загрузите другую фотографию в рамках ограничений: от 20x20 до 1920х1080 и соотношением сторон не более чем 2 к 1'
-                this.$emit('onChangeModal', true, errorText, 'uploadPhoto')
-                // this.$forceUpdate()
-              }
+              this.checkLimitations(response, event)
             })
           // Если запрос с ошибкой
             .catch(error => {
-              console.log(this.file)
-              console.log(error)
+              // console.log(this.file)
+              const er = error
             })
         })
       // Если запрос с ошибкой
@@ -127,8 +108,30 @@ export default ({
           // this.onChangeModal(true, errorText, 'uploadPage')
           this.$emit('onChangeServerStatus', false)
           // this.isServerOn = false
-          console.log(error)
+          const er = error
         })
+    },
+    checkLimitations (response, event) {
+      if (((response.data.w <= 1920 && response.data.h <= 1080) ||
+                (response.data.w <= 1080 && response.data.h <= 1920)) &&
+                (Math.max(response.data.w, response.data.h) / Math.min(response.data.w, response.data.h) <= 2) &&
+                ((response.data.w >= 20 && response.data.h >= 20))) {
+        this.isUploaded = true
+        this.changeResolutionWidth(response.data.w)
+        this.changeResolutionHeight(response.data.h)
+        // console.log(this.$store.getters.CUR_RESOLUTION_WIDTH + ' ' + this.$store.getters.CUR_RESOLUTION_HEIGHT)
+        // console.log(response)
+        this.changeCurFile(event.target.files[0])
+        this.changeInitFile(event.target.files[0])
+        this.$emit('onChangeStatus', this.isUploaded)
+        this.$emit('onChangeServerStatus', true)
+        // console.log('Загружена картинка и инструменты редактирования ', response)
+      } else {
+        const errorText = 'Фотография с разрешением ' + response.data.w + 'x' + response.data.h + ' не поддерживается.' +
+                  ' Загрузите другую фотографию в рамках ограничений: от 20x20 до 1920х1080 и соотношением сторон не более чем 2 к 1'
+        this.$emit('onChangeModal', true, errorText, 'uploadPhoto')
+        // this.$forceUpdate()
+      }
     },
     sendPicture () {
       axios.post('/', this.file)

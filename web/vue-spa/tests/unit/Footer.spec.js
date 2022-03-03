@@ -1,5 +1,5 @@
-/* eslint-disable semi */
-import { createLocalVue, mount } from '@vue/test-utils'
+/* eslint-disable */
+import { createLocalVue, mount, shallowMount } from '@vue/test-utils'
 import Footer from '../../src/components/Footer.vue'
 import axios from 'axios'
 import store from '@/store'
@@ -22,7 +22,7 @@ const file = {
   type: 'image/jpg'
 }
 
-jest.mock('axios')
+// jest.mock('axios')
 
 const mockData = [
   { success: true }
@@ -35,22 +35,68 @@ jest.mock('axios', () => ({
   get: jest.fn(() => mockData),
   post: jest.fn(() => mockDataPost)
 }))
+
+const responseGetSize = {
+  data:
+  {
+    h: 60,
+    w: 60
+  }
+}
+const responseGetSizeIncorrect = {
+  data:
+  {
+    h: 10,
+    w: 10
+  }
+}
+const responseGet = {
+  data:
+  {
+    success: true
+  }
+}
+// jest.spyOn(axios, 'post').mockImplementation(() => Promise.resolve({ data: {h: 40, w: 40 }}))
 // jest.mock('axios', () => ({
 //   post: jest.fn(() => mockDataPost)
 // }))
 
 describe('Footer.vue testing', () => {
   // создаем новый экземпляр Vue приложения с помощью функции  “createLocalVue”
-  const vueInstance = createLocalVue()
+  const vueInstance = createLocalVue();
   // создаем и помещаем в переменную “wrapper” обертку, в которую передаем наш компонент, дополнительно помещая в объект опций созданный экземпляр вью, чтобы  смонтировать и отрендерить наш компонент во Vue-приложении
-  const wrapper = mount(Footer, {
-    vueInstance
+  const wrapper = shallowMount(Footer, {
+    vueInstance,
+    store
   })
   // используем функцию от Jest “it”, в которой описываем наш первый тест с двумя ожидаемыми результатами:
   it('initialized correctly', () => {
     // ожидаем, что созданная обертка является экземпляром Vue
     expect(wrapper).toBeTruthy()
     expect(wrapper.is(Footer)).toBe(true)
+  })
+  it('limitations', () => {
+    wrapper.setData({ isUploaded: false })
+    jest.spyOn(wrapper.vm, 'checkLimitations')
+    // const fileReaderSpy = jest.spyOn(FileReader.prototype, 'readAsDataURL').mockImplementation(() => null)
+    // axios.get.mockResolvedValue(responseGet)
+    // axios.post.mockImplementationOnce(() => Promise.resolve(responseGetSize))
+    wrapper.vm.checkLimitations(responseGetSize, event)
+    // console.log(wrapper.vm.$data.isUploaded)
+    expect(wrapper.vm.isUploaded).toBe(true)
+    // expect(wrapper.is(Footer)).toBe(true)
+  })
+  it('limitations', () => {
+    wrapper.setData({ isUploaded: false })
+    jest.spyOn(wrapper.vm, 'checkLimitations')
+    // const fileReaderSpy = jest.spyOn(FileReader.prototype, 'readAsDataURL').mockImplementation(() => null)
+    // axios.get.mockResolvedValue(responseGet)
+    // axios.post.mockImplementationOnce(() => Promise.resolve(responseGetSize))
+    wrapper.vm.checkLimitations(responseGetSizeIncorrect, event)
+    // console.log(wrapper.vm.$data.isUploaded)
+    expect(wrapper.vm.isUploaded).toBe(false)
+    expect(wrapper.emitted().onChangeModal).toBeTruthy()
+    // expect(wrapper.is(Footer)).toBe(true)
   })
 })
 

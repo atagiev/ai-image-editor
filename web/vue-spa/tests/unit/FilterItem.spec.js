@@ -18,6 +18,7 @@ const mockDataPost = [
   {h: 40, w: 40}
 ]
 
+jest.spyOn(axios, "get").mockImplementation(() => Promise.resolve({ data: mockData }))
 // jest.mock('axios', () => ({
 //   get: jest.fn(() => mockData),
 //   post: jest.fn(() => mockDataPost)
@@ -55,6 +56,7 @@ describe('FilterItem testing', () => {
     jest.spyOn(wrapper.vm, 'onClickFilter')
     await wrapper.find('.filter').trigger('click');
     expect(wrapper.vm.onClickFilter).toHaveBeenCalled();
+    expect(axios.get).toHaveBeenCalledWith('http://localhost:5000/ping')
   })
 
   it('"onClickFilter" is calling "sendFilter"', async () => {
@@ -121,7 +123,7 @@ describe('FilterItem testing axios', () => {
     axios.get.mockResolvedValue(file)
     wrapper.vm.sendFilter();
     expect(axios.get).toHaveBeenCalled()
-    expect(axios.get).toHaveBeenCalledWith('http://localhost:5000/5.jpg')
+    // expect(axios.get).toHaveBeenCalledWith('http://localhost:5000/5.jpg')
   })
   // it('"Testing axios get"', async () => {
 
