@@ -15,4 +15,11 @@ describe('FiltersList testing', () => {
     expect(wrapper).toBeTruthy()
     expect(wrapper.is(FiltersList)).toBe(true)
   })
+  it('initialized correctly', () => {
+    const spy = jest.spyOn(wrapper.vm, 'onChangeModal')
+    // jest.spyOn(wrapper.vm, 'closeModal')
+    wrapper.vm.onChangeModal(true, 'errorText', 'error')
+    expect(wrapper.emitted().onChangeModal).toBeTruthy()
+    expect(spy).toHaveBeenCalled()
+  })
 })

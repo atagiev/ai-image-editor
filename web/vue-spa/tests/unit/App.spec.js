@@ -147,4 +147,45 @@ describe('App testing acceptAction', () => {
     wrapper.vm.acceptAction()
     expect(spy).toHaveBeenCalled()
   })
+  it('Testing acceptAction type=reset', async () => {
+    const spy = jest.spyOn(wrapper.vm, 'closeModal')
+    wrapper.setData({ userAction: 'reset' })
+    wrapper.vm.acceptAction()
+    expect(spy).toHaveBeenCalled()
+  })
+  it('Testing acceptAction type=upload', async () => {
+    const spy = jest.spyOn(wrapper.vm, 'closeModal')
+    const spy_1 = jest.spyOn(wrapper.vm, 'resetBackendStore')
+    wrapper.setData({ userAction: 'upload' })
+    wrapper.vm.acceptAction()
+    expect(spy).toHaveBeenCalled()
+    expect(spy_1).toHaveBeenCalled()
+  })
+  it('Testing acceptAction type=download', async () => {
+    const ax = axios.get.mockImplementationOnce(() => Promise.resolve(responseGetId))
+    wrapper.setData({ userAction: 'download' })
+    wrapper.vm.acceptAction()
+    expect(ax).toHaveBeenCalled()
+  })
+  it('Testing acceptAction type=delete', async () => {
+    const spy = jest.spyOn(wrapper.vm, 'closeModal')
+    wrapper.setData({ userAction: 'delete' })
+    wrapper.vm.acceptAction()
+    expect(spy).toHaveBeenCalled()
+  })
 })
+
+// describe('App vuex testing', () => {
+//   it('Testing acceptAction type=download', async () => {
+//     const spy = jest.spyOn(wrapper.vm, 'closeModal')
+//     wrapper.setData({ userAction: 'download' })
+//     wrapper.vm.acceptAction()
+//     expect(spy).toHaveBeenCalled()
+//   })
+//   it('Testing acceptAction type=download', async () => {
+//     const spy = jest.spyOn(wrapper.vm, 'closeModal')
+//     wrapper.setData({ userAction: 'download' })
+//     wrapper.vm.acceptAction()
+//     expect(spy).toHaveBeenCalled()
+//   })
+// })

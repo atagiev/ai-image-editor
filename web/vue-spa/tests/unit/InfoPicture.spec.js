@@ -17,20 +17,10 @@ describe('InfoPicture testing', () => {
     expect(wrapper).toBeTruthy()
     expect(wrapper.is(InfoPicture)).toBe(true)
   })
+  it('initialized correctly', () => {
+    const spy = jest.spyOn(wrapper.vm, 'setNewFile')
+    wrapper.vm.setNewFile()
+    // ожидаем, что созданная обертка является экземпляром Vue
+    expect(spy).toHaveBeenCalled()
+  })
 })
-// it('when photo is uploaded name and resolution are visible', () => {
-//   const vueInstance = createLocalVue()
-//   vueInstance.use(Vuex)
-//   // создаем и помещаем в переменную “wrapper” обертку, в которую передаем наш компонент, дополнительно помещая в объект опций созданный экземпляр вью, чтобы  смонтировать и отрендерить наш компонент во Vue-приложении
-//   const wrapper = mount(InfoPicture, {
-//     vueInstance,
-//     store
-//   })
-//   const pictureName = wrapper.findAll('div').at(1).text()
-//   const pictureRes = wrapper.findAll('div').at(2).text()
-//   expect(wrapper.vm.$options.name).toMatch('InfoPicture')
-//   expect(wrapper).toBeTruthy()
-//   expect(wrapper.is(InfoPicture)).toBe(true)
-//   expect((pictureName).exists()).toBe(true)
-//   expect((pictureRes).exists()).toBe(true)
-// })
