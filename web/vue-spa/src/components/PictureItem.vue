@@ -28,7 +28,7 @@ export default ({
 <style scoped>
   .picture-item{
     margin: auto;
-    margin-top: 20px;
+    padding-top: 20px;
     width: 1000px;
   }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="header__brand">
-      YourEditor
+      {{ header }}
     </div>
   </header>
 </template>
@@ -11,7 +11,10 @@ export default {
   name: 'Header',
   props: {
     msg: String
-  }
+  },
+  data: () => ({
+    header: 'YourEditor'
+  })
 }
 </script>
 

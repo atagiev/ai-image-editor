@@ -17,10 +17,10 @@
       <div class="filters__buttons">
         <button class="classic-btn btn"
           :class="{'active-btn':isActiveClassic}"
-          @click='onClickBtnClassic'>C</button>
+          @click='onClickBtnClassic()'>C</button>
         <button class="neural-btn btn"
           :class="{'active-btn':isActiveNeural}"
-          @click='onClickBtnNeural'>NN</button>
+          @click='onClickBtnNeural()'>NN</button>
       </div>
       <div class="filters__list">
         <FiltersList @onChangeModal="onChangeModalStatus" :activeType='activeType'></FiltersList>
@@ -34,7 +34,6 @@
 import { mapActions, mapGetters } from 'vuex'
 import FiltersList from '@/components/FiltersList'
 import axios from 'axios'
-
 export default ({
   name: 'Footer',
   components: {
@@ -94,31 +93,13 @@ export default ({
           axios.post('http://localhost:5000/get_size', formData)
           // Проверка разрешения картинки
             .then(response => {
-              if (((response.data.w <= 1920 && response.data.h <= 1080) ||
-                  (response.data.w <= 1080 && response.data.h <= 1920)) &&
-                  (Math.max(response.data.w, response.data.h) / Math.min(response.data.w, response.data.h) <= 2) &&
-                  ((response.data.w >= 20 && response.data.h >= 20))) {
-                this.isUploaded = true
-                this.changeResolutionWidth(response.data.w)
-                this.changeResolutionHeight(response.data.h)
-                console.log(this.$store.getters.CUR_RESOLUTION_WIDTH + ' ' + this.$store.getters.CUR_RESOLUTION_HEIGHT)
-                console.log(response)
-                this.changeCurFile(event.target.files[0])
-                this.changeInitFile(event.target.files[0])
-                this.$emit('onChangeStatus', this.isUploaded)
-                this.$emit('onChangeServerStatus', true)
-                console.log('Загружена картинка и инструменты редактирования ', response)
-              } else {
-                const errorText = 'Фотография с разрешением ' + response.data.w + 'x' + response.data.h + ' не поддерживается.' +
-                  ' Загрузите другую фотографию в рамках ограничений: от 20x20 до 1920х1080 и соотношением сторон не более чем 2 к 1'
-                this.$emit('onChangeModal', true, errorText, 'uploadPhoto')
-                // this.$forceUpdate()
-              }
+              this.checkLimitations(response, event)
             })
           // Если запрос с ошибкой
             .catch(error => {
-              console.log(this.file)
-              console.log(error)
+              // console.log(this.file)
+              // eslint-disable-next-line no-unused-vars
+              const er = error
             })
         })
       // Если запрос с ошибкой
@@ -128,8 +109,31 @@ export default ({
           // this.onChangeModal(true, errorText, 'uploadPage')
           this.$emit('onChangeServerStatus', false)
           // this.isServerOn = false
-          console.log(error)
+          // eslint-disable-next-line no-unused-vars
+          const er = error
         })
+    },
+    checkLimitations (response, event) {
+      if (((response.data.w <= 1920 && response.data.h <= 1080) ||
+                (response.data.w <= 1080 && response.data.h <= 1920)) &&
+                (Math.max(response.data.w, response.data.h) / Math.min(response.data.w, response.data.h) <= 2) &&
+                ((response.data.w >= 20 && response.data.h >= 20))) {
+        this.isUploaded = true
+        this.changeResolutionWidth(response.data.w)
+        this.changeResolutionHeight(response.data.h)
+        // console.log(this.$store.getters.CUR_RESOLUTION_WIDTH + ' ' + this.$store.getters.CUR_RESOLUTION_HEIGHT)
+        // console.log(response)
+        this.changeCurFile(event.target.files[0])
+        this.changeInitFile(event.target.files[0])
+        this.$emit('onChangeStatus', this.isUploaded)
+        this.$emit('onChangeServerStatus', true)
+        // console.log('Загружена картинка и инструменты редактирования ', response)
+      } else {
+        const errorText = 'Фотография с разрешением ' + response.data.w + 'x' + response.data.h + ' не поддерживается.' +
+                  ' Загрузите другую фотографию в рамках ограничений: от 20x20 до 1920х1080 и соотношением сторон не более чем 2 к 1'
+        this.$emit('onChangeModal', true, errorText, 'uploadPhoto')
+        // this.$forceUpdate()
+      }
     },
     sendPicture () {
       axios.post('/', this.file)
@@ -142,22 +146,55 @@ export default ({
           console.log(error)
         })
     }
+    // uploadPicture (event) {
+    //   const formData = new FormData()
+    //   formData.append('image', this.file)
+    //   axios.post('http://localhost:5000/get_size', formData)
+    //   // Проверка разрешения картинки
+    //     .then(response => {
+    //       if (((response.data.w <= 1920 && response.data.h <= 1080) ||
+    //           (response.data.w <= 1080 && response.data.h <= 1920)) &&
+    //           (Math.max(response.data.w, response.data.h) / Math.min(response.data.w, response.data.h) <= 2) &&
+    //           ((response.data.w >= 20 && response.data.h >= 20))) {
+    //         this.isUploaded = true
+    //         this.changeResolutionWidth(response.data.w)
+    //         this.changeResolutionHeight(response.data.h)
+    //         console.log(this.$store.getters.CUR_RESOLUTION_WIDTH + ' ' + this.$store.getters.CUR_RESOLUTION_HEIGHT)
+    //         console.log(response)
+    //         this.changeCurFile(event.target.files[0])
+    //         this.changeInitFile(event.target.files[0])
+    //         this.$emit('onChangeStatus', this.isUploaded)
+    //         this.$emit('onChangeServerStatus', true)
+    //         console.log('Загружена картинка и инструменты редактирования ', response)
+    //       } else {
+    //         const errorText = 'Фотография с разрешением ' + response.data.w + 'x' + response.data.h + ' не поддерживается.' +
+    //           ' Загрузите другую фотографию в рамках ограничений: от 20x20 до 1920х1080 и соотношением сторон не более чем 2 к 1'
+    //         this.$emit('onChangeModal', true, errorText, 'uploadPhoto')
+    //         // this.$forceUpdate()
+    //       }
+    //     })
+    //   // Если запрос с ошибкой
+    //     .catch(error => {
+    //       console.log(this.file)
+    //       console.log(error)
+    //     })
+    // }
   },
   computed: {
     ...mapGetters(['CUR_FILE', 'URL_CUR_FILE', 'CUR_RESOLUTION_WIDTH', 'CUR_RESOLUTION_HEIGHT'])
   },
   mounted () {
     this.isUploaded = this.isImageUploaded
-  },
-  updated () {
-    console.log(this.isImgChanged)
-    // if (this.isImgChanged === true) {
-    this.onClickFileUpload()
-    console.log('ckick')
-    this.isImgChanged = false
-    // }
-    // this.isImgChanged = false
   }
+  // updated () {
+  //   console.log(this.isImgChanged)
+  //   // if (this.isImgChanged === true) {
+  //   this.onClickFileUpload()
+  //   console.log('ckick')
+  //   this.isImgChanged = false
+  //   // }
+  //   // this.isImgChanged = false
+  // }
 })
 </script>
 
@@ -167,7 +204,8 @@ export default ({
 }
 .welcome-container{
   display: flex;
-  margin: 50px 250px;
+  padding-top:50px;
+  margin: 0px 250px;
   justify-content: space-between;
 }
 .welcome-container__text{
@@ -188,7 +226,7 @@ export default ({
 }
 .filters-container{
   height: 80%;
-  margin-top: 15px;
+  padding-top: 15px;
   display: flex;
   width: 100%;
 }
@@ -234,7 +272,6 @@ export default ({
   align-items: center;
   padding: 9px 49px;
   border-radius: 6px;
-
 }
 .input__file-button:hover {
   background:#4ac885a9;

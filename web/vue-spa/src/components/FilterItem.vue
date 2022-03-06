@@ -1,5 +1,5 @@
 <template>
-  <div @click='onClickFilter' class="filter">
+  <div @click='onClickFilter()' class="filter">
     <div class="filter-item" :class="classObj"
     :style="{'background': 'url('+ itemImage + ') no-repeat'}">
       <div class="filter-item__filter-name">
@@ -34,12 +34,13 @@ export default ({
           this.filterName = this.nameFilter
           this.curFile = this.$store.getters.CUR_FILE
           this.urlCurFile = this.$store.getters.URL_CUR_FILE
-          console.log(this.nameFilter, this.$store.getters.CUR_FILE)
+          // console.log(this.nameFilter, this.$store.getters.CUR_FILE)
           this.sendFilter()
         })
         .catch(error => {
           this.sendWaitingError()
-          console.log(error)
+          // eslint-disable-next-line no-unused-vars
+          const er = error
         })
     },
     // запрос на отправку текущей картинки и названия фильтра
@@ -51,7 +52,7 @@ export default ({
       axios.post('http://localhost:5000/', formData)
       // Если запрос успешен
         .then(response => {
-          console.log(response.data.id)
+          // console.log(response.data.id)
           const id = response.data.id
           // axios.defaults.timeout = 5000
           axios({
@@ -59,7 +60,7 @@ export default ({
             url: `http://localhost:8000/${id}.jpg`,
             responseType: 'blob'
           }).then(response => {
-            console.log(response)
+            // console.log(response)
             this.changeCurFileId(id)
             // this.changeCurFile(response.data)
             const reader = new FileReader()
@@ -76,14 +77,16 @@ export default ({
           })
             .catch(function (error) {
               this.sendWaitingError()
-              console.log(error)
+              // eslint-disable-next-line no-unused-vars
+              const er = error
               this.changeLoading(false)
             })
         })
       // Если запрос с ошибкой
         .catch(error => {
           this.sendWaitingError()
-          console.log(error)
+          // eslint-disable-next-line no-unused-vars
+          const er = error
           this.changeLoading(false)
         })
     },

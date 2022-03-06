@@ -11,15 +11,15 @@
             && userAction != "acceptError" && userAction != "downloadUnsaved"'>
             <button
                   type="button"
-                  class="btn-green"
-                  @click="submit"
+                  class="btn-green yes"
+                  @click="submit()"
                 >
                   Да
             </button>
             <button
                   type="button"
-                  class="btn-green"
-                  @click="cancel"
+                  class="btn-green no"
+                  @click="cancel()"
                 >
                   Нет
             </button>
@@ -28,7 +28,7 @@
             <button
                   type="button"
                   class="btn-green ok"
-                  @click="cancel"
+                  @click="cancel()"
                 >
                   Понятно
             </button>

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <el-container direction="vertical">
+    <div>
       <header>
         <Header></Header>
       </header>
@@ -20,7 +20,7 @@
           @onChangeModal="onChangeModal">
         </Footer>
       </footer>
-    </el-container>
+    </div>
     <modal
       :userAction = userAction
       :msg = modalMessage
@@ -88,31 +88,16 @@ export default {
           url: `http://localhost:8000/${id}.jpg`,
           responseType: 'blob'
         }).then(response => {
-          console.log(response)
+          // console.log(response)
           this.changeCurFile(response.data)
         })
           .catch(function (error) {
-            console.log(error)
+            // eslint-disable-next-line no-unused-vars
+            const er = error
           })
-        const formData = new FormData()
-        formData.append('saved_image_id', this.CUR_FILE_ID)
-        axios.post('http://localhost:5000/save_image', formData)
-        // Если запрос успешен
-          .then(response => {
-            console.log(response.data, 'Фото сохранено')
-            this.closeModal()
-            if (response.data.success === false) {
-              throw new Error('Произошла ошибка: не удалось сохранить файл. Попробуйте снова')
-            }
-            this.isImgChanged = true
-            this.changeActiveFilter(this.CUR_EFFECT)
-          })
+        this.saveImage()
         // Если запрос с ошибкой
-          .catch(error => {
-            const errorText = 'Произошла ошибка: не удалось сохранить файл. Попробуйте снова'
-            this.onChangeModal(true, errorText, 'acceptError')
-            console.log(error)
-          })
+
         this.closeModal()
         // this.changeActiveFilter(this.CUR_EFFECT)
         // this.changeEffect('отсутствует')
@@ -133,7 +118,7 @@ export default {
                 url: `http://localhost:8000/${id}.jpg`,
                 responseType: 'blob'
               }).then(response => {
-                console.log(response)
+                // console.log(response)
                 this.changeCurFile(response.data)
                 const reader = new FileReader()
                 reader.addEventListener('load', function () {
@@ -187,13 +172,13 @@ export default {
                 url: `http://localhost:8000/${id}.jpg`,
                 responseType: 'blob'
               }).then(response => {
-                console.log(response)
+                // console.log(response)
                 // this.changeCurFile(response.data)
                 const reader = new FileReader()
                 reader.addEventListener('load', function () {
                   this.imageSrc = reader.result
                   const urlSavedFile = reader.result
-                  console.log(urlSavedFile)
+                  // console.log(urlSavedFile)
                   const link = document.createElement('a')
                   link.href = urlSavedFile
                   // link.download = this.$store.getters.CUR_FILE.name
@@ -235,12 +220,31 @@ export default {
         this.closeModal()
       }
     },
+    saveImage () {
+      const formData = new FormData()
+      formData.append('saved_image_id', this.CUR_FILE_ID)
+      axios.post('http://localhost:5000/save_image', formData)
+        // Если запрос успешен
+        .then(response => {
+          // console.log(response.data, 'Фото сохранено')
+          this.closeModal()
+          if (response.data.success === false) {
+            throw new Error('Произошла ошибка: не удалось сохранить файл. Попробуйте снова')
+          }
+          this.isImgChanged = true
+          this.changeActiveFilter(this.CUR_EFFECT)
+        }).catch(error => {
+          const errorText = 'Произошла ошибка: не удалось сохранить файл. Попробуйте снова'
+          this.onChangeModal(true, errorText, 'acceptError')
+          console.log(error)
+        })
+    },
     isServerAnswer () {
       axios.get('http://localhost:5000/ping')
       // Если запрос успешен
         .then(response => {
           this.isServerOn = true
-          console.log('Сервер готов к работе ', response)
+          // console.log('Сервер готов к работе ', response.data)
         })
       // Если запрос с ошибкой
         .catch(error => {
@@ -254,7 +258,7 @@ export default {
       axios.get('http://localhost:5000/reset')
         // Если запрос успешен
         .then(response => {
-          console.log(response.data)
+          // console.log(response.data)
         })
         .catch(error => {
           console.log(error)
@@ -267,10 +271,10 @@ export default {
   created () {
     this.isServerAnswer()
     this.resetBackendStore()
-  },
-  updated () {
-    // this.isServerAnswer()
   }
+  // updated () {
+  //   this.isServerAnswer()
+  // }
 }
 </script>
 
@@ -289,6 +293,8 @@ export default {
 main {
   background-color: rgba(54, 51, 51, 0.81);
   height: 600px;
+  padding:0px; /* Обратите внимание что внутренние отступы равны 0 */
+  border:0px solid grey;
 }
 footer{
   background-color: #4D4E53;
