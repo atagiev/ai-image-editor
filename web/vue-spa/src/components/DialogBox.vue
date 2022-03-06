@@ -21,7 +21,7 @@
                   class="btn-green"
                   @click="cancel"
                 >
-                  Отмена
+                  Нет
             </button>
           </template>
           <template v-else>

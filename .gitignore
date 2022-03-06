@@ -1,4 +1,6 @@
 .idea
 .ipynb_checkpoints
 .vscode
+.pytest_cache
+logs
 __pycache__
