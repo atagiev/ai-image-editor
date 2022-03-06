@@ -22,6 +22,7 @@ class FilterManager:
             if filter_image.name.lower().startswith("ai_"):
                 if self.__storage.get_filter_image(filter_name=filter_image) is None:
                     error(f"Filter {filter_image.value} not found !")
+                    raise
                 else:
                     info(msg=f"Filter {filter_image.value} found")
         info(msg="Checking images with styles completed")
