@@ -16,6 +16,14 @@ class ClassicFilterTest(unittest.TestCase):
     def test_correct_filter(self):
         processed_image = self.cf.apply_filter(image=self.image, filter_name=FilterNamesEnum.GREYSCALE)
         self.assertIsNotNone(processed_image)
+        processed_image = self.cf.apply_filter(image=self.image, filter_name=FilterNamesEnum.BROWN)
+        self.assertIsNotNone(processed_image)
+        processed_image = self.cf.apply_filter(image=self.image, filter_name=FilterNamesEnum.INVERT)
+        self.assertIsNotNone(processed_image)
+        processed_image = self.cf.apply_filter(image=self.image, filter_name=FilterNamesEnum.HAND_DRAWN)
+        self.assertIsNotNone(processed_image)
+        processed_image = self.cf.apply_filter(image=self.image, filter_name=FilterNamesEnum.EMBOSS)
+        self.assertIsNotNone(processed_image)
 
     def test_ai_filter(self):
         processed_image = self.cf.apply_filter(image=self.image, filter_name=FilterNamesEnum.AI_CANDY)
