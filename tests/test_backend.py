@@ -19,7 +19,7 @@ class FakeStorage(LocalStorage):
     def delete_images(self):
         return True
 
-class MyTestCase(unittest.TestCase):
+class TestBackend(unittest.TestCase):
     def test_image_size(self):
         backend = Backend(queue=None, storage=None)
 
