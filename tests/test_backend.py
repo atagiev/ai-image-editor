@@ -2,7 +2,7 @@ import os
 import pathlib
 import unittest
 
-from backend import Backend
+from src.backend import Backend
 from local_storage import LocalStorage
 
 
@@ -18,6 +18,8 @@ class FakeStorage(LocalStorage):
         return True
     def delete_images(self):
         return True
+    def delete_image(self, image_id):
+        pass
 
 class TestBackend(unittest.TestCase):
     def test_image_size(self):
@@ -56,6 +58,16 @@ class TestBackend(unittest.TestCase):
     def test_reset(self):
         backend = Backend(queue=None, storage=FakeStorage())
         self.assertTrue(backend.reset())
+
+    def test_delete_image(self):
+        backend = Backend(queue=None, storage=FakeStorage())
+
+        is_failed = False
+        try:
+            backend.delete_image(image_id=1)
+        except:
+            is_failed=True
+        self.assertFalse(is_failed)
 
 if __name__ == '__main__':
     unittest.main()
