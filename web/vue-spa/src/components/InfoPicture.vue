@@ -43,13 +43,15 @@ export default ({
 
 <style scoped>
   .info-picture{
+    /* position: relative; */
     background-color: rgba(0, 0, 0, 0.329);
     display: flex;
     margin-left: 360px;
     width: 500px;
     justify-content: space-between;
     padding: 10px 15px;
+    /* margin-top: 55px; */
     border-radius: 20px;
-    margin-top: 25px;
+    /* top: 25px; */
   }
 </style>

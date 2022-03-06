@@ -204,7 +204,8 @@ export default ({
 }
 .welcome-container{
   display: flex;
-  margin: 50px 250px;
+  padding-top:50px;
+  margin: 0px 250px;
   justify-content: space-between;
 }
 .welcome-container__text{
@@ -225,7 +226,7 @@ export default ({
 }
 .filters-container{
   height: 80%;
-  margin-top: 15px;
+  padding-top: 15px;
   display: flex;
   width: 100%;
 }
