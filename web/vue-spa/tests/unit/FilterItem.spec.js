@@ -22,19 +22,25 @@ const file = {
 const mockDataPost = [
   {h: 40, w: 40}
 ]
-
+const responseGet = {
+  data:
+  {
+    success: true
+  }
+}
 const responseGetFile = {
   data:
   {
     image: file
   }
 }
-jest.spyOn(axios, "get").mockImplementation(() => Promise.resolve({ data: mockData }))
-// jest.mock('axios', () => ({
-//   get: jest.fn(() => mockData),
-//   post: jest.fn(() => mockDataPost)
-// }))
-
+const responseGetId = {
+  data:
+  {
+    id: 5
+  }
+}
+jest.spyOn(axios, "get").mockImplementation(() => Promise.resolve(responseGet))
 
 describe('FilterItem testing', () => {
   const vueInstance = createLocalVue()
@@ -56,7 +62,8 @@ describe('FilterItem testing', () => {
     localVue,
     propsData: {
       previewImage: 'candy.jpg',
-    }
+    },
+    store
   })
   it('Click is calling method "onClickFilter"', async () => {
     jest.spyOn(wrapper.vm, 'onClickFilter')
@@ -66,12 +73,13 @@ describe('FilterItem testing', () => {
   })
 
   it('"onClickFilter" is calling "sendFilter"', async () => {
-    jest.spyOn(wrapper.vm, 'onClickFilter')
+    jest.spyOn(wrapper.vm, 'sendFilter')
+    // axios.post.mockImplementationOnce(() => Promise.resolve(responseGetId))
+    axios.get.mockImplementationOnce(() => Promise.resolve(responseGet))
     await wrapper.get('.filter').trigger('click');
+    expect(wrapper.vm.sendFilter).toHaveBeenCalled()
     expect(axios.get).toHaveBeenCalled()
     expect(axios.get).toHaveBeenCalledWith('http://localhost:5000/ping')
-    // await flushPromises()
-    // expect(wrapper.vm.sendFilter).toHaveBeenCalled();
   })
 })
 
@@ -103,45 +111,23 @@ describe('FilterItem testing axios', () => {
       previewImage: 'candy.jpg',
     }
   })
-  const responseGet = {
-    data:
-    {
-      id: 5
-    }
-  }
   it('Testing axios post"', async () => {
     const filter = 'kek'
     const formData = new FormData()
     formData.append('filter_name', filter)
     formData.append('image', file)
     jest.spyOn(wrapper.vm, 'sendFilter')
-    axios.post.mockImplementationOnce(() => Promise.resolve(responseGet))
+    axios.post.mockImplementationOnce(() => Promise.resolve(responseGetId))
     wrapper.vm.sendFilter();
-
-    // axios.post.mockResolvedValue(responseGetSize)
     expect(axios.post).toHaveBeenCalled()
     expect(axios.post).toHaveBeenCalledWith('http://localhost:5000/', expect.any(FormData))
   })
   it('Testing axios get"', () => {
     jest.spyOn(wrapper.vm, 'sendFilter')
-    axios.post.mockImplementationOnce(() => Promise.resolve(responseGet))
+    axios.post.mockImplementationOnce(() => Promise.resolve(responseGetId))
     expect(axios.post).toHaveBeenCalled()
     axios.get.mockResolvedValue(file)
     wrapper.vm.sendFilter();
     expect(axios.get).toHaveBeenCalled()
-    // expect(axios.get).toHaveBeenCalledWith('http://localhost:5000/5.jpg')
   })
-  // it('Testing filereader filteritem"', () => {
-  //   jest.spyOn(wrapper.vm, 'sendFilter')
-  //   axios.post.mockImplementationOnce(() => Promise.resolve(responseGet))
-  //   const fileReaderSpy = jest.spyOn(FileReader.prototype, 'readAsDataURL').mockImplementation(() => null)
-  //   axios.get.mockResolvedValue(responseGetFile)
-  //   wrapper.vm.sendFilter();
-  //   // Assert that the FileReader object was called with the uploaded image
-  //   expect(fileReaderSpy).toHaveBeenCalled()
-  //   // expect(axios.get).toHaveBeenCalledWith('http://localhost:5000/5.jpg')
-  // })
-  // it('"Testing axios get"', async () => {
-
-  // })
 })
