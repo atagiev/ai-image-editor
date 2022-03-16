@@ -4,7 +4,7 @@ import unittest
 
 from PIL import Image
 
-from filter_names_enum import FilterNamesEnum
+from src.filter_names_enum import FilterNamesEnum
 from src.local_storage import LocalStorage
 
 
@@ -14,8 +14,10 @@ class LocalStorageTest(unittest.TestCase):
         self.filters_folder_path = os.path.normpath(
             os.path.join(pathlib.Path().resolve(), "..", "ai_filters", "Style_GAN", "images"))
 
-        self.image1 = Image.open(os.path.join(pathlib.Path().resolve(), "..", "tests", "test_images", "skull_100_100.jpg"))
-        self.image2 = Image.open(os.path.join(pathlib.Path().resolve(), "..", "tests", "test_images", "lake_800_450.jpg"))
+        self.image1 = Image.open(
+            os.path.join(pathlib.Path().resolve(), "..", "tests", "test_images", "skull_100_100.jpg"))
+        self.image2 = Image.open(
+            os.path.join(pathlib.Path().resolve(), "..", "tests", "test_images", "lake_800_450.jpg"))
         self.notimage = open(file=os.path.join(pathlib.Path().resolve(), "..", "main.py"), mode="rb")
 
     def test_save_image(self):
@@ -163,7 +165,6 @@ class LocalStorageTest(unittest.TestCase):
 
         ls.delete_images()
 
-
     def test_delete_images(self):
         ls = LocalStorage(tmp_folder_path=self.tmp_folder_path, filters_folder_path=self.filters_folder_path)
         ls.save_image(image=self.image1)
@@ -194,8 +195,6 @@ class LocalStorageTest(unittest.TestCase):
         except:
             is_failed = True
         self.assertTrue(is_failed)
-
-
 
     def tearDown(self) -> None:
         ls = LocalStorage(tmp_folder_path=self.tmp_folder_path, filters_folder_path=self.filters_folder_path)

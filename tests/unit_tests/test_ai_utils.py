@@ -13,7 +13,6 @@ class AIUtilsTestCase(unittest.TestCase):
         self.assertEqual(processed_image.dtype, torch.float)
         self.assertEqual((self.image.shape[2], self.image.shape[0], self.image.shape[1]), processed_image.shape)
 
-    #@unittest.skip("not working")
     def testCommonBatchProcessing(self):
         image = tensor_process_rgbimage(self.image).unsqueeze(0)
         processed_image = preprocess_batch(image)

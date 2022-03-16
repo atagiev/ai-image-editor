@@ -11,6 +11,7 @@ class AIFilterTestCase(unittest.TestCase):
     def setUp(self):
         self.aiFilter = AIFilter()
         os.chdir(os.path.join(pathlib.Path().resolve(), ".."))
+        #print(pathlib.Path().resolve())
 
     def tearDown(self):
         os.chdir(os.path.join(pathlib.Path().resolve(), "tests"))
@@ -22,17 +23,14 @@ class AIFilterTestCase(unittest.TestCase):
         self.assertEqual(output.__class__, image.__class__)
         self.assertEqual(output.size, image.size)
 
-        #print(image.__module__)
-
     def testSingleChannelImage(self):
         image = Image.open('tests/test_images/fox_320_480.jpg').convert('L')
-        # print(image.size)
         filter_name = FilterNamesEnum.AI_FEATHERS
         with self.assertRaises(ValueError):
-            output = self.aiFilter.apply_filter(image, filter_name)
+            _ = self.aiFilter.apply_filter(image, filter_name)
 
     def testInvalidFilterName(self):
         image = Image.open('tests/test_images/fox_320_480.jpg').convert('RGB')
         filter_name = FilterNamesEnum.BROWN
         with self.assertRaises(cv2.error):
-            output = self.aiFilter.apply_filter(image, filter_name)
+            _ = self.aiFilter.apply_filter(image, filter_name)

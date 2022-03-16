@@ -1,14 +1,17 @@
 import unittest
 
-from filter_manager import FilterManager
+from src.filter_manager import FilterManager
+
 
 class FakeStorageGood:
     def get_filter_image(self, filter_name):
         return True
 
+
 class FakeStorageBad:
     def get_filter_image(self, filter_name):
         return None
+
 
 class FilterManagerTest(unittest.TestCase):
     def test_import_filters_good(self):
@@ -28,6 +31,7 @@ class FilterManagerTest(unittest.TestCase):
         except:
             is_failed = True
         self.assertTrue(is_failed)
+
 
 if __name__ == '__main__':
     unittest.main()

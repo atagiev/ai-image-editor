@@ -10,7 +10,7 @@ from src.filter_names_enum import FilterNamesEnum
 
 class ClassicFilterTest(unittest.TestCase):
     def setUp(self) -> None:
-        self.image = Image.open(os.path.join(pathlib.Path().resolve(), "..", "tests", "images", "unnamed.jpg"))
+        self.image = Image.open(os.path.join(pathlib.Path().resolve(), "..", "tests", "test_images", "unnamed.jpg"))
         self.cf = ClassicFilter()
 
     def test_correct_filter(self):
