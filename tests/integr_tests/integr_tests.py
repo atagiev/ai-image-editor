@@ -21,6 +21,18 @@ class IntegrationTests(unittest.TestCase):
         sleep(5)
         return thread
 
+    def test_two_backends(self):
+        th = self._run_backend()
+        is_failed = False
+
+        try:
+            import main
+        except:
+            is_failed = True
+
+        self.assertTrue(is_failed)
+        th.terminate()
+
     def test_ping(self):
         th = self._run_backend()
 
@@ -54,7 +66,7 @@ class IntegrationTests(unittest.TestCase):
 
         payload = {'image': open(path, 'rb')}
         response = requests.post(url="http://localhost:5000/get_size", files=payload)
-        self.assertEqual(response.status_code,500)
+        self.assertEqual(response.status_code, 500)
         th.terminate()
 
     def test_apply_filter(self):
@@ -72,7 +84,7 @@ class IntegrationTests(unittest.TestCase):
 
     def test_save_unreal_image(self):
         th = self._run_backend()
-        data = {'saved_image_id':"2000"}
+        data = {'saved_image_id': "2000"}
         response = requests.post(url="http://localhost:5000/save_image", data=data)
         r = response.json()
         self.assertFalse(r['success'])
@@ -100,7 +112,7 @@ class IntegrationTests(unittest.TestCase):
         th = self._run_backend()
 
         r = requests.get(url="http://localhost:5000/reset")
-        self.assertEqual(r.json()['error'],"NO")
+        self.assertEqual(r.json()['error'], "NO")
 
         th.terminate()
 
