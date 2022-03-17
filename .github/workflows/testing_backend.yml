@@ -44,4 +44,4 @@ jobs:
     - name: Unit tests
       working-directory: ./tests
       run: |
-        pytest tests/unit_tests/test_*.py
+        pytest unit_tests/test_*.py
