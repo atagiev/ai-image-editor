@@ -1,5 +1,5 @@
 TN:
-SF:D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\App.vue
+SF:D:\Projects and labs\ai-image-editor\web\vue-spa\src\App.vue
 FN:56,(anonymous_1)
 FN:66,(anonymous_2)
 FN:69,(anonymous_3)
@@ -201,7 +201,7 @@ BRF:28
 BRH:16
 end_of_record
 TN:
-SF:D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\ButtonsList.vue
+SF:D:\Projects and labs\ai-image-editor\web\vue-spa\src\components\ButtonsList.vue
 FN:42,(anonymous_1)
 FN:49,(anonymous_2)
 FN:54,(anonymous_3)
@@ -265,7 +265,7 @@ BRF:8
 BRH:4
 end_of_record
 TN:
-SF:D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\DialogBox.vue
+SF:D:\Projects and labs\ai-image-editor\web\vue-spa\src\components\DialogBox.vue
 FN:47,(anonymous_1)
 FN:50,(anonymous_2)
 FNF:2
@@ -280,7 +280,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\EffectText.vue
+SF:D:\Projects and labs\ai-image-editor\web\vue-spa\src\components\EffectText.vue
 FN:15,(anonymous_1)
 FNF:1
 FNH:1
@@ -293,7 +293,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\FilterItem.vue
+SF:D:\Projects and labs\ai-image-editor\web\vue-spa\src\components\FilterItem.vue
 FN:19,(anonymous_1)
 FN:28,(anonymous_2)
 FN:30,(anonymous_3)
@@ -366,7 +366,7 @@ BRF:2
 BRH:0
 end_of_record
 TN:
-SF:D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\FiltersList.vue
+SF:D:\Projects and labs\ai-image-editor\web\vue-spa\src\components\FiltersList.vue
 FN:27,(anonymous_1)
 FN:31,(anonymous_2)
 FNF:2
@@ -382,7 +382,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\Footer.vue
+SF:D:\Projects and labs\ai-image-editor\web\vue-spa\src\components\Footer.vue
 FN:43,(anonymous_1)
 FN:53,(anonymous_2)
 FN:58,(anonymous_3)
@@ -483,7 +483,7 @@ BRF:17
 BRH:11
 end_of_record
 TN:
-SF:D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\Header.vue
+SF:D:\Projects and labs\ai-image-editor\web\vue-spa\src\components\Header.vue
 FN:15,(anonymous_1)
 FNF:1
 FNH:1
@@ -495,7 +495,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\InfoPicture.vue
+SF:D:\Projects and labs\ai-image-editor\web\vue-spa\src\components\InfoPicture.vue
 FN:21,(anonymous_1)
 FN:27,(anonymous_2)
 FN:33,(anonymous_3)
@@ -517,7 +517,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:D:\Projects and labs\img-editor-cw\ai-image-editor\web\vue-spa\src\components\PictureItem.vue
+SF:D:\Projects and labs\ai-image-editor\web\vue-spa\src\components\PictureItem.vue
 FN:12,(anonymous_1)
 FN:21,(anonymous_2)
 FNF:2
