@@ -31,7 +31,7 @@ class TestBackend(unittest.TestCase):
         backend = Backend(queue=None, storage=None)
 
         x, y = backend.get_image_size(flask_request_local=FakeFlaskRequest(
-            os.path.join(pathlib.Path().resolve(), "..", "tests", "test_images", "skull_100_100.jpg"), val=None))
+            os.path.join(pathlib.Path().resolve(), "tests", "test_images", "skull_100_100.jpg"), val=None))
 
         self.assertEqual(x, 100)
         self.assertEqual(y, 100)
@@ -40,7 +40,7 @@ class TestBackend(unittest.TestCase):
         backend = Backend(queue=None, storage=None)
         is_failed = False
         try:
-            fr = FakeFlaskRequest(os.path.join(pathlib.Path().resolve(), "../..", "main.py"), val=None)
+            fr = FakeFlaskRequest(os.path.join(pathlib.Path().resolve(), "main.py"), val=None)
             x, y = backend.get_image_size(flask_request_local=fr)
         except:
             is_failed = True

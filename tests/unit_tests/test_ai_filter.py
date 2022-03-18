@@ -1,5 +1,3 @@
-import os
-import pathlib
 import unittest
 import cv2
 from PIL import Image
@@ -10,11 +8,6 @@ from src.filter_names_enum import FilterNamesEnum
 class AIFilterTestCase(unittest.TestCase):
     def setUp(self):
         self.aiFilter = AIFilter()
-        os.chdir(os.path.join(pathlib.Path().resolve(), ".."))
-        #print(pathlib.Path().resolve())
-
-    def tearDown(self):
-        os.chdir(os.path.join(pathlib.Path().resolve(), "tests"))
 
     def testCommonOutput(self):
         image = Image.open('tests/test_images/fox_320_480.jpg').convert('RGB')

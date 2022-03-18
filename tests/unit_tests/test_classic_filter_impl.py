@@ -14,13 +14,13 @@ class ClassicFilterImplementationTest(unittest.TestCase):
         return image_height * image_width * len(image.getbands())
 
     def setUp(self) -> None:
-        self.image = Image.open(os.path.join(pathlib.Path().resolve(), "..", "tests", "test_images", "photo3.jpg"))
+        self.image = Image.open(os.path.join(pathlib.Path().resolve(), "tests", "test_images", "photo3.jpg"))
         self.verticalImage = Image.open(
-            os.path.join(pathlib.Path().resolve(), "..", "tests", "test_images", "firefox-ailurus-fulgens-malaya.jpg"))
+            os.path.join(pathlib.Path().resolve(), "tests", "test_images", "firefox-ailurus-fulgens-malaya.jpg"))
         self.squareImage = Image.open(
-            os.path.join(pathlib.Path().resolve(), "..", "tests", "test_images", "unnamed.jpg"))
+            os.path.join(pathlib.Path().resolve(), "tests", "test_images", "unnamed.jpg"))
         self.badImage = Image.open(
-            os.path.join(pathlib.Path().resolve(), "..", "tests", "test_images", "unnamed_2.jpg"))
+            os.path.join(pathlib.Path().resolve(), "tests", "test_images", "unnamed_2.jpg"))
 
     def test_image_size(self):
         image_size = self.getSize(image=self.image)

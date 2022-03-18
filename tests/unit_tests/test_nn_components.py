@@ -1,5 +1,3 @@
-import os
-import pathlib
 import unittest
 from scipy import stats
 from ai_filters.Style_GAN.model import *
@@ -63,7 +61,7 @@ class NNComponentsTestCase(unittest.TestCase):
         self.assertEqual(result.dtype, x.dtype)
         self.assertEqual(result.shape, x.shape)
         #self.assertEqual(False, torch.isnan(result).any())
-        #self.assertEqual(False, torch.isinf(result).any())
+        self.assertEqual(False, torch.isinf(result).any())
         self.assertEqual("Inspiration(N x 100)", insp.__repr__())
 
         result.mean().backward()
@@ -269,7 +267,6 @@ class NNComponentsTestCase(unittest.TestCase):
         return flatt_children
 
     def testNetWeights(self):
-        os.chdir(os.path.join(pathlib.Path().resolve(), ".."))
         model = Net(ngf=128)
         model_dict = torch.load('ai_filters/Style_GAN/weights/21styles.model')
         model_dict_clone = model_dict.copy()
