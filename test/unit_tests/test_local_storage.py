@@ -15,9 +15,9 @@ class LocalStorageTest(unittest.TestCase):
             os.path.join(pathlib.Path().resolve(), "ai_filters", "Style_GAN", "images"))
 
         self.image1 = Image.open(
-            os.path.join(pathlib.Path().resolve(), "tests", "test_images", "skull_100_100.jpg"))
+            os.path.join(pathlib.Path().resolve(), "test", "test_images", "skull_100_100.jpg"))
         self.image2 = Image.open(
-            os.path.join(pathlib.Path().resolve(), "tests", "test_images", "lake_800_450.jpg"))
+            os.path.join(pathlib.Path().resolve(), "test", "test_images", "lake_800_450.jpg"))
         self.notimage = open(file=os.path.join(pathlib.Path().resolve(), "main.py"), mode="rb")
 
     def test_save_image(self):
