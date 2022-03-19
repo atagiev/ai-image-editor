@@ -1,5 +1,5 @@
 <template>
-  <div class="footer">
+  <div class="footer" data-hook="footer">
     <div class="welcome-container" v-if="!isImageUploaded">
       <div class="welcome-container__text">
         Добро пожаловать!<br>

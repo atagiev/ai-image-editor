@@ -152,6 +152,7 @@ export default {
         this.resetBackendStore()
       }
       if (this.userAction === 'download') {
+        this.closeModal()
         if (this.ACT_FILTER === 'отсутствует' && this.CUR_EFFECT === 'отсутствует') {
           const link = document.createElement('a')
           link.href = this.URL_INIT_FILE
@@ -207,6 +208,7 @@ export default {
             })
           this.closeModal()
         }
+
       }
       if (this.userAction === 'delete') {
         this.changeURLCurFile(this.$store.getters.URL_INIT_FILE)
