@@ -1,8 +1,8 @@
 import unittest
 
-
 from src.filter_names_enum import FilterNamesEnum
 from src.request import Request
+
 
 class RequestTest(unittest.TestCase):
     def setUp(self) -> None:

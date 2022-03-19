@@ -4,7 +4,7 @@ from ai_filters.Style_GAN.utils import *
 
 class AIUtilsTestCase(unittest.TestCase):
     def setUp(self):
-        image = Image.open('test_images/fox_320_480.jpg').convert("RGB")
+        image = Image.open('test/test_images/fox_320_480.jpg').convert("RGB")
         self.image = np.asarray(image)
 
     def testCommonImageProcessing(self):
@@ -13,7 +13,6 @@ class AIUtilsTestCase(unittest.TestCase):
         self.assertEqual(processed_image.dtype, torch.float)
         self.assertEqual((self.image.shape[2], self.image.shape[0], self.image.shape[1]), processed_image.shape)
 
-    #@unittest.skip("not working")
     def testCommonBatchProcessing(self):
         image = tensor_process_rgbimage(self.image).unsqueeze(0)
         processed_image = preprocess_batch(image)
