@@ -2,7 +2,10 @@ Flask
 Flask-Cors
 numpy
 opencv-python
+scipy
 Pillow
 torch
 torchaudio
 torchvision
+pytest
+pyteset-cov
