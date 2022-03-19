@@ -12,4 +12,5 @@ module.exports = (on, config) => {
 }
 module.exports = (on, config) => {
   on('task', { isFileExist })
+  return config
 }
