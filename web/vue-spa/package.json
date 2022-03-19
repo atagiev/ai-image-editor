@@ -6,12 +6,15 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test": "vue-cli-service test:unit --coverage --colors",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "cyopen": "cypress open"
   },
   "dependencies": {
+    "@cypress/webpack-dev-server": "^1.8.3",
     "axios": "^0.24.0",
     "base-64": "^1.0.0",
     "core-js": "^3.6.5",
+    "cypress": "^9.5.1",
     "element-ui": "^2.15.6",
     "flush-promises": "^1.0.2",
     "sinon": "^13.0.1",
@@ -20,14 +23,13 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-unit-jest": "^4.5.15",
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/test-utils": "^1.0.3",
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
+    "cypress-file-upload": "^5.0.8",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
@@ -35,7 +37,5 @@
     "eslint-plugin-vue": "^6.2.2",
     "vue-template-compiler": "^2.6.11"
   },
-  "jest": {
-    
-  }
+  "jest": {}
 }

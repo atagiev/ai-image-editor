@@ -4,3 +4,4 @@
 .pytest_cache
 logs
 __pycache__
+web/vue-spa/coverage
