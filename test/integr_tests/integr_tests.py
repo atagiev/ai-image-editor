@@ -82,6 +82,19 @@ class IntegrationTests(unittest.TestCase):
 
         th.terminate()
 
+    def test_apply_filter_on_incorrect_file(self):
+        th = self._run_backend()
+
+        path = os.path.join(pathlib.Path().resolve(), "..", "unit_tests", "test_ai_filter.py")
+
+        payload = {'image': open(path, 'rb')}
+        data = {'filter_name': "Candy"}
+        response = requests.post(url="http://localhost:5000/", data=data, files=payload)
+
+        self.assertEqual(response.status_code, 500)
+
+        th.terminate()
+
     def test_save_unreal_image(self):
         th = self._run_backend()
         data = {'saved_image_id': "2000"}
@@ -161,6 +174,22 @@ class IntegrationTests(unittest.TestCase):
         self.assertIn("2.jpg", r.text)
 
         th.terminate()
+
+    @unittest.skip
+    def test_reset_applied_filters(self):
+        th = self._run_backend()
+        path = os.path.join(pathlib.Path().resolve(), "..", "test_images", "fox_320_480.jpg")
+
+        payload = {'image': open(path, 'rb')}
+        data = {'filter_name': "Candy"}
+        requests.post(url="http://localhost:5000/", data=data, files=payload)
+
+        data = {'saved_image_id': "2"}
+        requests.post(url="http://localhost:5000/save_image", data=data)
+
+    @unittest.skip
+    def test_images_on_file_server(self):
+        pass
 
 
 if __name__ == '__main__':
