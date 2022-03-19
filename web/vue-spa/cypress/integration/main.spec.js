@@ -141,8 +141,8 @@ it("Clicking button download", () => {
     .equal(' Начать скачивание изображения? Вы сможете продолжить редактирование ');
   })
   cy.get('.no').click();
-  // cy.verifyDownload('file.jpg');
-  // cy.get('.modal').should('not.be.visible');
+  cy.verifyDownload('file.jpg');
+  cy.get('.modal').should('not.be.visible');
 });
 it("Clicking button upload", () => {
   cy.get('.upld-btn').click();
