@@ -6,7 +6,7 @@ it("After uploading photo open editor", () => {
     cy.get('.filters-container').should('be.visible');
     cy.get('.acpt-btn').should('have.class','btn-disabled')
     cy.get('.rst-btn').should('have.class','btn-disabled')
-});
+}); //+
 it("Clicking C and NN buttons is correct", () => {
   cy.visit("http://localhost:8080/");
   const fixtureFile = 'file-ok.jpg';
@@ -17,7 +17,7 @@ it("Clicking C and NN buttons is correct", () => {
   cy.get('.neural-btn').should('have.class','active-btn');
   cy.get('.filters_list__neural').should('be.visible');
   cy.get('.classic-btn').click();
-});
+}); //+
 it("Clicking classic filters", () => {
   let text = '';
   cy.get(':nth-child(1) > .filter-item').click();
@@ -45,7 +45,7 @@ it("Clicking classic filters", () => {
     text = $effect_text.text();
     expect(text).to.equal('Эффект: Рельеф');
   });
-});
+});//+
 it("Clicking neural filters", () => {
   cy.get('.neural-btn').click();
   let text = '';
@@ -75,7 +75,7 @@ it("Clicking neural filters", () => {
     expect(text).to.equal('Эффект: Wave');
   });
   cy.get('.classic-btn').click();
-});
+}); //+
 it("Clicking button save", () => {
   cy.get(':nth-child(1) > .filter-item').click();
   cy.get('.acpt-btn').click();
@@ -87,7 +87,7 @@ it("Clicking button save", () => {
   cy.get('.yes').click();
   cy.get('.acpt-btn').should('have.class','btn-disabled')
   cy.get('.rst-btn').should('have.class','btn-disabled')
-});
+}); //+
 it("Clicking button reset", () => {
   cy.get(':nth-child(1) > .filter-item').click();
   cy.get('.rst-btn').click();
@@ -99,7 +99,7 @@ it("Clicking button reset", () => {
   cy.get('.yes').click();
   cy.get('.acpt-btn').should('have.class','btn-disabled')
   cy.get('.rst-btn').should('have.class','btn-disabled')
-});
+}); //+
 it("Clicking button help", () => {
   cy.get('.help-button').click();
   cy.get('.modal').should('be.visible');
@@ -140,7 +140,7 @@ it("Clicking button download", () => {
     .to
     .equal(' Начать скачивание изображения? Вы сможете продолжить редактирование ');
   })
-  cy.get('.no').click();
+  cy.get('.yes').click();
   cy.get('.modal').should('not.be.visible');
 });
 it("Clicking button upload", () => {
@@ -158,10 +158,8 @@ it("Clicking button upload", () => {
   const fixtureFile = 'file-ok.jpg';
   cy.get('.input-file').attachFile(fixtureFile);
 });
-it("Save and return to initial picture", () => {
+it("Clicking filter and return to initial picture", () => {
   cy.get(':nth-child(1) > .filter-item').click();
-  cy.get('.acpt-btn').click();
-  cy.get('.yes').click();
   cy.get('.dlt-btn').click();
   cy.get('.yes').click();
   cy.get('.effect-text', { timeout: 20000 }).should(($effect_text) => {
