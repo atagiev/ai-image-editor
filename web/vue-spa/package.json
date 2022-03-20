@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "test": "vue-cli-service test:unit --coverage --colors",
     "lint": "vue-cli-service lint",
-    "cyopen": "cypress open"
+    "cyopen": "cypress open",
+    "cynogui": "node_modules/.bin/cypress run --spec 'cypress/integration/main.spec.js'"
   },
   "dependencies": {
     "@cypress/webpack-dev-server": "^1.8.3",
