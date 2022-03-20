@@ -35,8 +35,7 @@ jobs:
         with:
           working-directory: web/vue-spa
           browser: chrome
-          build: npm build
-          start: npm start
+          start: npm run serve
           command: npm run cynogui
 
   back:
