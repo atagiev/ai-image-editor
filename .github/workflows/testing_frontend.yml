@@ -26,6 +26,13 @@ jobs:
         working-directory: web/vue-spa
         run: npm install
 
-      - name: Run tests
+      - name: Run unit tests
         working-directory: web/vue-spa
         run: npm run test
+
+      - uses: actions/checkout@v2
+      - name: Run end-to-end tests
+        working-directory: web/vue-spa
+        uses: cypress-io/github-action@v2
+        with:
+          browser: chrome
