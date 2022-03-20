@@ -295,7 +295,7 @@ export default {
 main {
   background-color: rgba(54, 51, 51, 0.81);
   height: 600px;
-  padding:0px; /* Обратите внимание что внутренние отступы равны 0 */
+  padding:0px;
   border:0px solid grey;
 }
 footer{

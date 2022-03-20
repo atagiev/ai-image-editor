@@ -65,13 +65,13 @@ describe('Footer.vue testing', () => {
     expect(wrapper).toBeTruthy()
     expect(wrapper.is(Footer)).toBe(true)
   })
-  it('limitations', () => {
+  it('limitations - correct resolution', () => {
     wrapper.setData({ isUploaded: false })
     jest.spyOn(wrapper.vm, 'checkLimitations')
     wrapper.vm.checkLimitations(responseGetSize, event)
     expect(wrapper.vm.isUploaded).toBe(true)
   })
-  it('limitations', () => {
+  it('limitations - incorrect resolution', () => {
     wrapper.setData({ isUploaded: false })
     jest.spyOn(wrapper.vm, 'checkLimitations')
     wrapper.vm.checkLimitations(responseGetSizeIncorrect, event)
