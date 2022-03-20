@@ -53,6 +53,6 @@ jobs:
         with:
           working-directory: web/vue-spa
           browser: chrome
-          start: python main.py, npm run serve
+          start: python ../../main.py, npm run serve
           command: npm run cynogui
           wait-on: 'http://localhost:5000/ping'
