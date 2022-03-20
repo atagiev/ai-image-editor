@@ -9,7 +9,6 @@ from PIL import Image
 
 
 def backend_process():
-    os.chdir(os.path.join(pathlib.Path().resolve(), "..", ".."))
     import main
 
 
@@ -21,18 +20,6 @@ class IntegrationTests(unittest.TestCase):
         thread.start()
         sleep(5)
         return thread
-
-    def test_two_backends(self):
-        th = self._run_backend()
-        is_failed = False
-
-        try:
-            import main
-        except:
-            is_failed = True
-
-        self.assertTrue(is_failed)
-        th.terminate()
 
     def test_ping(self):
         th = self._run_backend()
@@ -52,7 +39,7 @@ class IntegrationTests(unittest.TestCase):
 
     def test_get_image_size(self):
         th = self._run_backend()
-        path = os.path.join(pathlib.Path().resolve(), "..", "test_images", "fox_320_480.jpg")
+        path = os.path.join(pathlib.Path().resolve(), "test", "test_images", "fox_320_480.jpg")
 
         payload = {'image': open(path, 'rb')}
         response = requests.post(url="http://localhost:5000/get_size", files=payload)
@@ -63,7 +50,7 @@ class IntegrationTests(unittest.TestCase):
 
     def test_get_not_image_size(self):
         th = self._run_backend()
-        path = os.path.join(pathlib.Path().resolve(), "..", "unit_tests", "test_ai_filter.py")
+        path = os.path.join(pathlib.Path().resolve(), "test", "unit_tests", "test_ai_filter.py")
 
         payload = {'image': open(path, 'rb')}
         response = requests.post(url="http://localhost:5000/get_size", files=payload)
@@ -73,7 +60,7 @@ class IntegrationTests(unittest.TestCase):
     def test_apply_filter(self):
         th = self._run_backend()
 
-        path = os.path.join(pathlib.Path().resolve(), "..", "test_images", "fox_320_480.jpg")
+        path = os.path.join(pathlib.Path().resolve(), "test", "test_images", "fox_320_480.jpg")
 
         payload = {'image': open(path, 'rb')}
         data = {'filter_name': "Candy"}
@@ -86,7 +73,7 @@ class IntegrationTests(unittest.TestCase):
     def test_apply_filter_on_incorrect_file(self):
         th = self._run_backend()
 
-        path = os.path.join(pathlib.Path().resolve(), "..", "unit_tests", "test_ai_filter.py")
+        path = os.path.join(pathlib.Path().resolve(), "test", "unit_tests", "test_ai_filter.py")
 
         payload = {'image': open(path, 'rb')}
         data = {'filter_name': "Candy"}
@@ -107,7 +94,7 @@ class IntegrationTests(unittest.TestCase):
     def test_save_image(self):
         th = self._run_backend()
 
-        path = os.path.join(pathlib.Path().resolve(), "..", "test_images", "fox_320_480.jpg")
+        path = os.path.join(pathlib.Path().resolve(), "test", "test_images", "fox_320_480.jpg")
 
         payload = {'image': open(path, 'rb')}
         data = {'filter_name': "Candy"}
@@ -133,7 +120,7 @@ class IntegrationTests(unittest.TestCase):
     def test_get_last_saved(self):
         th = self._run_backend()
 
-        path = os.path.join(pathlib.Path().resolve(), "..", "test_images", "fox_320_480.jpg")
+        path = os.path.join(pathlib.Path().resolve(), "test", "test_images", "fox_320_480.jpg")
         payload = {'image': open(path, 'rb')}
         data = {'filter_name': "Candy"}
         requests.post(url="http://localhost:5000/", data=data, files=payload)
@@ -149,7 +136,7 @@ class IntegrationTests(unittest.TestCase):
         self.assertEqual(r['id'], "2")
 
         data = {'filter_name': "Candy"}
-        path = os.path.join(pathlib.Path().resolve(), "..", "test_images", "cat_300_100.jpg")
+        path = os.path.join(pathlib.Path().resolve(), "test", "test_images", "cat_300_100.jpg")
         payload = {'image': open(path, 'rb')}
         requests.post(url="http://localhost:5000/", data=data, files=payload)
         data = {'saved_image_id': "4"}
@@ -177,7 +164,7 @@ class IntegrationTests(unittest.TestCase):
     def test_find_file_in_http_server(self):
         th = self._run_backend()
 
-        path = os.path.join(pathlib.Path().resolve(), "..", "test_images", "fox_320_480.jpg")
+        path = os.path.join(pathlib.Path().resolve(), "test", "test_images", "fox_320_480.jpg")
 
         payload = {'image': open(path, 'rb')}
         data = {'filter_name': "Candy"}
@@ -192,7 +179,7 @@ class IntegrationTests(unittest.TestCase):
 
     def test_reset_applied_filters(self):
         th = self._run_backend()
-        path = os.path.join(pathlib.Path().resolve(), "..", "test_images", "fox_320_480.jpg")
+        path = os.path.join(pathlib.Path().resolve(), "test", "test_images", "fox_320_480.jpg")
 
         payload = {'image': open(path, 'rb')}
         data = {'filter_name': "Candy"}
@@ -205,7 +192,6 @@ class IntegrationTests(unittest.TestCase):
         r = response.json()
         self.assertEqual(r['error'], "NO")
         self.assertEqual(r['id'], "2")
-
 
         payload = {'image': open(path, 'rb')}
         data = {'filter_name': "Candy"}
@@ -226,7 +212,7 @@ class IntegrationTests(unittest.TestCase):
         r = requests.get(url="http://localhost:8000/")
         self.assertNotIn("2.jpg", r.text)
 
-        path = os.path.join(pathlib.Path().resolve(), "..", "test_images", "fox_320_480.jpg")
+        path = os.path.join(pathlib.Path().resolve(), "test", "test_images", "fox_320_480.jpg")
 
         payload = {'image': open(path, 'rb')}
         data = {'filter_name': "Candy"}
@@ -244,6 +230,47 @@ class IntegrationTests(unittest.TestCase):
 
         th.terminate()
 
+    def test_incorrect_requests(self):
+        th = self._run_backend()
+
+        path = os.path.join(pathlib.Path().resolve(), "test", "unit_tests", "test_ai_filter.py")
+        payload = {'image': open(path, 'rb')}
+        requests.post(url="http://localhost:5000/get_size", files=payload)
+
+        path = os.path.join(pathlib.Path().resolve(), "test", "unit_tests", "test_ai_filter.py")
+        payload = {'image': open(path, 'rb')}
+        data = {'filter_name': "Candy"}
+        requests.post(url="http://localhost:5000/", data=data, files=payload)
+
+        path = os.path.join(pathlib.Path().resolve(), "test", "test_images", "fox_320_480.jpg")
+        payload = {'image': open(path, 'rb')}
+        data = {'filter_name': "NOTAFILTER"}
+        requests.post(url="http://localhost:5000/", data=data, files=payload)
+
+        requests.get(url="http://localhost:8000/200000.jpg")
+
+        data = {'saved_image_id': "2000"}
+        requests.post(url="http://localhost:5000/save_image", data=data)
+
+        r = requests.get(url="http://localhost:5000/ping")
+        self.assertTrue(r.json()['success'])
+
+        th.terminate()
+
+    def test_apply_filter_with_incorrect_name(self):
+        th = self._run_backend()
+
+        path = os.path.join(pathlib.Path().resolve(), "test", "test_images", "fox_320_480.jpg")
+
+        payload = {'image': open(path, 'rb')}
+        data = {'filter_name': "NOTAFILTER"}
+        response = requests.post(url="http://localhost:5000/", data=data, files=payload)
+
+        print(response.status_code)
+        self.assertEqual(response.status_code, 500)
+
+        th.terminate()
+
+
 if __name__ == '__main__':
     unittest.main()
-
