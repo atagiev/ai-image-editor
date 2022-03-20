@@ -48,12 +48,14 @@ jobs:
         run: |
           pip install torch==${{ matrix.torch-version}}+cpu torchvision==${{ matrix.torchvision-version}}+cpu -f https://download.pytorch.org/whl/torch_stable.html
 
+      - name: Run backend
+        run: |
+          python main.py &
+
       - name: Run end-to-end tests
         uses: cypress-io/github-action@v2
         with:
           browser: chrome
-          start: |
-            python main.py
-            cd web/vue-spa
-            npm run serve
+          working-directory: web/vue-spa
+          start: npm run serve
           command: npm run cynogui
