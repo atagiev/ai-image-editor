@@ -34,4 +34,5 @@ jobs:
       - name: Run end-to-end tests
         uses: cypress-io/github-action@v2
         with:
+          working-directory: web/vue-spa
           browser: chrome
