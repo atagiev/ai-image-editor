@@ -51,8 +51,9 @@ jobs:
       - name: Run end-to-end tests
         uses: cypress-io/github-action@v2
         with:
-          working-directory: web/vue-spa
           browser: chrome
-          start: python ../../main.py, npm run serve
+          start: |
+            python main.py
+            cd web/vue-spa
+            npm run serve
           command: npm run cynogui
-          wait-on: 'http://localhost:5000/ping'
