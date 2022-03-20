@@ -37,6 +37,7 @@ jobs:
           browser: chrome
           start: npm run serve
           command: npm run cynogui
+          wait-on: 'http://localhost:5000/ping'
 
   back:
     runs-on: ubuntu-latest
