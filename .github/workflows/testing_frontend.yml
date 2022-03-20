@@ -30,8 +30,8 @@ jobs:
         working-directory: web/vue-spa
         run: npm run test
 
-      - uses: actions/checkout@v2
       - name: Run end-to-end tests
         uses: cypress-io/github-action@v2
         with:
+          working-directory: web/vue-spa
           browser: chrome
