@@ -7,13 +7,15 @@ on:
     branches: [ main, testing ]
 
 jobs:
-  front:
-
+  build:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         node-version: [ '14.x' ]
+        python-version: [ "3.9" ]
+        torch-version: [ "1.10.2" ]
+        torchvision-version: [ "0.11.3" ]
 
     steps:
       - uses: actions/checkout@v2
@@ -30,6 +32,26 @@ jobs:
         working-directory: web/vue-spa
         run: npm run test
 
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest pytest-cov
+          pip install numpy==1.22 opencv-python Pillow==9.0 scipy==1.8 requests
+          pip install Flask==2.0.2 Flask-cors==3.0
+
+      - name: Install PyTorch ${{ matrix.torch-version }}+cpu
+        run: |
+          pip install torch==${{ matrix.torch-version}}+cpu torchvision==${{ matrix.torchvision-version}}+cpu -f https://download.pytorch.org/whl/torch_stable.html
+
+      - name: Run backend
+        run: |
+          python main.py
+
       - name: Run end-to-end tests
         uses: cypress-io/github-action@v2
         with:
@@ -38,34 +60,3 @@ jobs:
           start: npm run serve
           command: npm run cynogui
           wait-on: 'http://localhost:5000/ping'
-
-  back:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.9"]
-        torch-version: ["1.10.2"]
-        torchvision-version: ["0.11.3"]
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install flake8 pytest pytest-cov
-        pip install numpy==1.22 opencv-python Pillow==9.0 scipy==1.8 requests
-        pip install Flask==2.0.2 Flask-cors==3.0
-
-    - name: Install PyTorch ${{ matrix.torch-version }}+cpu
-      run: |
-        pip install torch==${{ matrix.torch-version}}+cpu torchvision==${{ matrix.torchvision-version}}+cpu -f https://download.pytorch.org/whl/torch_stable.html
-
-    - name: Run backend
-      run: |
-        python main.py
