@@ -35,6 +35,8 @@ jobs:
         with:
           working-directory: web/vue-spa
           browser: chrome
+          build: npm build
+          start: npm start
           command: npm run cynogui
           wait-on: 'http://localhost:5000'
 
@@ -68,4 +70,3 @@ jobs:
     - name: Run backend
       run: |
         python main.py
-        
