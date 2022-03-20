@@ -12,7 +12,7 @@ describe('InfoPicture testing', () => {
     expect(wrapper).toBeTruthy()
     expect(wrapper.is(InfoPicture)).toBe(true)
   })
-  it('initialized correctly', () => {
+  it('setNewFile correct', () => {
     const spy = jest.spyOn(wrapper.vm, 'setNewFile')
     wrapper.vm.setNewFile()
     expect(spy).toHaveBeenCalled()

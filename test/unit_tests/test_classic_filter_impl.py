@@ -58,7 +58,7 @@ class ClassicFilterImplementationTest(unittest.TestCase):
         for y in range(image_height):
             for x in range(image_width):
                 self.assertEqual(first=new_img_array[x, y, 1], second=new_img_array[x, y, 2])
-                self.assertEqual(first=new_img_array[x, y, 1], second=new_img_array[x, y, 1])
+                self.assertEqual(first=new_img_array[x, y, 0], second=new_img_array[x, y, 1])
 
     def test_brown_color_consistency(self):
         test_pixel = np.array([[[0, 0, 0]]])
