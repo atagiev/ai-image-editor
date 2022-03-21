@@ -7,6 +7,7 @@ on:
     branches: [ main, testing ]
   schedule:
     - cron: '30 10,13 * * *'
+      branches: [ main, testing ]
 
 jobs:
   build:
@@ -61,4 +62,3 @@ jobs:
           working-directory: web/vue-spa
           start: npm run serve
           command: npm run cynogui
-          ref: [ main, testing ]
