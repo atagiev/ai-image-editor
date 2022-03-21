@@ -5,6 +5,8 @@ on:
     branches: [ main, testing ]
   pull_request:
     branches: [ main, testing ]
+  schedule:
+    - cron: '30 10,13 * * *'
 
 jobs:
   build:
@@ -23,6 +25,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+          ref: [ main, testing ]
 
       - name: Install Javascript dependencies
         working-directory: web/vue-spa
@@ -36,6 +39,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+          ref: [ main, testing ]
 
       - name: Install dependencies
         run: |
@@ -59,3 +63,4 @@ jobs:
           working-directory: web/vue-spa
           start: npm run serve
           command: npm run cynogui
+          ref: [ main, testing ]
